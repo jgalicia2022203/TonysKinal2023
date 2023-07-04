@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="958.0" style="-fx-background-color: #a691ce;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.ProgrammerController">
+   <children>
+      <Circle fill="#9c03fc" layoutX="944.0" layoutY="64.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#9c03fc" layoutX="14.0" layoutY="440.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#9c03fc" layoutX="11.0" layoutY="64.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fitHeight="341.0" fitWidth="270.0" layoutX="118.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/ImageProgrammer.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="413.0" layoutY="169.0" text="Juan Luis Galicia Mazariegos">
+         <font>
+            <Font name="Century" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="565.0" layoutY="228.0" text="2022-203">
+         <font>
+            <Font name="Century" size="36.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" prefHeight="64.0" prefWidth="958.0" style="-fx-background-color: #3836b5;" text="PROGRAMMER" textAlignment="CENTER" textFill="#d381ff">
+         <font>
+            <Font name="Dubai Medium" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="587.0" layoutY="286.0" text="IN5BV">
+         <font>
+            <Font name="Century" size="36.0" />
+         </font>
+      </Label>
+      <Circle fill="#9c03fc" layoutX="944.0" layoutY="411.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <VBox layoutX="11.0" layoutY="13.0" prefHeight="36.0" prefWidth="39.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="40.0" prefWidth="39.0" styleClass="button1" stylesheets="@../resource/TonysKinal.css">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/Back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

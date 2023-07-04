@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subGeneralReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="520fb760-8ad4-45e0-bf0e-9b76b83649d3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[call sp_Report();]]>
+	</queryString>
+	<field name="nameCompany" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amountBudget" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="typeService" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="firstNameEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="secondNameEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descript" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nameDish" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descriptionType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="priceDish" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nameProduct" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="eb41f2e8-d6ad-47c3-94ee-714eaf6b37a1"/>
+				<text><![CDATA[descript]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="0" width="100" height="20" uuid="6bf5db32-aa62-4fec-9f33-50ca262f4629"/>
+				<text><![CDATA[nameDish]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="0" width="100" height="20" uuid="e40dd196-d998-4fce-9f71-52efb28deb5c"/>
+				<text><![CDATA[descriptionType]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="20" uuid="ccf6ec4e-bc0a-44cd-9704-57fd99b0d51f"/>
+				<text><![CDATA[quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="0" width="100" height="20" uuid="99731444-71be-4c50-8119-5fa1a61c8460"/>
+				<text><![CDATA[priceDish]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="8" width="100" height="20" uuid="77687669-4007-4be5-bd69-a2ea1e68c3a8"/>
+				<textFieldExpression><![CDATA[$F{descript}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="8" width="100" height="20" uuid="48507a6d-316c-47ce-a889-f04b9d4d3ee3"/>
+				<textFieldExpression><![CDATA[$F{nameDish}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="8" width="100" height="20" uuid="1cee7580-fe20-44ba-a4bc-5da65f84fe16"/>
+				<textFieldExpression><![CDATA[$F{descriptionType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="8" width="100" height="20" uuid="eb99b33a-bcd5-44dd-ab5d-47c572599d84"/>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="8" width="100" height="20" uuid="4342cf4a-abcc-4d94-a425-de71ba8e8af2"/>
+				<textFieldExpression><![CDATA[$F{priceDish}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #a691ce;" stylesheets="@../resource/TonysKinal.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.PrincipalMenuController">
+   <children>
+      <ImageView fitHeight="949.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/PrincipalMenuBackground.png" />
+         </image>
+      </ImageView>
+      <MenuBar layoutX="-16.0" layoutY="-8.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="958.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Modules">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Companys" />
+                  <MenuItem mnemonicParsing="false" onAction="#productWindow" text="Products" />
+                  <MenuItem mnemonicParsing="false" onAction="#employeeWindow" text="Employees" />
+                  <MenuItem mnemonicParsing="false" onAction="#serviceWindow" text="Services" />
+                  <MenuItem mnemonicParsing="false" onAction="#dishWindow" text="Dishes" />
+                  <MenuItem mnemonicParsing="false" onAction="#typeEmployeeWindow" text="Type Employee" />
+                  <MenuItem mnemonicParsing="false" onAction="#typeDishWindow" text="Type Dish" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Has">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#Services_has_DishesWindow" text="Services has Dishes" />
+                  <MenuItem mnemonicParsing="false" onAction="#Products_has_DishesWindow" text="Products has Dishes" />
+                  <MenuItem mnemonicParsing="false" onAction="#Services_has_EmployeesWindow" text="Services has Employees" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Reports">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="General Report" />
+                  <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Company's Report" />
+                  <MenuItem mnemonicParsing="false" onAction="#budgetWindow" text="Budget's Report" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="?">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#programmerWindow" text="Programmer" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <JFXButton layoutX="1288.0" layoutY="706.0" onAction="#logout" prefHeight="55.0" prefWidth="77.0" text=" ">
+         <graphic>
+            <ImageView fitHeight="75.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </children>
+</AnchorPane>

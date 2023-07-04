@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="1116.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.ServiceController">
+   <children>
+      <AnchorPane layoutX="-2.0" prefHeight="454.0" prefWidth="282.0" style="-fx-background-color: #a691ce;">
+         <children>
+            <Pane layoutX="69.0" layoutY="14.0" prefHeight="150.0" prefWidth="146.0" style="-fx-background-color: #3836b5; -fx-background-radius: 50 50 50 50;">
+               <children>
+                  <ImageView fitHeight="120.0" fitWidth="110.0" layoutX="18.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/Services.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <VBox layoutY="182.0" prefHeight="271.0" prefWidth="283.0">
+               <children>
+                  <Button fx:id="btnCreate" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#create" prefHeight="25.0" prefWidth="283.0" styleClass="button1" text="Create Service">
+                     <font>
+                        <Font name="Century" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgCreate" fitHeight="51.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Add%20Service.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <stylesheets>
+                        <URL value="@NetBeansProjects/TonnysKinal2022203/src/org/juangalicia/resource/TonysKinal.css" />
+                        <URL value="@../resource/TonysKinal.css" />
+                     </stylesheets>
+                  </Button>
+                  <Button fx:id="btnRead" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#read" prefHeight="25.0" prefWidth="283.0" styleClass="button1" text="Read Service">
+                     <font>
+                        <Font name="Century" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgRead" fitHeight="51.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Read%20Services.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <stylesheets>
+                        <URL value="@NetBeansProjects/TonnysKinal2022203/src/org/juangalicia/resource/TonysKinal.css" />
+                        <URL value="@../resource/TonysKinal.css" />
+                     </stylesheets>
+                  </Button>
+                  <Button fx:id="btnUpdate" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="283.0" styleClass="button1" text="Update Service">
+                     <font>
+                        <Font name="Century" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgUpdate" fitHeight="51.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Update%20Service.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <stylesheets>
+                        <URL value="@NetBeansProjects/TonnysKinal2022203/src/org/juangalicia/resource/TonysKinal.css" />
+                        <URL value="@../resource/TonysKinal.css" />
+                     </stylesheets>
+                  </Button>
+                  <Button fx:id="btnDelete" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="283.0" styleClass="button1" text="Delete Service">
+                     <font>
+                        <Font name="Century" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgDelete" fitHeight="51.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Delete%20Service.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <stylesheets>
+                        <URL value="@NetBeansProjects/TonnysKinal2022203/src/org/juangalicia/resource/TonysKinal.css" />
+                        <URL value="@../resource/TonysKinal.css" />
+                     </stylesheets>
+                  </Button>
+                  <Button fx:id="btnBack" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="53.0" prefWidth="65.0" styleClass="button1">
+                     <font>
+                        <Font name="Century" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgBack" fitHeight="51.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/Back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <stylesheets>
+                        <URL value="@NetBeansProjects/TonnysKinal2022203/src/org/juangalicia/resource/TonysKinal.css" />
+                        <URL value="@../resource/TonysKinal.css" />
+                     </stylesheets>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <Pane layoutX="280.0" layoutY="-5.0" prefHeight="96.0" prefWidth="836.0" style="-fx-background-color: #9c03fc;">
+         <children>
+            <ImageView fitHeight="87.0" fitWidth="90.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/ImagePartyHatTonys.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="234.0" layoutY="26.0" text="Services Management">
+               <font>
+                  <Font name="Century" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="280.0" layoutY="91.0" prefHeight="363.0" prefWidth="836.0">
+         <children>
+            <ImageView fitHeight="465.0" fitWidth="836.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Background.png" />
+               </image>
+            </ImageView>
+            <GridPane fx:id="grpDate" layoutX="14.0" layoutY="22.0" prefHeight="143.0" prefWidth="803.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="105.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="195.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="109.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="224.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="57.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="57.0" minHeight="0.0" prefHeight="36.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Service Id" textFill="#a691ce">
+                     <font>
+                        <Font name="Century" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Type of service" textFill="#a691ce" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Century" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Date of service" textFill="#a691ce" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets left="5.0" />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txtServiceId" editable="false" GridPane.columnIndex="1">
+                     <opaqueInsets>
+                        <Insets right="5.0" />
+                     </opaqueInsets>
+                  </TextField>
+                  <TextField fx:id="txtTypeOfService" editable="false" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Hour of service" textFill="#a691ce" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Century" size="14.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Place of service" textFill="#a691ce" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Century" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Contact Phone" textFill="#a691ce" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Century" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Company Id" textFill="#a691ce" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Century" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtPlaceOfService" editable="false" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtContactPhone" editable="false" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cmbCompanyId" prefHeight="14.0" prefWidth="239.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <JFXTimePicker fx:id="jfxHourService" defaultColor="#9c03fc" prefHeight="27.0" prefWidth="271.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <TableView fx:id="tblServices" layoutX="6.0" layoutY="180.0" onKeyReleased="#SelectElement" onMouseClicked="#SelectElement" prefHeight="175.0" prefWidth="825.0" stylesheets="@../resource/TonysKinal.css">
+               <columns>
+                  <TableColumn fx:id="colServiceId" prefWidth="68.0" text="Service Id" />
+                  <TableColumn fx:id="colDate" prefWidth="95.0" text="Date " />
+                  <TableColumn fx:id="colTypeOfService" minWidth="0.0" prefWidth="154.0" text="Type of Service" />
+                  <TableColumn fx:id="colHour" minWidth="0.0" prefWidth="82.0" text="Hour" />
+                  <TableColumn fx:id="colPlace" minWidth="0.0" prefWidth="207.0" text="Place" />
+                  <TableColumn fx:id="colContactPhone" prefWidth="113.0" text="Contact Phone" />
+                  <TableColumn fx:id="colCompanyId" prefWidth="105.0" text="Company Id" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

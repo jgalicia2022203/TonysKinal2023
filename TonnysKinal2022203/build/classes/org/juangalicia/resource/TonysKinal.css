@@ -1,0 +1,265 @@
+.menu-bar {
+	-fx-background-color: #f13435;
+	-fx-opacity: 2;
+	-fx-border-width: 1;
+}
+.menu-bar .label {
+	-fx-font-size: 42 pt;
+	-fx-font-family: 'Concert One';
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-padding: 10px 20px 10px 20px;
+	-fx-alignment: center;
+}
+.menu-bar .menu-button:hover,
+.menu-bar .menu-button:focused,
+.menu-bar .menu-button:showing {
+	-fx-background: #f13435;
+	-fx-opacity: 2;
+	-fx-text-fill: #9c03fc;
+}
+
+.menu-item {
+	-fx-padding: 0em 0em 0em 0em;
+	-fx-text-fill: white;
+	-fx-background: #f13435;
+}
+.menu-item .label {
+	-fx-font-size: 32 pt;
+	-fx-text-fill: white;
+}
+.menu-item .label:hover {
+	-fx-font-size: 14 pt;
+	-fx-background: #41345f;
+	-fx-text-fill: #d381ff;
+}
+.context-menu {
+	-fx-skin: 'com.sun.javafx.scene.control.skin.ContextMenuSkin';
+	-fx-background-color: #41345f;
+	-fx-border-width: 0.2px;
+	-fx-border-color: black;
+	/** -fx-background-insets: 0.0, 1.0, 2.0;
+    -fx-background-radius: 0.0 6.0 6.0 6.0, 0.0 5.0 5.0 5.0, 0.0 4.0 4.0 4.0;
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; 
+    -fx-opacity: 0.9;*/
+}
+
+.button1 {
+	-fx-background-color: #a691ce;
+	-fx-background-radius: 30 0 30 0;
+}
+
+.button1:hover {
+	-fx-background-color: #d381ff;
+	-fx-background-radius: 30 0 30 0;
+}
+
+.button1:pressed {
+	-fx-background-color: #9c03fc;
+	-fx-background-radius: 30 0 30 0;
+}
+
+.button2 {
+	-fx-background-color: #ffffff;
+}
+
+.button2:hover {
+	-fx-background-color: #d381ff;
+}
+
+.button2:pressed {
+	-fx-background-color: #9c03fc;
+}
+
+root {
+	/*-fx-base: dodgerblue; */
+}
+
+.datepicker-invalid {
+	-fx-border-color: red;
+}
+
+.datepicker-valid {
+	-fx-border-color: null;
+}
+
+/* The main calendar pane */
+.calendar {
+}
+
+/* The calendar header, which contains the navigation elements. */
+.calendar-header {
+	-fx-background-color: linear-gradient(
+		to bottom,
+		derive(-fx-base, -70%),
+		derive(-fx-base, -90%)
+	);
+	-fx-padding: 0.5em;
+	/* -fx-background-radius: 10;*/
+}
+
+/* The calendar footer, which contains the today button. It is only visible when the today button is shown */
+.calendar-footer {
+	-fx-background-color: linear-gradient(
+		to top,
+		derive(-fx-base, -70%),
+		derive(-fx-base, -90%)
+	);
+	-fx-padding: 0.2em;
+}
+
+/* The 3 different panes, which show the month, the year, and the decades */
+.calendar-month-view,
+.calendar-year-view,
+.calendar-decades-view {
+	-fx-background-color: linear-gradient(
+		to bottom,
+		derive(-fx-base, 80%),
+		derive(-fx-base, 40%)
+	);
+	-fx-padding: 0;
+}
+
+/* The usual button which either display the day of the current month, or the month in the year view, or the year in the decades view */
+.calendar-cell-current-month,
+.calendar-year-button,
+.calendar-month-button {
+	-fx-background-color: null;
+	-fx-background-radius: 0;
+	-fx-background-insets: 0, 0, 0, 0;
+	-fx-cursor: hand;
+	-fx-padding: 0.7em;
+	-fx-font-weight: bold;
+	-fx-background-radius: 8;
+}
+
+/* The hover state of the buttons */
+.calendar-cell-current-month:hover,
+.calendar-year-button:hover,
+.calendar-month-button:hover {
+	-fx-background-color: -fx-cell-hover-color;
+}
+
+/* The day buttons for the previous and next month. */
+.calendar-cell-other-month {
+	-fx-background-color: null;
+	-fx-background-radius: 0;
+	-fx-background-insets: 0, 0, 0, 0;
+	-fx-opacity: 0.7;
+	-fx-cursor: hand;
+	-fx-padding: 0.7em;
+	-fx-background-radius: 8;
+}
+
+/* The hover state of this button. */
+.calendar-cell-other-month:hover {
+	-fx-background-color: -fx-cell-hover-color;
+}
+
+/* The button which shows the current day. */
+.calendar-cell-today {
+	-fx-background-color: -fx-accent;
+}
+
+/* The buttons in the header and the footer */
+.calendar-navigation-button,
+.calendar-navigation-title,
+.calendar-today-button {
+	-fx-background-color: null;
+	-fx-cursor: hand;
+	-fx-text-fill: white;
+}
+
+/* don't make the title button transparent, when it is disabled in the decades view */
+.calendar-navigation-title:disabled {
+	-fx-opacity: 1;
+}
+
+/* The arrow for navigation. SVG is used for it. */
+.calendar-navigation-arrow {
+	/*padding determines the size of the arrow; This should match the design size in the SVG */
+	-fx-padding: 4 3.5 4 3.5;
+	-fx-padding: 0.333333em 0.333333em 0.333333em 0.333333em; /* 2 3.5 2 3.5 */
+	-fx-shape: 'M 100 100 L 300 100 L 200 300 z';
+	-fx-background-color: #ffffff;
+}
+
+/* The cell which contain the week day names */
+.calendar-weekdays {
+	-fx-background-color: -fx-body-color;
+	-fx-padding: 3px;
+}
+
+.calendar-week-number {
+	-fx-font-size: 0.8em;
+	-fx-padding: 4px;
+}
+
+.close {
+	-fx-background-color: transparent;
+	-fx-cursor: hand;
+}
+
+.close:hover {
+	-fx-background-color: #ff3547;
+}
+
+.minimize:hover {
+	-fx-background-color: #75a8ea;
+}
+
+.left-form {
+	-fx-background-color: linear-gradient(to bottom right, #ffffff, #41345f);
+	-fx-border-color: #000;
+	-fx-border-width: 0.4px 0px 0.4px 0.4px;
+}
+
+.center {
+	-fx-background-color: linear-gradient(to bottom right, #f13435, #ffffff);
+	-fx-border-width: 0.4px 0px 0.4px 0.4px;
+}
+
+.white-bg {
+	-fx-background-color: #fff;
+	-fx-background-radius: 8px;
+}
+
+.shadow {
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 6, 0, 0, 0);
+}
+
+.top-form {
+	-fx-background-color: #fff;
+	-fx-border-color: #000;
+	-fx-border-width: 0.4px 0.4px 0.2px 0.4px;
+}
+
+.semi-top-form {
+	-fx-background-color: #efefef;
+	-fx-border-color: #000;
+	-fx-border-width: 0.2px 0.4px 0.8px 0.4px;
+}
+
+.table-view {
+	-fx-background-color: transparent;
+	-fx-border-color: linear-gradient(to bottom right, #41345f, #f13435);
+	-fx-border-radius: 8px;
+	-fx-padding: 0px;
+}
+.table-view .table-column {
+	-fx-alignment: CENTER;
+}
+.table-view .column-header-background {
+	-fx-background-color: linear-gradient(to bottom right, #41345f, #f13435);
+	-fx-background-insets: 0 0 0 0;
+	-f-background-radius: 8px 8px 0px 0px;
+}
+.table-view .column-header,
+.filter {
+	-fx-background-color: transparent;
+	-fx-size: 40px;
+}
+.table-view .column-header .label {
+	-fx-text-fill: #fff;
+	-fx-font-family: 'Arial';
+}

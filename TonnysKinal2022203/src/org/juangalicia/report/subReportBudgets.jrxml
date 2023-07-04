@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReportBudgets" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="385982c7-5621-4a6e-bc99-ea5beffd829b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codCompany" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select * from Companys C Inner join Budgets B on
+C.codeCompany = B.codeCompany where C.codeCompany = $P{codCompany}
+group by B.amountBudget]]>
+	</queryString>
+	<field name="codeCompany" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nameCompany" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codeBudget" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateRequest" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amountBudget" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="139" y="2" width="100" height="20" uuid="f8409fbe-9549-4c2b-bbac-4ef4384f34f5"/>
+				<text><![CDATA[dateRequest]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="2" width="100" height="20" uuid="ac23c4bf-974b-4d45-8af1-ff592f97d828"/>
+				<text><![CDATA[amountBudget]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement x="139" y="19" width="100" height="20" uuid="4cd63386-537c-4ebb-a153-89548e81ad10"/>
+				<textFieldExpression><![CDATA[$F{dateRequest}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="19" width="100" height="20" uuid="b23740c5-8398-4f2c-af60-bd1aa46a9860"/>
+				<textFieldExpression><![CDATA[$F{amountBudget}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

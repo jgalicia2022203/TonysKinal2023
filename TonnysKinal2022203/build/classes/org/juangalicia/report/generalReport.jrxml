@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="generalReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f95e53e4-8176-4acb-a6e7-c500665651b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="23"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/JuanGalicia/Desktop/Proyecto/TonnysKinal2022203/src/org/juangalicia/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[call sp_Report();]]>
+	</queryString>
+	<field name="nameCompany" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amountBudget" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="typeService" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="firstNameEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="secondNameEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descript" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nameDish" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descriptionType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="priceDish" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nameProduct" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band height="752" splitType="Stretch">
+			<image>
+				<reportElement x="17" y="0" width="555" height="752" uuid="373eaec5-2ab8-4701-be4f-e1516307e6da"/>
+				<imageExpression><![CDATA["/Users/JuanGalicia/Desktop/Proyecto/TonnysKinal2022203/src/org/juangalicia/image/Report Background.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="230" height="35" uuid="72d3c20f-a8ff-49e4-a10e-f64561397838"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Silom" size="22"/>
+				</textElement>
+				<text><![CDATA[GENERAL REPORT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="100" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="23" width="78" height="20" uuid="fd3bdbf7-66a2-4198-8ffb-754dcbfb1922"/>
+				<textFieldExpression><![CDATA[$F{nameCompany}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="23" width="80" height="20" uuid="219cb548-f093-480c-97f8-3383a0c275cc"/>
+				<textFieldExpression><![CDATA[$F{typeService}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="23" width="60" height="20" uuid="eea85561-459d-4268-82ca-91725d6f0016"/>
+				<textFieldExpression><![CDATA[$F{firstNameEmployee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="23" width="61" height="20" uuid="0dcb42aa-ff32-44e9-80e7-b46fc751caf5"/>
+				<textFieldExpression><![CDATA[$F{secondNameEmployee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="23" width="47" height="20" uuid="1560b210-c7dd-4d7f-8752-1e5740bf03fc"/>
+				<textFieldExpression><![CDATA[$F{amountBudget}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="43" width="572" height="54" uuid="a66b1e74-4530-49ef-87f3-3fd591e9b85b"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subGeneralReport.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="0" width="78" height="20" uuid="1225b41b-c305-4e21-b5d9-62201d2417fd"/>
+				<text><![CDATA[Company Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="0" width="47" height="20" uuid="0c11842b-8718-48de-870b-a79a451a4b18"/>
+				<text><![CDATA[Budget]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="0" width="80" height="20" uuid="c14914f6-9606-4331-a37b-29b7484267b6"/>
+				<text><![CDATA[Type of Service]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="0" width="102" height="20" uuid="3fcb8ca7-8dc0-47b6-9d55-5d4011679309"/>
+				<text><![CDATA[First Name Employee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="0" width="116" height="20" uuid="405dbc41-700b-44dc-b4c5-9aa314676dfa"/>
+				<text><![CDATA[Second Name Employee]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="359" y="22" width="205" height="20" uuid="34442298-b086-400b-b144-27df8368a1b4"/>
+				<textElement>
+					<font fontName="Silom" size="13"/>
+				</textElement>
+				<text><![CDATA[Share Memorable Moments]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
