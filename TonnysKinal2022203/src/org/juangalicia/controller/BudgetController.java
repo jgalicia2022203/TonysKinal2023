@@ -50,8 +50,8 @@ public class BudgetController implements Initializable {
     private ObservableList<Budget> budgetList;
     private ObservableList<Company> companyList;
     private DatePicker date;
-    
-    @FXML 
+
+    @FXML
     private AnchorPane budgetPane;
     @FXML
     private JFXButton btnCreate;
@@ -87,7 +87,7 @@ public class BudgetController implements Initializable {
     private JFXTextField txtAmount;
     @FXML
     private JFXTextField txtBudgetId;
-    @FXML 
+    @FXML
     private JFXTextField txtBudgetSearch;
 
     @Override
@@ -101,7 +101,7 @@ public class BudgetController implements Initializable {
         grpDate.add(date, 3, 0);
         cmbCompanyId.setItems(getCompany());
     }
- 
+
     public void loadData() {
         tblBudgets.setItems(getBudget());
         colBudgetId.setCellValueFactory(new PropertyValueFactory<Budget, Integer>("codeBudget"));
@@ -191,7 +191,7 @@ public class BudgetController implements Initializable {
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Budget");
-                btnUpdate.setText("Read Budget");
+                btnUpdate.setText("Update Budget");
                 btnDelete.setDisable(false);
                 btnRead.setDisable(false);
                 imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
@@ -201,8 +201,8 @@ public class BudgetController implements Initializable {
                 break;
         }
     }
-    
-        public void save() {
+
+    public void save() {
         Budget register = new Budget();
         register.setDateRequest(date.getSelectedDate());
         register.setAmountBudget(Double.parseDouble(txtAmount.getText()));
@@ -219,7 +219,7 @@ public class BudgetController implements Initializable {
             e.printStackTrace();
         }
     }
-        
+
     public void edit() {
         switch (typeOfOperation) {
             case NONE:
@@ -281,11 +281,10 @@ public class BudgetController implements Initializable {
             e.printStackTrace();
         }
     }
-    
+
     public void delete() {
         switch (typeOfOperation) {
             case UPDATE:
-                update();
                 clearControls();
                 lockControls();
                 btnCreate.setDisable(false);
@@ -316,7 +315,7 @@ public class BudgetController implements Initializable {
                             PreparedStatement procedure = Conexion.getInsance().getConexion()
                                     .prepareCall("call sp_DeleteBudget(?)");
                             procedure.setInt(1,
-                                    ((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getCodeCompany());
+                                    ((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getCodeBudget());
                             procedure.execute();
                             budgetList.remove(tblBudgets.getSelectionModel().getSelectedItem());
                             clearControls();
@@ -331,25 +330,26 @@ public class BudgetController implements Initializable {
                     alert.showAndWait();
                 }
         }
-    }    
-    
-    public void generateReport(){
-            switch(typeOfOperation){
-                case NONE:
-                    printReport();
-                    break;
-               
-            }
     }
-    
-    public void printReport(){
+
+    public void generateReport() {
+        switch (typeOfOperation) {
+            case NONE:
+                printReport();
+                break;
+
+        }
+    }
+
+    public void printReport() {
         Map parameters = new HashMap();
-        int codCompany = Integer.valueOf(((Company)cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
+        int codCompany = Integer
+                .valueOf(((Company) cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
         parameters.put("codCompany", codCompany);
         GenerateReport.showReport("reportBudgets.jasper", "Budget's Report", parameters);
     }
-    
-        public void budgetSearch() {
+
+    public void budgetSearch() {
 
         FilteredList<Budget> filter = new FilteredList<>(budgetList, e -> true);
 
@@ -382,15 +382,15 @@ public class BudgetController implements Initializable {
         sortList.comparatorProperty().bind(tblBudgets.comparatorProperty());
         tblBudgets.setItems(sortList);
     }
-        
+
     public void minimize() {
         Stage stage = (Stage) budgetPane.getScene().getWindow();
         stage.setIconified(true);
     }
-    
+
     public void close() {
         System.exit(0);
-    }        
+    }
 
     public void lockControls() {
         txtBudgetId.setEditable(false);
@@ -398,7 +398,7 @@ public class BudgetController implements Initializable {
         cmbCompanyId.setDisable(true);
         date.setDisable(true);
     }
-    
+
     private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -432,7 +432,7 @@ public class BudgetController implements Initializable {
     public void menuPrincipal() {
         principalStage.principalWindow();
     }
-    
+
     public void companiesWindow() {
         principalStage.companyWindow();
     }

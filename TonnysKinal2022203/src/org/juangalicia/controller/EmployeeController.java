@@ -1,12 +1,14 @@
 package org.juangalicia.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import org.juangalicia.bean.Employee;
 import org.juangalicia.bean.TypeEmployee;
@@ -15,16 +17,19 @@ import org.juangalicia.main.Principal;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class EmployeeController implements Initializable {
     private Principal principalStage;
@@ -36,17 +41,20 @@ public class EmployeeController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private ObservableList<Employee> employeeList;
     private ObservableList<TypeEmployee> typeEmployeeList;
-
+    
+    
     @FXML
-    private Button btnCreate;
+    private AnchorPane employeePane;
     @FXML
-    private Button btnRead;
+    private JFXButton btnCreate;
     @FXML
-    private Button btnUpdate;
+    private JFXButton btnRead;
     @FXML
-    private Button btnDelete;
+    private JFXButton btnUpdate;
     @FXML
-    private ComboBox cmbCodeTypeEmployee;
+    private JFXButton btnDelete;
+    @FXML
+    private JFXComboBox cmbCodeTypeEmployee;
     @FXML
     private ImageView imgCreate;
     @FXML
@@ -74,19 +82,21 @@ public class EmployeeController implements Initializable {
     @FXML
     private TableView tblEmployees;
     @FXML
-    private TextField txtAdress;
+    private JFXTextField txtAdress;
     @FXML
-    private TextField txtContactPhone;
+    private JFXTextField txtContactPhone;
     @FXML
-    private TextField txtCookDegree;
+    private JFXTextField txtCookDegree;
     @FXML
-    private TextField txtEmployeeId;
+    private JFXTextField txtEmployeeId;
     @FXML
-    private TextField txtEmployeeNumber;
+    private JFXTextField txtEmployeeNumber;
     @FXML
-    private TextField txtFirstName;
+    private JFXTextField txtFirstName;
     @FXML
-    private TextField txtSecondName;
+    private JFXTextField txtSecondName;
+    @FXML
+    private JFXTextField txtEmployeeSearch;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -179,11 +189,11 @@ public class EmployeeController implements Initializable {
                 clearControls();
                 unlockControls();
                 btnCreate.setText("Save");
-                btnRead.setText("Cancel");
-                btnUpdate.setDisable(true);
+                btnUpdate.setText("Cancel");
                 btnDelete.setDisable(true);
+                btnRead.setDisable(true);
                 imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgRead.setImage(new Image("/org/juangalicia/image/cancel.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/cancel.png"));
                 typeOfOperation = operations.SAVE;
                 loadData();
                 break;
@@ -193,28 +203,11 @@ public class EmployeeController implements Initializable {
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Employee");
-                btnRead.setText("Read Budget");
-                btnUpdate.setDisable(false);
+                btnUpdate.setText("Update Employee");
                 btnDelete.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Employee.png"));
-                imgRead.setImage(new Image("/org/juangalicia/image/Read Employees.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-        }
-    }
-
-    public void read() {
-        switch (typeOfOperation) {
-            case SAVE:
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Employee");
-                btnRead.setText("Read Employee");
-                btnUpdate.setDisable(false);
-                btnDelete.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Employee.png"));
-                imgRead.setImage(new Image("/org/juangalicia/image/Read Employees.png"));
+                btnRead.setDisable(false);
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
                 typeOfOperation = operations.NONE;
                 loadData();
                 break;
@@ -234,9 +227,23 @@ public class EmployeeController implements Initializable {
                     unlockControls();
                     typeOfOperation = operations.UPDATE;
                 } else {
-                    JOptionPane.showMessageDialog(null, "You should select an element");
+                    showAlert(Alert.AlertType.ERROR, "No element selected", null, "Please select an element");
                 }
                 break;
+            
+             case SAVE:
+                clearControls();
+                lockControls();
+                btnCreate.setText("Create Employee");
+                btnUpdate.setText("Update Employee");
+                btnDelete.setDisable(false);
+                btnRead.setDisable(false);
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
+                imgUpdate.setImage(new Image("org/juangalicia/image/update.png"));
+                typeOfOperation = operations.NONE;
+                loadData();
+                break;
+            
             case UPDATE:
                 update();
                 clearControls();
@@ -245,8 +252,8 @@ public class EmployeeController implements Initializable {
                 btnRead.setDisable(false);
                 btnUpdate.setText("Update Employee");
                 btnDelete.setText("Delete Employee");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/Update Employee.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/Delete Employee.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
+                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
                 loadData();
                 typeOfOperation = operations.NONE;
                 break;
@@ -283,24 +290,32 @@ public class EmployeeController implements Initializable {
     public void delete() {
         switch (typeOfOperation) {
             case UPDATE:
-                update();
                 clearControls();
                 lockControls();
                 btnCreate.setDisable(false);
                 btnRead.setDisable(false);
                 btnUpdate.setText("Update Employee");
                 btnDelete.setText("Delete Employee");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/Update Employee.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/Delete Employee.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
+                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
                 loadData();
                 typeOfOperation = operations.NONE;
                 break;
 
             default:
                 if (tblEmployees.getSelectionModel().getSelectedItem() != null) {
-                    int answer = JOptionPane.showConfirmDialog(null, "Are you sure of deleting this register?",
-                            "Delete Budget", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (answer == JOptionPane.YES_OPTION) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete Employee");
+                    alert.setHeaderText("Are you sure of deleting this register? You are gonna delete a foreign key");
+                    alert.setContentText("Choose your option.");
+
+                    ButtonType buttonTypeYes = new ButtonType("Yes");
+                    ButtonType buttonTypeNo = new ButtonType("No");
+
+                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
                         try {
                             PreparedStatement procedure = Conexion.getInsance().getConexion()
                                     .prepareCall("call sp_DeleteEmployee(?)");
@@ -312,9 +327,12 @@ public class EmployeeController implements Initializable {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "You should select an element");
                     }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("You should select an element");
+                    alert.showAndWait();
                 }
         }
     }
@@ -345,7 +363,65 @@ public class EmployeeController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    public void productSearch() {
 
+        FilteredList<Employee> filter = new FilteredList<>(employeeList, e -> true);
+
+        txtEmployeeSearch.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate((Employee predicateEmployee) -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicateEmployee.getCodeEmployee()).contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateEmployee.getNumberEmployee()).contains(searchKey)) {
+                    return true;
+                } else if (predicateEmployee.getSecondNameEmployee().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if(predicateEmployee.getFirstNameEmployee().toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(predicateEmployee.getAdressEmployee().toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(predicateEmployee.getContactPhone().toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(predicateEmployee.getCookDegree().toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(String.valueOf(predicateEmployee.getCodeTypeEmployee()).contains(searchKey)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Employee> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblEmployees.comparatorProperty());
+        tblEmployees.setItems(sortList);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) employeePane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    public void close() {
+        System.exit(0);
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }    
     public void lockControls() {
         txtEmployeeId.setEditable(false);
         txtEmployeeNumber.setEditable(false);

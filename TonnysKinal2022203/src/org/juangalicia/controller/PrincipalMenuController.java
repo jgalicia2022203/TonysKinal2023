@@ -8,7 +8,6 @@ import org.juangalicia.main.Principal;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
 public class PrincipalMenuController implements Initializable {

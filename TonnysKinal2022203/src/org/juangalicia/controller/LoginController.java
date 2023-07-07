@@ -11,14 +11,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javax.swing.JOptionPane;
 import org.juangalicia.bean.Login;
 import org.juangalicia.bean.User;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 
 public class LoginController implements Initializable{
     private Principal principalStage;

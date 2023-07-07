@@ -1,12 +1,15 @@
 package org.juangalicia.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
 
 import org.juangalicia.bean.Dish;
 import org.juangalicia.bean.TypeDish;
@@ -15,16 +18,19 @@ import org.juangalicia.main.Principal;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class DishController implements Initializable {
     private Principal principalStage;
@@ -36,17 +42,19 @@ public class DishController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private ObservableList<Dish> dishList;
     private ObservableList<TypeDish> typeDishList;
-
+    
     @FXML
-    private Button btnCreate;
+    private AnchorPane dishPane;
     @FXML
-    private Button btnRead;
+    private JFXButton btnCreate;
     @FXML
-    private Button btnUpdate;
+    private JFXButton btnRead;
     @FXML
-    private Button btnDelete;
+    private JFXButton btnUpdate;
     @FXML
-    private ComboBox cmbTypeDish;
+    private JFXButton btnDelete;
+    @FXML
+    private JFXComboBox cmbTypeDish;
     @FXML
     private ImageView imgCreate;
     @FXML
@@ -70,15 +78,17 @@ public class DishController implements Initializable {
     @FXML
     private TableView tblDishes;
     @FXML
-    private TextField txtDishId;
+    private JFXTextField txtDishId;
     @FXML
-    private TextField txtQuantity;
+    private JFXTextField txtQuantity;
     @FXML
-    private TextField txtNameDish;
+    private JFXTextField txtNameDish;
     @FXML
-    private TextField txtDescription;
+    private JFXTextField txtDescription;
     @FXML
-    private TextField txtPriceDish;
+    private JFXTextField txtPriceDish;
+    @FXML 
+    private JFXTextField txtDishSearch;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -165,11 +175,11 @@ public class DishController implements Initializable {
                 clearControls();
                 unlockControls();
                 btnCreate.setText("Save");
-                btnRead.setText("Cancel");
-                btnUpdate.setDisable(true);
+                btnUpdate.setText("Cancel");
                 btnDelete.setDisable(true);
+                btnRead.setDisable(true);
                 imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgRead.setImage(new Image("/org/juangalicia/image/cancel.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/cancel.png"));
                 typeOfOperation = operations.SAVE;
                 loadData();
                 break;
@@ -179,28 +189,11 @@ public class DishController implements Initializable {
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Dish");
-                btnRead.setText("Read Dishes");
-                btnUpdate.setDisable(false);
+                btnUpdate.setText("Update Dish");
                 btnDelete.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Dish.png"));
-                imgRead.setImage(new Image("/org/juangalicia/image/Read Dishes.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-        }
-    }
-
-    public void read() {
-        switch (typeOfOperation) {
-            case SAVE:
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Dish");
-                btnRead.setText("Read Dishes");
-                btnUpdate.setDisable(false);
-                btnDelete.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Dish.png"));
-                imgRead.setImage(new Image("/org/juangalicia/image/Read Dishes.png"));
+                btnRead.setDisable(false);
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
                 typeOfOperation = operations.NONE;
                 loadData();
                 break;
@@ -220,8 +213,21 @@ public class DishController implements Initializable {
                     unlockControls();
                     typeOfOperation = operations.UPDATE;
                 } else {
-                    JOptionPane.showMessageDialog(null, "You should select an element");
+                    showAlert(Alert.AlertType.ERROR, "No element selected", null, "Please select an element");
                 }
+                break;
+            
+            case SAVE:
+                clearControls();
+                lockControls();
+                btnCreate.setText("Create Dish");
+                btnUpdate.setText("Update Dish");
+                btnDelete.setDisable(false);
+                btnRead.setDisable(false);
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
+                imgUpdate.setImage(new Image("org/juangalicia/image/update.png"));
+                typeOfOperation = operations.NONE;
+                loadData();
                 break;
 
             case UPDATE:
@@ -232,8 +238,8 @@ public class DishController implements Initializable {
                 btnRead.setDisable(false);
                 btnUpdate.setText("Update Dish");
                 btnDelete.setText("Delete Dish");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/Update Dish.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/Delete Dish.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
+                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
                 loadData();
                 typeOfOperation = operations.NONE;
                 break;
@@ -265,28 +271,37 @@ public class DishController implements Initializable {
     public void delete() {
         switch (typeOfOperation) {
             case UPDATE:
-                update();
                 clearControls();
                 lockControls();
                 btnCreate.setDisable(false);
                 btnRead.setDisable(false);
                 btnUpdate.setText("Update Dish");
                 btnDelete.setText("Delete Dish");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/Update Dish.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/Delete Dish.png"));
+                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
+                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
                 loadData();
                 typeOfOperation = operations.NONE;
                 break;
 
             default:
                 if (tblDishes.getSelectionModel().getSelectedItem() != null) {
-                    int answer = JOptionPane.showConfirmDialog(null, "Are you sure of deleting this register",
-                            "Delete Dish", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (answer == JOptionPane.YES_OPTION) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete Dish");
+                    alert.setHeaderText("Are you sure of deleting this register? You are gonna delete a foreign key");
+                    alert.setContentText("Choose your option.");
+
+                    ButtonType buttonTypeYes = new ButtonType("Yes");
+                    ButtonType buttonTypeNo = new ButtonType("No");
+
+                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
                         try {
                             PreparedStatement procedure = Conexion.getInsance().getConexion()
-                                    .prepareCall("sp_DeleteDish(?)");
-                            procedure.setInt(1, ((Dish) tblDishes.getSelectionModel().getSelectedItem()).getCodeDish());
+                                    .prepareCall("call sp_DeleteDish(?)");
+                            procedure.setInt(1,
+                                    ((Dish) tblDishes.getSelectionModel().getSelectedItem()).getCodeDish());
                             procedure.execute();
                             dishList.remove(tblDishes.getSelectionModel().getSelectedItem());
                             clearControls();
@@ -295,9 +310,11 @@ public class DishController implements Initializable {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "You should select an element");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("You should select an element");
+                    alert.showAndWait();
                 }
-
         }
     }
 
@@ -322,6 +339,61 @@ public class DishController implements Initializable {
             e.printStackTrace();
         }
     }
+
+        public void dishSearch() {
+
+        FilteredList<Dish> filter = new FilteredList<>(dishList, e -> true);
+
+        txtDishSearch.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate((Dish predicateDish) -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicateDish.getCodeDish()).contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateDish.getQuantity()).contains(searchKey)) {
+                    return true;
+                } else if (predicateDish.getNameDish().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if(predicateDish.getDescriptionDish().toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(String.valueOf(predicateDish.getPriceDish()).toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(String.valueOf(predicateDish.getCodeTypeDish()).toLowerCase().contains(searchKey)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Dish> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblDishes.comparatorProperty());
+        tblDishes.setItems(sortList);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) dishPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    public void close() {
+        System.exit(0);
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }    
 
     public void lockControls() {
         txtDishId.setEditable(false);

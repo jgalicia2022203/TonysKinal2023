@@ -95,7 +95,7 @@ public class Principal extends Application {
 
     public void typeEmployeeWindow() {
         try {
-            TypeEmployeeController typeE = (TypeEmployeeController) switchScene("TypeEmployeeView.fxml", 958, 454);
+            TypeEmployeeController typeE = (TypeEmployeeController) switchScene("TypeEmployeeView.fxml", 1366, 768);
             typeE.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class Principal extends Application {
 
     public void productWindow() {
         try {
-            ProductController product = (ProductController) switchScene("ProductView.fxml", 958, 454);
+            ProductController product = (ProductController) switchScene("ProductView.fxml", 1366, 768);
             product.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class Principal extends Application {
 
     public void employeeWindow() {
         try {
-            EmployeeController employee = (EmployeeController) switchScene("EmployeeView.fxml", 1163, 454);
+            EmployeeController employee = (EmployeeController) switchScene("EmployeeView.fxml", 1366, 768);
             employee.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class Principal extends Application {
 
     public void typeDishWindow() {
         try {
-            TypeDishController typeDish = (TypeDishController) switchScene("TypeDishView.fxml", 958, 454);
+            TypeDishController typeDish = (TypeDishController) switchScene("TypeDishView.fxml", 1366, 768);
             typeDish.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class Principal extends Application {
     
     public void dishWindow() {
         try {
-            DishController dish = (DishController) switchScene("DishView.fxml", 1163, 454);
+            DishController dish = (DishController) switchScene("DishView.fxml", 1366, 768);
             dish.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class Principal extends Application {
     
     public void serviceWindow(){
         try {
-            ServiceController service = (ServiceController) switchScene("ServiceView.fxml", 1116, 454);
+            ServiceController service = (ServiceController) switchScene("ServiceView.fxml", 1366, 768);
             service.setPrincipalStage(this);
 
         } catch (Exception e) {
