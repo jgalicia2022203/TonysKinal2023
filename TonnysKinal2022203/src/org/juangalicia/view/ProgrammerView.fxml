@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="511.0" styleClass="left-form" stylesheets="@../resource/TonysKinal.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.ProgrammerController">
    <children>
       <Pane layoutX="27.0" layoutY="27.0" prefHeight="652.0" prefWidth="458.0" style="-fx-border-radius: 35px; -fx-background-radius: 35px; -fx-background-color: FFF;">
@@ -30,7 +29,7 @@
             </Label>
             <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="67.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../image/🦆%20icon%20_email%20outline_.jpg" />
+                  <Image url="@../image/email.png" />
                </image>
             </ImageView>
             <Label layoutX="106.0" layoutY="424.0" prefHeight="30.0" prefWidth="330.0" text="Email: jgalicia-2022203@kinal.edu.gt">
