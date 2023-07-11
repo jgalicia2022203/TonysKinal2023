@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import eu.schudt.javafx.controls.calendar.DatePicker;
+import java.io.File;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -343,10 +344,14 @@ public class BudgetController implements Initializable {
 
     public void printReport() {
         Map parameters = new HashMap();
-        int codCompany = Integer
-                .valueOf(((Company) cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
+        int codCompany = Integer.valueOf(((Company) cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
         parameters.put("codCompany", codCompany);
-        GenerateReport.showReport("reportBudgets.jasper", "Budget's Report", parameters);
+      
+        File fichero2 = new File("src/org/juangalicia/report");
+        String path2 = fichero2.getAbsolutePath();
+        parameters.put("SUBREPORT_DIR", path2);
+       //parameters.put("ReportBackground", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
+         GenerateReport.showReport("reportBudgets.jasper", "Budget's Report", parameters);
     }
 
     public void budgetSearch() {

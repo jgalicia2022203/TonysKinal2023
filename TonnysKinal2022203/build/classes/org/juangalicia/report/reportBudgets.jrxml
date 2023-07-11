@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportBudgets" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="939f1552-caa3-4ba6-94d4-9eabc150bb50">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="270"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="codCompany" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -44,23 +44,10 @@ C.codeCompany = S.codeCompany where C.codeCompany = $P{codCompany}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
-		<band height="752" splitType="Stretch">
-			<image>
-				<reportElement x="18" y="0" width="543" height="752" uuid="968bf2f2-f64f-4dc8-8f00-4a3382d8119d"/>
-				<imageExpression><![CDATA["/Users/JuanGalicia/Desktop/Proyecto/TonnysKinal2022203/src/org/juangalicia/image/Report Background.png"]]></imageExpression>
-			</image>
-		</band>
+		<band height="752" splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="286" splitType="Stretch">
-			<staticText>
-				<reportElement x="18" y="37" width="230" height="35" uuid="8eba658c-9893-4695-8b13-e5939ba565c7"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Silom" size="22"/>
-				</textElement>
-				<text><![CDATA[Budget's Report]]></text>
-			</staticText>
-		</band>
+		<band height="286" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band height="98" splitType="Stretch">
@@ -80,18 +67,10 @@ C.codeCompany = S.codeCompany where C.codeCompany = $P{codCompany}]]>
 				<reportElement x="413" y="0" width="100" height="20" uuid="8004eca2-dcdd-4fe9-92d7-c0a8f1194bb3"/>
 				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="18" y="42" width="495" height="56" uuid="2589eebd-3536-4ec5-b042-714ce691a621"/>
-				<subreportParameter name="codCompany">
-					<subreportParameterExpression><![CDATA[$P{codCompany}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subReportBudgets.jasper"]]></subreportExpression>
-			</subreport>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="29" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<staticText>
 				<reportElement x="18" y="2" width="100" height="20" uuid="88b8a9c6-5814-41a7-9748-5cd24b55a1ff"/>
 				<text><![CDATA[dateService]]></text>

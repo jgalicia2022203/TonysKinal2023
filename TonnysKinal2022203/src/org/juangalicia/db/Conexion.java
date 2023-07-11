@@ -11,8 +11,7 @@ public class Conexion {
     public Conexion() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/DBTonysKinal2023?allowPublicKeyRetrieval=true&useSSL=false", "root",
-                    "admin");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/DBTonysKinal2023?allowPublicKeyRetrieval=true&useSSL=false", "hailoreach","123456789");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

@@ -2,6 +2,7 @@ package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -303,14 +304,21 @@ public class CompanyController implements Initializable {
     public void printReport() {
         Map parameters = new HashMap();
         parameters.put("codeCompany", null);
-        parameters.put("ReportBackground",
-                CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
-        GenerateReport.showReport("reportCompanys.jasper", "Company's Report", parameters);
+        parameters.put("ReportBackground", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
+        GenerateReport.showReport("ReportCompany.jasper", "Company's Report", parameters);
     }
 
     public void printGeneralReport() {
-        Map parameters = new HashMap();
-        GenerateReport.showReport("generalReport.jasper", "General Report", parameters);
+        Map parametros = new HashMap();
+        int codEmpresa = Integer.valueOf(((Company)tblCompanys.getSelectionModel().getSelectedItem()).getCodeCompany());
+        parametros.put("codEmpresa", codEmpresa);
+        
+        
+        File fichero2 = new File("src/org/juangalicia/report");
+        String path2 = fichero2.getAbsolutePath();
+        parametros.put("SUBREPORT_DIR", path2);
+       //parameters.put("ReportBackground", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
+        GenerateReport.showReport("generalReport.jasper", "General Report", parametros);
     }
     
     public void companySearch() {
