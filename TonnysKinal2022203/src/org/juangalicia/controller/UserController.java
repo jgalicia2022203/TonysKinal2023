@@ -1,14 +1,13 @@
 package org.juangalicia.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.juangalicia.bean.User;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
@@ -21,24 +20,18 @@ public class UserController implements Initializable{
     
     private operations typeOfOperation = operations.NONE;
     
-    @FXML 
-    private TextField txtUserId;
     @FXML
-    private TextField txtFirstName;
+    private JFXTextField txtFirstName;
     @FXML
-    private TextField txtSecondName;
+    private JFXTextField txtSecondName;
     @FXML
-    private TextField txtUsername;
+    private JFXTextField txtUsername;
     @FXML
-    private TextField txtPassword;
+    private JFXPasswordField txtPassword;
     @FXML
-    private Button btnCreate;
+    private JFXButton btnCreate;
     @FXML
-    private Button btnCancel;
-    @FXML
-    private ImageView imgCreate;
-    @FXML 
-    private ImageView imgCancel;
+    private JFXButton btnCancel;
 
     public UserController() {
     }
@@ -55,8 +48,6 @@ public class UserController implements Initializable{
                 unlockControls();
                 btnCreate.setText("Save");
                 btnCancel.setText("Cancel");
-                imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgCancel.setImage(new Image("/org/juangalicia/image/cancel.png"));
                 typeOfOperation = operations.SAVE;
                 break;
                 
@@ -64,10 +55,8 @@ public class UserController implements Initializable{
                 save();
                 clearControls();
                 lockControls();
-                btnCreate.setText("Create User");
-                btnCancel.setText("Delete User");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Employee.png"));
-                imgCancel.setImage(null);
+                btnCreate.setText("Register");
+                btnCancel.setText(" ");
                 typeOfOperation = operations.NONE;
                 login();
                 break;
@@ -79,10 +68,8 @@ public class UserController implements Initializable{
             case SAVE: 
                 clearControls();
                 lockControls();
-                btnCreate.setText("Create User");
-                btnCancel.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Employee.png"));
-                imgCancel.setImage(null);
+                btnCreate.setText("Register");
+                btnCancel.setText(" ");
                 typeOfOperation = operations.NONE;
                 break;
         }
@@ -106,6 +93,10 @@ public class UserController implements Initializable{
         }
     }
     
+    public void close(){
+        login();
+    }
+    
     public Principal getPrincipalStage() {
         return principalStage;
     }
@@ -119,7 +110,6 @@ public class UserController implements Initializable{
     }
     
     public void unlockControls(){
-        txtUserId.setEditable(false);
         txtFirstName.setEditable(true);
         txtSecondName.setEditable(true);
         txtUsername.setEditable(true);
@@ -127,7 +117,6 @@ public class UserController implements Initializable{
     }
     
     public void lockControls(){
-        txtUserId.setEditable(false);
         txtFirstName.setEditable(false);
         txtSecondName.setEditable(false);
         txtUsername.setEditable(false);
@@ -135,7 +124,6 @@ public class UserController implements Initializable{
     }
     
     public void clearControls(){
-        txtUserId.clear();
         txtFirstName.clear();
         txtSecondName.clear();
         txtUsername.clear();

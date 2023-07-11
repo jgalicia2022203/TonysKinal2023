@@ -1,5 +1,8 @@
 package org.juangalicia.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,17 +10,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.juangalicia.bean.Dish;
+import org.juangalicia.bean.Product;
 import org.juangalicia.bean.Service;
 import org.juangalicia.bean.Services_has_Dishes;
 import org.juangalicia.db.Conexion;
@@ -36,13 +41,17 @@ public class Services_has_DishesController implements Initializable{
     private ObservableList<Dish> dishList;
     
     @FXML
-    private Button btnCreate;
+    private AnchorPane ServiceHasDishPane;
     @FXML
-    private Button btnCancel;
+    private JFXTextField txtSearchServiceHasDish;
+    @FXML
+    private JFXButton btnCreate;
+    @FXML
+    private JFXButton btnCancel;
     @FXML 
-    private ComboBox cmbCodeService;
+    private JFXComboBox cmbCodeService;
     @FXML
-    private ComboBox cmbCodeDish;
+    private JFXComboBox cmbCodeDish;
     @FXML
     private ImageView imgCreate;
     @FXML 
@@ -56,7 +65,7 @@ public class Services_has_DishesController implements Initializable{
     @FXML
     private TableView tblServicesHasDishes;
     @FXML 
-    private TextField txtServices_ServiceId;
+    private JFXTextField txtServices_ServiceId;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -174,8 +183,8 @@ public class Services_has_DishesController implements Initializable{
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Service has Dish");
-                btnCancel.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add TypeDish.png"));
+                btnCancel.setText(" ");
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
                 imgCancel.setImage(null);
                 typeOfOperation = operations.NONE;
                 loadData();
@@ -189,8 +198,8 @@ public class Services_has_DishesController implements Initializable{
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Service has Dish");
-                btnCancel.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add TypeDish.png"));
+                btnCancel.setText(" ");
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
                 imgCancel.setImage(null);
                 typeOfOperation = operations.NONE;
                 loadData();
@@ -214,6 +223,47 @@ public class Services_has_DishesController implements Initializable{
             e.printStackTrace();
         }
     }
+    
+    public void ServiceHasDishSearch() {
+
+        FilteredList<Services_has_Dishes> filter = new FilteredList<>(servicesHasDishesList, e -> true);
+
+        txtSearchServiceHasDish.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate((Services_has_Dishes predicateSHD) -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicateSHD.getServices_codeService()).contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateSHD.getCodeDish()).toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateSHD.getCodeService()).toLowerCase().contains(searchKey)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Services_has_Dishes> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblServicesHasDishes.comparatorProperty());
+        tblServicesHasDishes.setItems(sortList);
+    }
+    
+    public void minimize() {
+        Stage stage = (Stage) ServiceHasDishPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    public void close() {
+        System.exit(0);
+    }   
     
     public void lockControls(){
         txtServices_ServiceId.setEditable(false);

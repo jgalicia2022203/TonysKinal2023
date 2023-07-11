@@ -14,6 +14,10 @@ public class ProgrammerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+    
+    public void close(){
+        principalStage.principalWindow();
+    }
 
     public Principal getPrincipalStage() {
         return principalStage;

@@ -19,7 +19,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Modules">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Companys" />
+              <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Companies" />
                   <MenuItem mnemonicParsing="false" onAction="#productWindow" text="Products" />
                   <MenuItem mnemonicParsing="false" onAction="#employeeWindow" text="Employees" />
                   <MenuItem mnemonicParsing="false" onAction="#serviceWindow" text="Services" />
@@ -38,12 +38,12 @@
           <Menu mnemonicParsing="false" text="Reports">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="General Report" />
-                  <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Company's Report" />
-                  <MenuItem mnemonicParsing="false" onAction="#budgetWindow" text="Budget's Report" />
+                  <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Companies Report" />
+                  <MenuItem mnemonicParsing="false" onAction="#budgetWindow" text="Budgets Report" />
                </items></Menu>
           <Menu mnemonicParsing="false" text="?">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#programmerWindow" text="Programmer" />
+              <MenuItem mnemonicParsing="false" onAction="#programmerWindow" text="Developer" />
             </items>
           </Menu>
         </menus>

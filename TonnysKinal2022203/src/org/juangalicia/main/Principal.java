@@ -65,7 +65,7 @@ public class Principal extends Application {
 
     public void programmerWindow() {
         try {
-            ProgrammerController programmer = (ProgrammerController) switchScene("ProgrammerView.fxml", 958, 454);
+            ProgrammerController programmer = (ProgrammerController) switchScene("ProgrammerView.fxml", 511, 706);
             programmer.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -155,7 +155,7 @@ public class Principal extends Application {
     
     public void Products_has_DishesWindow(){
         try {
-            Products_has_DishesController PhD = (Products_has_DishesController) switchScene("ProductsHasDishesView.fxml", 958, 454);
+            Products_has_DishesController PhD = (Products_has_DishesController) switchScene("ProductsHasDishesView.fxml", 1366, 768);
             PhD.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class Principal extends Application {
     
     public void Services_has_DishesWindow(){
         try {
-            Services_has_DishesController ShD = (Services_has_DishesController) switchScene("ServicesHasDishesView.fxml", 958, 454);
+            Services_has_DishesController ShD = (Services_has_DishesController) switchScene("ServicesHasDishesView.fxml", 1366, 768);
             ShD.setPrincipalStage(this);
  
         } catch (Exception e) {
@@ -175,7 +175,7 @@ public class Principal extends Application {
     
     public void Services_has_EmployeesWindow(){
         try {
-            Services_has_EmployeesController ShE = (Services_has_EmployeesController) switchScene("ServicesHasEmployeesView.fxml", 958, 454);
+            Services_has_EmployeesController ShE = (Services_has_EmployeesController) switchScene("ServicesHasEmployeesView.fxml", 1366, 768);
             ShE.setPrincipalStage(this);
 
         } catch (Exception e) {
@@ -185,7 +185,7 @@ public class Principal extends Application {
     
     public void userWindow(){
         try{
-            UserController user = (UserController) switchScene("UserView.fxml", 958, 454);
+            UserController user = (UserController) switchScene("UserView.fxml", 1366, 768);
             user.setPrincipalStage(this);
 
         }catch(Exception e){

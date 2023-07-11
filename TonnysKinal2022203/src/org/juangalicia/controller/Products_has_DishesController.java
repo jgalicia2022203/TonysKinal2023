@@ -1,5 +1,8 @@
 package org.juangalicia.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,19 +10,21 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.juangalicia.bean.Dish;
 import org.juangalicia.bean.Product;
 import org.juangalicia.bean.Products_has_Dishes;
+import org.juangalicia.bean.Services_has_Dishes;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
 
@@ -36,17 +41,21 @@ public class Products_has_DishesController implements Initializable{
     private ObservableList<Dish> dishList;
     
     @FXML 
-    private Button btnCreate;
-    @FXML 
-    private Button btnDelete;
-    @FXML 
-    private ComboBox cmbCodeDish;
+    private AnchorPane PHDPane;
     @FXML
-    private ComboBox cmbCodeProduct;
+    private JFXTextField txtSearchPHD;
+    @FXML 
+    private JFXButton btnCreate;
+    @FXML 
+    private JFXButton btnCancel;
+    @FXML 
+    private JFXComboBox cmbCodeDish;
+    @FXML
+    private JFXComboBox cmbCodeProduct;
     @FXML
     private ImageView imgCreate;
     @FXML
-    private ImageView imgDelete;
+    private ImageView imgCancel;
     @FXML
     private TableColumn colProducts_CodeProduct;
     @FXML 
@@ -56,7 +65,7 @@ public class Products_has_DishesController implements Initializable{
     @FXML
     private TableView tblProductsHasDishes;
     @FXML 
-    private TextField txtProducts_CodeProduct;    
+    private JFXTextField txtProducts_CodeProduct;    
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -158,9 +167,9 @@ public class Products_has_DishesController implements Initializable{
                 clearControls();
                 unlockControls();
                 btnCreate.setText("Save");
-                btnDelete.setText("Cancel");
+                btnCancel.setText("Cancel");
                 imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgDelete.setImage(new Image ("org/juangalicia/image/cancel.png"));
+                imgCancel.setImage(new Image ("org/juangalicia/image/cancel.png"));
                 typeOfOperation = operations.SAVE;
                 loadData();
                 break;
@@ -169,10 +178,10 @@ public class Products_has_DishesController implements Initializable{
                 save();
                 clearControls();
                 lockControls();
-                btnCreate.setText("Create Product Has Dishes");
-                btnDelete.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Dish.png"));
-                imgDelete.setImage(null);
+                btnCreate.setText("Create Product Has Dish");
+                btnCancel.setText(" ");
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
+                imgCancel.setImage(null);
                 typeOfOperation = operations.NONE;
                 loadData();
                 break;
@@ -184,10 +193,10 @@ public class Products_has_DishesController implements Initializable{
             case SAVE:
                 clearControls();
                 lockControls();
-                btnCreate.setText("Create Products has Dishes");
-                btnDelete.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Dish.png"));
-                imgDelete.setImage(null);
+                btnCreate.setText("Create Products has Dish");
+                btnCancel.setText(" ");
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
+                imgCancel.setImage(null);
                 typeOfOperation = operations.NONE;
                 loadData();
                 break;
@@ -210,6 +219,47 @@ public class Products_has_DishesController implements Initializable{
             e.printStackTrace();
         }
     }
+    
+    public void ProductsHasDishSearch() {
+
+        FilteredList<Products_has_Dishes> filter = new FilteredList<>(productsHasDishesList, e -> true);
+
+        txtSearchPHD.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate((Products_has_Dishes predicatePHD) -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicatePHD.getProducts_codeProduct()).contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicatePHD.getCodeDish()).toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicatePHD.getCodeProduct()).toLowerCase().contains(searchKey)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Products_has_Dishes> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblProductsHasDishes.comparatorProperty());
+        tblProductsHasDishes.setItems(sortList);
+    }
+    
+    public void minimize() {
+        Stage stage = (Stage) PHDPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    public void close() {
+        System.exit(0);
+    }   
     
     public void lockControls(){
         txtProducts_CodeProduct.setEditable(false);

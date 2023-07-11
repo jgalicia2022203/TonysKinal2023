@@ -1,57 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="958.0" style="-fx-background-color: #a691ce;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.ProgrammerController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="511.0" styleClass="left-form" stylesheets="@../resource/TonysKinal.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.ProgrammerController">
    <children>
-      <Circle fill="#9c03fc" layoutX="944.0" layoutY="64.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fill="#9c03fc" layoutX="14.0" layoutY="440.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fill="#9c03fc" layoutX="11.0" layoutY="64.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <ImageView fitHeight="341.0" fitWidth="270.0" layoutX="118.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../image/ImageProgrammer.jpg" />
-         </image>
-      </ImageView>
-      <Label layoutX="413.0" layoutY="169.0" text="Juan Luis Galicia Mazariegos">
-         <font>
-            <Font name="Century" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="565.0" layoutY="228.0" text="2022-203">
-         <font>
-            <Font name="Century" size="36.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" prefHeight="64.0" prefWidth="958.0" style="-fx-background-color: #3836b5;" text="PROGRAMMER" textAlignment="CENTER" textFill="#d381ff">
-         <font>
-            <Font name="Dubai Medium" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="587.0" layoutY="286.0" text="IN5BV">
-         <font>
-            <Font name="Century" size="36.0" />
-         </font>
-      </Label>
-      <Circle fill="#9c03fc" layoutX="944.0" layoutY="411.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <VBox layoutX="11.0" layoutY="13.0" prefHeight="36.0" prefWidth="39.0">
+      <Pane layoutX="27.0" layoutY="27.0" prefHeight="652.0" prefWidth="458.0" style="-fx-border-radius: 35px; -fx-background-radius: 35px; -fx-background-color: FFF;">
          <children>
-            <Button mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="40.0" prefWidth="39.0" styleClass="button1" stylesheets="@../resource/TonysKinal.css">
-               <graphic>
-                  <ImageView fitHeight="48.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/Back.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <ImageView fitHeight="263.0" fitWidth="215.0" layoutX="41.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Programmer.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="67.0" layoutY="305.0" text="Juan Galicia">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
+            <Label layoutX="67.0" layoutY="348.0" text="Developer" textFill="#f13435">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="67.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/🦆%20icon%20_email%20outline_.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="106.0" layoutY="424.0" prefHeight="30.0" prefWidth="330.0" text="Email: jgalicia-2022203@kinal.edu.gt">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="348.0" layoutY="17.0" onAction="#close" prefHeight="55.0" prefWidth="88.0" styleClass="close" stylesheets="@../resource/TonysKinal.css" text="X">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
          </children>
-      </VBox>
+      </Pane>
    </children>
 </AnchorPane>

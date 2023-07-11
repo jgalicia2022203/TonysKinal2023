@@ -1,5 +1,8 @@
 package org.juangalicia.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import eu.schudt.javafx.controls.calendar.DatePicker;
 import java.net.URL;
@@ -13,19 +16,21 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.juangalicia.bean.Employee;
 import org.juangalicia.bean.Service;
+import org.juangalicia.bean.Services_has_Dishes;
 import org.juangalicia.bean.Services_has_Employees;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
@@ -43,14 +48,16 @@ public class Services_has_EmployeesController implements Initializable{
     private ObservableList<Employee> employeeList;
     private DatePicker date;
     
-    @FXML 
-    private Button btnCreate;
     @FXML
-    private Button btnCancel;
+    private AnchorPane ServiceHasEmployeesPane;
     @FXML 
-    private ComboBox cmbCodeEmployee;
+    private JFXButton btnCreate;
     @FXML
-    private ComboBox cmbCodeService;
+    private JFXButton btnCancel;
+    @FXML 
+    private JFXComboBox cmbCodeEmployee;
+    @FXML
+    private JFXComboBox cmbCodeService;
     @FXML 
     private GridPane grpDate;
     @FXML 
@@ -72,9 +79,11 @@ public class Services_has_EmployeesController implements Initializable{
     @FXML 
     private TableView tblServicesHasEmployees;
     @FXML 
-    private TextField txtPlaceEvent;
+    private JFXTextField txtPlaceEvent;
     @FXML 
-    private TextField txtServices_ServiceId;
+    private JFXTextField txtServices_ServiceId;
+    @FXML
+    private JFXTextField txtSearchSHE;
     @FXML
     private JFXTimePicker jfxHourEvent;
     
@@ -86,7 +95,7 @@ public class Services_has_EmployeesController implements Initializable{
         date.getCalendarView().todayButtonTextProperty().set("Today");
         date.getCalendarView().setShowWeeks(false);
         date.getStylesheets().add("org/juangalicia/resource/TonysKinal.css");
-        grpDate.add(date, 3, 1);
+        grpDate.add(date, 1, 1);
         cmbCodeEmployee.setItems(getEmployee());
         cmbCodeService.setItems(getService());
     }
@@ -212,8 +221,8 @@ public class Services_has_EmployeesController implements Initializable{
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Service has Employees");
-                btnCancel.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Service has employee.png"));
+                btnCancel.setText(" ");
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
                 imgCancel.setImage(null);
                 typeOfOperation = operations.NONE;
                 loadData();
@@ -227,8 +236,8 @@ public class Services_has_EmployeesController implements Initializable{
                 clearControls();
                 lockControls();
                 btnCreate.setText("Create Service has Employee");
-                btnCancel.setText("");
-                imgCreate.setImage(new Image("/org/juangalicia/image/Add Service has employee.png"));
+                btnCancel.setText(" ");
+                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
                 imgCancel.setImage(null);
                 typeOfOperation = operations.NONE;
                 loadData();
@@ -258,6 +267,53 @@ public class Services_has_EmployeesController implements Initializable{
             e.printStackTrace();
         }
     }
+    
+    public void ServiceHasEmployeeSearch() {
+
+        FilteredList<Services_has_Employees> filter = new FilteredList<>(servicesHasEmployeesList, e -> true);
+
+        txtSearchSHE.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate((Services_has_Employees predicateSHE) -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicateSHE.getServices_codeService()).contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateSHE.getCodeService()).toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateSHE.getCodeEmployee()).toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if(String.valueOf(predicateSHE.getDateEvent()).toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(String.valueOf(predicateSHE.getHourEvent()).toLowerCase().contains(searchKey)){
+                    return true;
+                } else if(predicateSHE.getPlaceEvent().toLowerCase().contains(searchKey)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Services_has_Employees> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblServicesHasEmployees.comparatorProperty());
+        tblServicesHasEmployees.setItems(sortList);
+    }
+    
+    public void minimize() {
+        Stage stage = (Stage) ServiceHasEmployeesPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    public void close() {
+        System.exit(0);
+    }   
     
     public void lockControls(){
         txtServices_ServiceId.setEditable(false);
