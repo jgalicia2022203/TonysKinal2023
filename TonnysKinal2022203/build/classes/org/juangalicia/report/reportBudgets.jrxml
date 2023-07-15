@@ -47,10 +47,10 @@ C.codeCompany = S.codeCompany where C.codeCompany = $P{codCompany}]]>
 		<band height="752" splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="286" splitType="Stretch"/>
+		<band height="165" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="98" splitType="Stretch">
+		<band height="143" splitType="Stretch">
 			<staticText>
 				<reportElement x="18" y="0" width="100" height="20" uuid="d67fd00d-d568-48e1-85f3-eb18da4b92e2"/>
 				<text><![CDATA[Company Name]]></text>

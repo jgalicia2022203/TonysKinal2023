@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import org.juangalicia.bean.Company;
@@ -31,6 +32,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 public class CompanyController implements Initializable {
@@ -41,6 +48,7 @@ public class CompanyController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private Principal principalStage;
     private ObservableList<Company> companyList;
+    private final String Background="/org/juangalicia/image/Report Background.png";
 
     
     @FXML
@@ -302,10 +310,15 @@ public class CompanyController implements Initializable {
     }
 
     public void printReport() {
-        Map parameters = new HashMap();
-        parameters.put("codeCompany", null);
-        parameters.put("ReportBackground", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
-        GenerateReport.showReport("ReportCompany.jasper", "Company's Report", parameters);
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeCompany", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("companyReport.jasper", "Companies Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void printGeneralReport() {
@@ -317,7 +330,7 @@ public class CompanyController implements Initializable {
         File fichero2 = new File("src/org/juangalicia/report");
         String path2 = fichero2.getAbsolutePath();
         parametros.put("SUBREPORT_DIR", path2);
-       //parameters.put("ReportBackground", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
+       //parameters.put("ReportBackgrousnd", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
         GenerateReport.showReport("generalReport.jasper", "General Report", parametros);
     }
     

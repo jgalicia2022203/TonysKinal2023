@@ -10,7 +10,7 @@ Modification Date:  30-03-2023 08:05 P.M. - 10:05 P.M.
                     02-06-2023 13:00 P.M. - 13:11 P.M.
 */
 
--- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'admin';
+-- ALTER USER 'root'@'localhost' IDENTIsFIED WITH mysql_native_password BY 'admin';
 -- flush privileges;
 -- SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
@@ -878,7 +878,7 @@ Delimiter $$
 Delimiter ;
 
 Delimiter $$
-	Create procedure sp_Report()
+	Create procedure sp_Report(in codeCompany_ int)
 		Begin
 			Select C.nameCompany, B.amountBudget ,S.typeService, E.firstNameEmployee, E.secondNameEmployee, TE.descript, 
 				   D.nameDish, TD.descriptionType, D.quantity, D.priceDish, P.nameProduct, P.quantity 
@@ -892,8 +892,9 @@ Delimiter $$
 				INNER JOIN Dishes D on D.codeDish = ShD.codeDish
 				INNER JOIN TypeDish TD on TD.codeTypeDish = D.codeTypeDish
 				INNER JOIN Products_has_Dishes PhD ON PhD.codeDish = D.codeDish
-				INNER JOIN Products P on P.codeProduct = PhD.codeProduct; 
+				INNER JOIN Products P on P.codeProduct = PhD.codeProduct
+                where C.codeCompany = codeCompany_;
         End$$
 Delimiter ;
 
-call sp_Report();
+call sp_Report(1);

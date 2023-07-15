@@ -3,7 +3,6 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="ReportBackground" class="java.lang.String"/>
 	<parameter name="codeCompany" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[call sp_ReadCompanys();]]>
@@ -23,8 +22,8 @@
 	<background>
 		<band height="752" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="572" height="752" uuid="84929f63-0fbb-4d28-833f-081f99a4bd45"/>
-				<imageExpression><![CDATA[$P{ReportBackground}]]></imageExpression>
+				<reportElement x="0" y="0" width="572" height="752" uuid="cc65b16d-741f-4683-b2f5-8270197fdbe4"/>
+				<imageExpression><![CDATA["/Users/JuanGalicia/Workspace/TonysKinal2023/TonnysKinal2022203/src/org/juangalicia/image/Report Background.png"]]></imageExpression>
 			</image>
 		</band>
 	</background>
@@ -38,24 +37,24 @@
 		<band height="50" splitType="Stretch">
 			<staticText>
 				<reportElement x="14" y="26" width="100" height="20" uuid="3342d80c-bcef-4197-8106-cecc7d805d52"/>
-				<text><![CDATA[code Company]]></text>
+				<text><![CDATA[Company ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="135" y="26" width="100" height="20" uuid="b934638f-2d17-48d2-ba74-01b02201c451"/>
-				<text><![CDATA[name Company]]></text>
+				<text><![CDATA[Company]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="284" y="26" width="100" height="20" uuid="3dd674b7-f894-4f82-bb1f-8226cfb9f118"/>
-				<text><![CDATA[adress]]></text>
+				<text><![CDATA[Adress]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="426" y="26" width="100" height="20" uuid="989102f1-54d6-4f9d-8592-8d05f3d23df0"/>
-				<text><![CDATA[phone]]></text>
+				<text><![CDATA[Phone]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="114" splitType="Stretch">
+		<band height="71" splitType="Stretch">
 			<rectangle>
 				<reportElement x="4" y="26" width="110" height="20" backcolor="#CCCCFF" uuid="6888e253-e008-4aa5-a22f-4f20fec04e3f"/>
 			</rectangle>
