@@ -330,7 +330,6 @@ public class CompanyController implements Initializable {
         File fichero2 = new File("src/org/juangalicia/report");
         String path2 = fichero2.getAbsolutePath();
         parametros.put("SUBREPORT_DIR", path2);
-       //parameters.put("ReportBackgrousnd", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
         GenerateReport.showReport("generalReport.jasper", "General Report", parametros);
     }
     
