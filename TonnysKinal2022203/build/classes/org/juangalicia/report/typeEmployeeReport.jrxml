@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="typeEmployeeReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d55aaf8-008e-450d-beda-45abfbc484ef">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="945"/>
+	<parameter name="Background" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[call sp_ReadTypeEmployees();]]>
+	</queryString>
+	<field name="codeTypeEmployee" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descript" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band height="752" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="572" height="752" uuid="c159e39e-22a4-46f6-9222-c60e9b96da39"/>
+				<imageExpression><![CDATA[$P{Background}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="214" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="145" y="0" width="100" height="20" uuid="2af8aeee-b083-4bc9-bb44-3b73ae43e4b9"/>
+				<text><![CDATA[Type Employee ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="0" width="100" height="20" uuid="fe7e0c94-b2e6-49a6-a73d-9294d71d08a5"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="182" y="0" width="35" height="20" uuid="e8eb1931-f4eb-440f-8e13-f4e29e7a3c11"/>
+				<textFieldExpression><![CDATA[$F{codeTypeEmployee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="1" width="100" height="20" uuid="f2ef5518-473c-4522-850f-3434e2fd83b6"/>
+				<textFieldExpression><![CDATA[$F{descript}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="20" width="509" height="1" uuid="00d4f02f-8875-4ca8-8040-71df52fe0533"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

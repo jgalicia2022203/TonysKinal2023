@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BudgetReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="477ded5b-d58b-4d0e-88ed-ee621047d03f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="176"/>
+	<parameter name="Background" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[call sp_ReadBudgets();]]>
+	</queryString>
+	<field name="codeBudget" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateRequest" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amountBudget" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codeCompany" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band height="752" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="572" height="752" uuid="da2c389f-868f-47a3-86bc-6fddeaef87da"/>
+				<imageExpression><![CDATA[$P{Background}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="208" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="53" y="0" width="100" height="20" uuid="041d119b-3f80-4397-a92a-4b0b89f6d4b1"/>
+				<text><![CDATA[codeBudget]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="0" width="100" height="20" uuid="5ee8c9eb-7764-4423-afcb-07b739f052fc"/>
+				<text><![CDATA[dateRequest]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="100" height="20" uuid="5a204996-25e0-41e3-aa6b-e2f58add90bf"/>
+				<text><![CDATA[amountBudget]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="438" y="0" width="100" height="20" uuid="f1ce1add-2a7d-433a-ab69-c124f0ce0fa4"/>
+				<text><![CDATA[codeCompany]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="53" y="0" width="100" height="20" uuid="6fd4015c-e035-4305-bb1d-997615672b82"/>
+				<textFieldExpression><![CDATA[$F{codeBudget}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="15" y="19" width="509" height="1" uuid="255ae80f-e404-40ea-91e8-f1dab9958388"/>
+			</line>
+			<textField>
+				<reportElement x="177" y="2" width="100" height="20" uuid="ee6ba08b-92e6-4b7e-b98d-cbbc55a20f20"/>
+				<textFieldExpression><![CDATA[$F{dateRequest}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="2" width="100" height="20" uuid="1c469236-2c7a-4ef2-9db3-e650fb7a4050"/>
+				<textFieldExpression><![CDATA[$F{amountBudget}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="2" width="100" height="20" uuid="2f75aeeb-cb8f-4cad-8a33-f127f81f558f"/>
+				<textFieldExpression><![CDATA[$F{codeCompany}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

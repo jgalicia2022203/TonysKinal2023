@@ -6,6 +6,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -31,6 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.juangalicia.bean.Company;
+import org.juangalicia.report.GenerateReport;
 
 public class ProductController implements Initializable {
     private enum operations {
@@ -40,6 +43,7 @@ public class ProductController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private Principal principalStage;
     private ObservableList<Product> productList;
+    private final String Background="/org/juangalicia/image/Report Background.png";
     
     @FXML 
     private AnchorPane productPane;
@@ -271,6 +275,27 @@ public class ProductController implements Initializable {
         txtQuantity
                 .setText(String.valueOf(((Product) tblProducts.getSelectionModel().getSelectedItem()).getQuantity()));
     }
+    
+    public void generateReport() {
+        switch (typeOfOperation) {
+            case NONE:
+                printReport();
+                break;
+        }
+    }
+
+    public void printReport() {
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeCompany", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("ProductReport.jasper", "Companies Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     
         public void productSearch() {
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="typeDishReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2ee1b49-5150-4ed4-82cb-7cd5da05ffd0">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="1078"/>
+	<property name="ireport.y" value="784"/>
+	<parameter name="Background" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[call sp_ReadTypeDishes();]]>
+	</queryString>
+	<field name="codeTypeDish" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descriptionType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band height="752" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="572" height="752" uuid="60772792-3114-479f-8e4d-ce0a3107e69c"/>
+				<imageExpression><![CDATA[$P{Background}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="216" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="134" y="0" width="100" height="20" uuid="8d52f80a-d415-40e9-bd80-07be3e71fda0"/>
+				<text><![CDATA[Type Dish ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="64" height="20" uuid="90c04f9e-0b79-43c3-ba81-5afb61c47e26"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="155" y="0" width="56" height="20" uuid="fe0df419-2eff-4b0e-a34c-e1d730c93a6f"/>
+				<textFieldExpression><![CDATA[$F{codeTypeDish}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="201" height="20" uuid="9a4c40e2-e986-4cf6-b982-730dc809eeae"/>
+				<textFieldExpression><![CDATA[$F{descriptionType}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="530" height="1" uuid="ac066cbc-886b-415e-8780-4d891300025a"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -17,7 +17,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 
@@ -41,6 +43,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.juangalicia.bean.Company;
 import org.juangalicia.db.Conexion;
+import org.juangalicia.report.GenerateReport;
 
 public class ServiceController implements Initializable {
     private enum operations {
@@ -52,6 +55,8 @@ public class ServiceController implements Initializable {
     private ObservableList<Service> serviceList;
     private ObservableList<Company> companyList;
     private DatePicker date;
+    private final String Background="/org/juangalicia/image/Report Background.png";   
+
 
     
     @FXML
@@ -430,6 +435,19 @@ public class ServiceController implements Initializable {
         sortList.comparatorProperty().bind(tblServices.comparatorProperty());
         tblServices.setItems(sortList);
     }
+    
+    public void printReport() {
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeService", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("serviceReport.jasper", "Services Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     public void minimize() {
         Stage stage = (Stage) servicePane.getScene().getWindow();

@@ -7,6 +7,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -30,6 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.juangalicia.report.GenerateReport;
 
 public class EmployeeController implements Initializable {
     private Principal principalStage;
@@ -41,6 +44,8 @@ public class EmployeeController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private ObservableList<Employee> employeeList;
     private ObservableList<TypeEmployee> typeEmployeeList;
+    private final String Background="/org/juangalicia/image/Report Background.png";
+
     
     
     @FXML
@@ -404,6 +409,26 @@ public class EmployeeController implements Initializable {
 
         sortList.comparatorProperty().bind(tblEmployees.comparatorProperty());
         tblEmployees.setItems(sortList);
+    }
+    
+    public void generateReport() {
+        switch (typeOfOperation) {
+            case NONE:
+                printReport();
+                break;
+        }
+    }
+
+    public void printReport() {
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeCompany", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("EmployeeReport.jasper", "Companies Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void minimize() {

@@ -7,6 +7,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -31,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.juangalicia.report.GenerateReport;
 
 public class DishController implements Initializable {
     private Principal principalStage;
@@ -42,7 +45,8 @@ public class DishController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private ObservableList<Dish> dishList;
     private ObservableList<TypeDish> typeDishList;
-    
+    private final String Background="/org/juangalicia/image/Report Background.png";   
+
     @FXML
     private AnchorPane dishPane;
     @FXML
@@ -376,6 +380,18 @@ public class DishController implements Initializable {
 
         sortList.comparatorProperty().bind(tblDishes.comparatorProperty());
         tblDishes.setItems(sortList);
+    }
+        
+    public void printReport() {
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeDish", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("dishReport.jasper", "Dishes Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void minimize() {

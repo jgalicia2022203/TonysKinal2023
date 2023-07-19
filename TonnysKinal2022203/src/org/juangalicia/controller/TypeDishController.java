@@ -6,6 +6,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -28,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.juangalicia.report.GenerateReport;
 
 public class TypeDishController implements Initializable {
     private enum operations {
@@ -37,7 +40,9 @@ public class TypeDishController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private Principal principalStage;
     private ObservableList<TypeDish> typeDishList;
+    private final String Background="/org/juangalicia/image/Report Background.png";   
 
+    
     @FXML
     private JFXButton btnCreate;
     @FXML
@@ -262,6 +267,18 @@ public class TypeDishController implements Initializable {
 
         sortList.comparatorProperty().bind(tblTypeDish.comparatorProperty());
         tblTypeDish.setItems(sortList);
+    }
+    
+    public void printReport() {
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeTypeDish", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("typeDishReport.jasper", "Type Dishes Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
        
     public void minimize() {

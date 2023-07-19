@@ -98,7 +98,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="btnRead" alignment="CENTER" prefHeight="48.0" prefWidth="204.0" text="Dishes Report">
+                        <JFXButton fx:id="btnRead" alignment="CENTER" onAction="#printReport" prefHeight="48.0" prefWidth="204.0" text="Dishes Report">
                            <graphic>
                               <ImageView fx:id="imgRead" fitHeight="31.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

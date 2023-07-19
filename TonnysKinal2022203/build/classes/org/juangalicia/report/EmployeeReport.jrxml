@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeReport" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d41ae6b0-4ee5-4a7a-94db-e97dfdca06b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Background" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[call sp_ReadEmployees();]]>
+	</queryString>
+	<field name="codeEmployee" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numberEmployee" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="secondNameEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="firstNameEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adressEmployee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contactPhone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cookDegree" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codeTypeEmployee" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band height="752" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="572" height="752" uuid="bae33f1d-7132-44db-aca1-e16856a39b83"/>
+				<imageExpression><![CDATA[$P{Background}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="197" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="0" width="91" height="20" uuid="49e792ea-debe-4f7c-acac-66de328128a6"/>
+				<text><![CDATA[Employee number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="0" width="81" height="20" uuid="64558f18-427e-4cd3-8397-c5df405dee67"/>
+				<text><![CDATA[Second Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="197" y="0" width="72" height="20" uuid="23969433-9b49-4b3e-b1b6-b8a40902d3f6"/>
+				<text><![CDATA[First Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="100" height="20" uuid="d0143ef5-2b4d-4e59-9ad7-152ef105b54f"/>
+				<text><![CDATA[Adress]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="0" width="69" height="20" uuid="d6cdaf1e-93a0-4db7-8b9e-13a173bab01a"/>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="102" height="20" uuid="8169ea1f-12bb-43f8-bd4d-1be3e6924377"/>
+				<text><![CDATA[Cook degree]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="42" y="0" width="48" height="20" uuid="5275ed9a-dc0a-41a5-a4c2-53eb48811f7f"/>
+				<textFieldExpression><![CDATA[$F{numberEmployee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="0" width="72" height="20" uuid="85cb6b05-4c55-4b27-8554-7d6173b5fabe"/>
+				<textFieldExpression><![CDATA[$F{firstNameEmployee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="100" height="20" uuid="295bc9c1-b6a6-4905-83cb-e6008db1f60f"/>
+				<textFieldExpression><![CDATA[$F{adressEmployee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="0" width="69" height="20" uuid="535e094e-de7d-41fb-81e2-d484fc23b276"/>
+				<textFieldExpression><![CDATA[$F{contactPhone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="102" height="20" uuid="5bd10ddf-17cb-4480-88a2-8207a1e24d2a"/>
+				<textFieldExpression><![CDATA[$F{cookDegree}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="572" height="1" uuid="3c84bf1d-5434-4513-b76b-9a237ad3df21"/>
+			</line>
+			<textField>
+				<reportElement x="115" y="0" width="60" height="20" uuid="2831ca8b-8812-4e86-afc6-2fc1caf2147c"/>
+				<textFieldExpression><![CDATA[$F{secondNameEmployee}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

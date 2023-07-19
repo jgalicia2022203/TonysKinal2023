@@ -2,13 +2,11 @@ package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import java.io.File;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import org.juangalicia.bean.Company;
@@ -32,12 +30,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 
 public class CompanyController implements Initializable {
@@ -48,8 +40,8 @@ public class CompanyController implements Initializable {
     private operations typeOfOperation = operations.NONE;
     private Principal principalStage;
     private ObservableList<Company> companyList;
-    private final String Background="/org/juangalicia/image/Report Background.png";
-
+    private final String Background="/org/juangalicia/image/Report Background.png";   
+    
     
     @FXML
     private AnchorPane companyPane;
@@ -320,6 +312,20 @@ public class CompanyController implements Initializable {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
+    
+    public void printGeneralReport() {            
+        try{
+            Map parameters = new HashMap();
+            parameters.clear();
+            int codeCompany = Integer.valueOf(((Company)tblCompanys.getSelectionModel().getSelectedItem()).getCodeCompany());
+            parameters.put("codeCompany", codeCompany);
+            parameters.put("fondo", Background);
+            GenerateReport.showReport("GeneralReport.jasper", "General Report", parameters);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+=======
 
     public void printGeneralReport() {
         Map parametros = new HashMap();
@@ -331,6 +337,7 @@ public class CompanyController implements Initializable {
         String path2 = fichero2.getAbsolutePath();
         parametros.put("SUBREPORT_DIR", path2);
         GenerateReport.showReport("generalReport.jasper", "General Report", parametros);
+>>>>>>> e10d41dcc10a1fd4c54588fae5635acd74531b5c
     }
     
     public void companySearch() {
@@ -366,7 +373,7 @@ public class CompanyController implements Initializable {
         sortList.comparatorProperty().bind(tblCompanys.comparatorProperty());
         tblCompanys.setItems(sortList);
     }
-       
+    
     public void minimize() {
         Stage stage = (Stage) companyPane.getScene().getWindow();
         stage.setIconified(true);

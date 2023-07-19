@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="employeePane" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.EmployeeController">
+<AnchorPane fx:id="employeePane" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.EmployeeController">
    <children>
       <BorderPane prefHeight="768.0" prefWidth="1366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -98,7 +98,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="btnRead" alignment="CENTER" prefHeight="48.0" prefWidth="204.0" text="Employees Report">
+                        <JFXButton fx:id="btnRead" alignment="CENTER" onAction="#generateReport" prefHeight="48.0" prefWidth="204.0" text="Employees Report">
                            <graphic>
                               <ImageView fx:id="imgRead" fitHeight="31.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

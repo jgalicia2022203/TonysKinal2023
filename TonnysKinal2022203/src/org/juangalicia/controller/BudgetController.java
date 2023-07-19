@@ -51,6 +51,7 @@ public class BudgetController implements Initializable {
     private ObservableList<Budget> budgetList;
     private ObservableList<Company> companyList;
     private DatePicker date;
+    private final String Background="/org/juangalicia/image/Report Background.png";
 
     @FXML
     private AnchorPane budgetPane;
@@ -343,15 +344,15 @@ public class BudgetController implements Initializable {
     }
 
     public void printReport() {
-        Map parameters = new HashMap();
-        int codCompany = Integer.valueOf(((Company) cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
-        parameters.put("codCompany", codCompany);
-      
-        File fichero2 = new File("src/org/juangalicia/report");
-        String path2 = fichero2.getAbsolutePath();
-        parameters.put("SUBREPORT_DIR", path2);
-       //parameters.put("ReportBackground", CompanyController.class.getResource("/org/juangalicia/image/Report Background.png"));
-         GenerateReport.showReport("reportBudgets.jasper", "Budget's Report", parameters);
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeCompany", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("BudgetReport.jasper", "Budget Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void budgetSearch() {
