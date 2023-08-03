@@ -1,6 +1,7 @@
 package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -8,18 +9,19 @@ import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.juangalicia.bean.User;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
 
 public class UserController implements Initializable{
     private Principal principalStage;
-    private enum operations{
-        SAVE, DELETE, UPDATE, NONE
-    }
-    
-    private operations typeOfOperation = operations.NONE;
-    
     @FXML
     private JFXTextField txtFirstName;
     @FXML
@@ -29,50 +31,28 @@ public class UserController implements Initializable{
     @FXML
     private JFXPasswordField txtPassword;
     @FXML
-    private JFXButton btnCreate;
+    private JFXButton btnRegister;
     @FXML
-    private JFXButton btnCancel;
+    private JFXCheckBox chkTerms;
+    @FXML
+    private AnchorPane userPane;
 
     public UserController() {
     }
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        
     }
     
-    public void create(){
-        switch(typeOfOperation){
-            case NONE:
-                clearControls();
-                unlockControls();
-                btnCreate.setText("Save");
-                btnCancel.setText("Cancel");
-                typeOfOperation = operations.SAVE;
-                break;
-                
-            case SAVE:
+    public void register() {
+        btnRegister.setOnAction(event -> {
+            if (isFormValid()) {
                 save();
-                clearControls();
-                lockControls();
-                btnCreate.setText("Register");
-                btnCancel.setText(" ");
-                typeOfOperation = operations.NONE;
-                login();
-                break;
-        }
-    }
-    
-    public void cancel(){
-        switch(typeOfOperation){
-            case SAVE: 
-                clearControls();
-                lockControls();
-                btnCreate.setText("Register");
-                btnCancel.setText(" ");
-                typeOfOperation = operations.NONE;
-                break;
-        }
+                check();
+            } else {
+                error();
+            }
+        });
     }
     
     public void save(){
@@ -93,20 +73,55 @@ public class UserController implements Initializable{
         }
     }
     
+    private boolean isPasswordFieldEmpty(JFXPasswordField passwordField){
+        return passwordField.getText().trim().isEmpty();
+    }
+
+    private boolean isTextFieldEmpty(JFXTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+
+    private boolean isCheckBoxSelected(JFXCheckBox checkBox) {
+        return checkBox.isSelected();
+    }
+
+    private boolean isFormValid() {
+        return !isTextFieldEmpty(txtFirstName)
+                && !isTextFieldEmpty(txtSecondName)
+                && !isTextFieldEmpty(txtUsername)
+                && !isPasswordFieldEmpty(txtPassword)
+                && isCheckBoxSelected(chkTerms);
+    }
+    
+    public void check(){
+        Image img = new Image("org/juangalicia/image/success.png");
+        Notifications notification = Notifications.create();
+        notification.title("Account Registred");
+        notification.graphic(new ImageView(img));
+        notification.text("Welcome to Tonys");
+        notification.hideAfter(Duration.seconds(5));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    public void error(){
+        Image img = new Image("org/juangalicia/image/error.png");
+        Notifications notification = Notifications.create();
+        notification.title("Error");
+        notification.graphic(new ImageView(img));
+        notification.text("Please fill all the fields & accept the terms & conditions");
+        notification.hideAfter(Duration.seconds(5));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
     public void close(){
         login();
     }
     
-    public Principal getPrincipalStage() {
-        return principalStage;
-    }
-
-    public void setPrincipalStage(Principal principalStage) {
-        this.principalStage = principalStage;
-    }
-    
-    public void login(){
-        principalStage.loginWindow();
+    public void minimize() {
+        Stage stage = (Stage) userPane.getScene().getWindow();
+        stage.setIconified(true);
     }
     
     public void unlockControls(){
@@ -132,5 +147,17 @@ public class UserController implements Initializable{
     
     public void menuPrincipal() {
         principalStage.principalWindow();
+    }
+    
+    public Principal getPrincipalStage() {
+        return principalStage;
+    }
+
+    public void setPrincipalStage(Principal principalStage) {
+        this.principalStage = principalStage;
+    }
+    
+    public void login(){
+        principalStage.loginWindow();
     }
 }

@@ -1,0 +1,31 @@
+{
+	"java.project.referencedLibraries": [
+		"lib/**/*.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.base.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.controls.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.fxml.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.graphics.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.media.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.swing.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx.web.jar",
+		"c:\\Program Files\\Java\\openjfx-20.0.2_windows-x64_bin-sdk\\javafx-sdk-20.0.2\\lib\\javafx-swt.jar",
+		"TonnysKinal2022203/lib/commons-collections-3.2.1.jar",
+		"TonnysKinal2022203/lib/commons-digester-2.1.jar",
+		"TonnysKinal2022203/lib/commons-logging-1.1.jar",
+		"TonnysKinal2022203/lib/groovy-all-2.0.1.jar",
+		"TonnysKinal2022203/lib/iText-2.1.7.js2.jar",
+		"TonnysKinal2022203/lib/jasperreports-5.6.0.jar",
+		"TonnysKinal2022203/lib/jfoenix-8.0.10.jar",
+		"TonnysKinal2022203/lib/mysql-connector-java-5.1.47-bin.jar",
+		"TonnysKinal2022203/lib/poi-3.7-20101029.jar",
+		"TonnysKinal2022203/lib/schudt-javafx-datepicker-0.0.2.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.base.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.controls.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.fxml.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.graphics.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.media.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.swing.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx.web.jar",
+		"c:\\Program Files\\Java\\javafx-sdk-20.0.2\\lib\\javafx-swt.jar"
+	]
+}

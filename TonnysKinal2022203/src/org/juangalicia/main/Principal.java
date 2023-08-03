@@ -7,7 +7,6 @@
 package org.juangalicia.main;
 
 import java.io.InputStream;
-
 import org.juangalicia.controller.BudgetController;
 import org.juangalicia.controller.CompanyController;
 import org.juangalicia.controller.EmployeeController;
@@ -16,6 +15,13 @@ import org.juangalicia.controller.ProductController;
 import org.juangalicia.controller.ProgrammerController;
 import org.juangalicia.controller.TypeDishController;
 import org.juangalicia.controller.TypeEmployeeController;
+import org.juangalicia.controller.DishController;
+import org.juangalicia.controller.LoginController;
+import org.juangalicia.controller.Products_has_DishesController;
+import org.juangalicia.controller.ServiceController;
+import org.juangalicia.controller.Services_has_DishesController;
+import org.juangalicia.controller.Services_has_EmployeesController;
+import org.juangalicia.controller.UserController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,14 +31,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.juangalicia.controller.DishController;
-import org.juangalicia.controller.LoginController;
-import org.juangalicia.controller.Products_has_DishesController;
-import org.juangalicia.controller.ServiceController;
-import org.juangalicia.controller.Services_has_DishesController;
-import org.juangalicia.controller.Services_has_EmployeesController;
-import org.juangalicia.controller.UserController;
-
 import javafx.application.Platform;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -132,7 +130,7 @@ public class Principal extends Application {
             e.printStackTrace();
         }
     }
-    
+
     public void dishWindow() {
         try {
             DishController dish = (DishController) switchScene("DishView.fxml", 1366, 768);
@@ -142,8 +140,8 @@ public class Principal extends Application {
             e.printStackTrace();
         }
     }
-    
-    public void serviceWindow(){
+
+    public void serviceWindow() {
         try {
             ServiceController service = (ServiceController) switchScene("ServiceView.fxml", 1366, 768);
             service.setPrincipalStage(this);
@@ -152,82 +150,83 @@ public class Principal extends Application {
             e.printStackTrace();
         }
     }
-    
-    public void Products_has_DishesWindow(){
+
+    public void Products_has_DishesWindow() {
         try {
-            Products_has_DishesController PhD = (Products_has_DishesController) switchScene("ProductsHasDishesView.fxml", 1366, 768);
+            Products_has_DishesController PhD = (Products_has_DishesController) switchScene(
+                    "ProductsHasDishesView.fxml", 1366, 768);
             PhD.setPrincipalStage(this);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void Services_has_DishesWindow(){
+
+    public void Services_has_DishesWindow() {
         try {
-            Services_has_DishesController ShD = (Services_has_DishesController) switchScene("ServicesHasDishesView.fxml", 1366, 768);
+            Services_has_DishesController ShD = (Services_has_DishesController) switchScene(
+                    "ServicesHasDishesView.fxml", 1366, 768);
             ShD.setPrincipalStage(this);
- 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void Services_has_EmployeesWindow(){
+
+    public void Services_has_EmployeesWindow() {
         try {
-            Services_has_EmployeesController ShE = (Services_has_EmployeesController) switchScene("ServicesHasEmployeesView.fxml", 1366, 768);
+            Services_has_EmployeesController ShE = (Services_has_EmployeesController) switchScene(
+                    "ServicesHasEmployeesView.fxml", 1366, 768);
             ShE.setPrincipalStage(this);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void userWindow(){
-        try{
-            UserController user = (UserController) switchScene("UserView.fxml", 1366, 768);
+
+    public void userWindow() {
+        try {
+            UserController user = (UserController) switchScene("UserView.fxml", 1000, 600);
             user.setPrincipalStage(this);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loginWindow(){
+    public void loginWindow() {
         try {
-            LoginController login = (LoginController) switchScene("LoginView.fxml", 1366, 768);
+            LoginController login = (LoginController) switchScene("LoginView.fxml", 1000, 600);
             login.setPrincipalStage(this);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
 
     public Initializable switchScene(String fxml, int width, int height) throws Exception {
-    Initializable result = null;
-    FXMLLoader loaderFXML = new FXMLLoader();
-    InputStream file = Principal.class.getResourceAsStream(PAQUETE_VISTA + fxml);
-    loaderFXML.setBuilderFactory(new JavaFXBuilderFactory());
-    loaderFXML.setLocation(Principal.class.getResource(PAQUETE_VISTA + fxml));
-    scene = new Scene((AnchorPane) loaderFXML.load(file), width, height);
-    principalStage.setScene(scene);
-    principalStage.sizeToScene();
-    principalStage.setResizable(false);
+        Initializable result = null;
+        FXMLLoader loaderFXML = new FXMLLoader();
+        InputStream file = Principal.class.getResourceAsStream(PAQUETE_VISTA + fxml);
+        loaderFXML.setBuilderFactory(new JavaFXBuilderFactory());
+        loaderFXML.setLocation(Principal.class.getResource(PAQUETE_VISTA + fxml));
+        scene = new Scene((AnchorPane) loaderFXML.load(file), width, height);
+        principalStage.setScene(scene);
+        principalStage.sizeToScene();
+        principalStage.setResizable(false);
 
-    result = (Initializable) loaderFXML.getController();
+        result = (Initializable) loaderFXML.getController();
 
-    principalStage.setOnShown((WindowEvent event) -> {
-        Platform.runLater(() -> {
-            principalStage.centerOnScreen();
+        principalStage.setOnShown((WindowEvent event) -> {
+            Platform.runLater(() -> {
+                principalStage.centerOnScreen();
+            });
         });
-    });
 
-    return result;
+        return result;
     }
-
-
 }

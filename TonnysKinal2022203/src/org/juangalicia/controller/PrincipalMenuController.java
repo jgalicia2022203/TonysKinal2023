@@ -3,19 +3,22 @@ package org.juangalicia.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+import javafx.fxml.FXML;
 import org.juangalicia.main.Principal;
-
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class PrincipalMenuController implements Initializable {
     private Principal principalStage;
+    
+    @FXML
+    public AnchorPane principalPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     public Principal getPrincipalStage() {
@@ -24,6 +27,10 @@ public class PrincipalMenuController implements Initializable {
 
     public void setPrincipalStage(Principal principalStage) {
         this.principalStage = principalStage;
+    }
+    
+    public void principalWindow(){
+        this.principalStage.principalWindow();
     }
 
     public void programmerWindow() {
@@ -82,12 +89,9 @@ public class PrincipalMenuController implements Initializable {
         principalStage.loginWindow();
     }
     
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle(title);
-    alert.setHeaderText(header);
-    alert.setContentText(content);
-    alert.showAndWait();
+    public void minimize() {
+        Stage stage = (Stage) principalPane.getScene().getWindow();
+        stage.setIconified(true);
     }
     
     public void logout() {
@@ -111,5 +115,4 @@ public class PrincipalMenuController implements Initializable {
                         principalStage.principalWindow();
                 }
     }
-    
 }

@@ -312,7 +312,6 @@ public class CompanyController implements Initializable {
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD
     
     public void printGeneralReport() {            
         try{
@@ -325,19 +324,6 @@ public class CompanyController implements Initializable {
         }catch(Exception e){
             e.printStackTrace();
         }
-=======
-
-    public void printGeneralReport() {
-        Map parametros = new HashMap();
-        int codEmpresa = Integer.valueOf(((Company)tblCompanys.getSelectionModel().getSelectedItem()).getCodeCompany());
-        parametros.put("codEmpresa", codEmpresa);
-        
-        
-        File fichero2 = new File("src/org/juangalicia/report");
-        String path2 = fichero2.getAbsolutePath();
-        parametros.put("SUBREPORT_DIR", path2);
-        GenerateReport.showReport("generalReport.jasper", "General Report", parametros);
->>>>>>> e10d41dcc10a1fd4c54588fae5635acd74531b5c
     }
     
     public void companySearch() {
@@ -374,13 +360,35 @@ public class CompanyController implements Initializable {
         tblCompanys.setItems(sortList);
     }
     
+    public void close() {
+        System.exit(0);
+    }
+    
     public void minimize() {
         Stage stage = (Stage) companyPane.getScene().getWindow();
         stage.setIconified(true);
     }
     
-    public void close() {
-        System.exit(0);
+    public void logout() {
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+       alert.setTitle("Logout");
+       alert.setHeaderText("Are you sure you want to logout?");
+       alert.setContentText("Choose your option.");
+       ButtonType buttonTypeYes = new ButtonType("Yes");
+       ButtonType buttonTypeNo = new ButtonType("No");
+       alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+       
+        Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
+                        try {
+                            principalStage.loginWindow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        principalStage.principalWindow();
+                }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
@@ -410,6 +418,67 @@ public class CompanyController implements Initializable {
         txtCompanyAdress.clear();
         txtCompanyPhone.clear();
     }
+    
+    public void principalWindow(){
+        this.principalStage.principalWindow();
+    }
+
+    public void programmerWindow() {
+        principalStage.programmerWindow();
+    }
+
+    public void companyWindow() {
+        principalStage.companyWindow();
+    }
+
+    public void typeEmployeeWindow() {
+        principalStage.typeEmployeeWindow();
+    }
+
+    public void productWindow() {
+        principalStage.productWindow();
+    }
+
+    public void employeeWindow() {
+        principalStage.employeeWindow();
+    }
+
+    public void typeDishWindow() {
+        principalStage.typeDishWindow();
+    }
+
+    public void budgetWindow() {
+        principalStage.budgetWindow();
+    }
+    
+    public void dishWindow(){
+        principalStage.dishWindow();
+    }
+    
+    public void serviceWindow(){
+        principalStage.serviceWindow();
+    }
+    
+    public void userWindow(){
+        principalStage.userWindow();
+    }
+    
+    public void Products_has_DishesWindow(){
+        principalStage.Products_has_DishesWindow();
+    }
+    
+    public void Services_has_DishesWindow(){
+        principalStage.Services_has_DishesWindow();
+    }
+    
+    public void Services_has_EmployeesWindow(){
+        principalStage.Services_has_EmployeesWindow();
+    }
+    
+    public void loginWindow(){
+        principalStage.loginWindow();
+    }
+    
 
     public Principal getPrincipalStage() {
         return principalStage;
@@ -422,8 +491,4 @@ public class CompanyController implements Initializable {
     public void menuPrincipal() {
         principalStage.principalWindow();
     } 
-
-    public void budgetWindow() {
-        principalStage.budgetWindow();
-    }
 }

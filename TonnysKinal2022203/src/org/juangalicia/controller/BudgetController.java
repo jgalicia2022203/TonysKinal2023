@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import eu.schudt.javafx.controls.calendar.DatePicker;
-import java.io.File;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,7 +50,7 @@ public class BudgetController implements Initializable {
     private ObservableList<Budget> budgetList;
     private ObservableList<Company> companyList;
     private DatePicker date;
-    private final String Background="/org/juangalicia/image/Report Background.png";
+    private final String Background = "/org/juangalicia/image/Report Background.png";
 
     @FXML
     private AnchorPane budgetPane;

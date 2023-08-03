@@ -11,17 +11,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.juangalicia.bean.Login;
 import org.juangalicia.bean.User;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
 
-import javafx.scene.control.Alert;
-
 public class LoginController implements Initializable{
+    
     private Principal principalStage;
     private ObservableList<User> userList;
-    
+    @FXML
+    private AnchorPane loginPane;
     @FXML 
     private JFXTextField txtUser;
     @FXML 
@@ -29,7 +37,6 @@ public class LoginController implements Initializable{
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        
     }
     
     public ObservableList<User>getUser(){
@@ -52,8 +59,7 @@ public class LoginController implements Initializable{
     public void login() {
         Login login = new Login();
         int x = 0;
-
-        boolean flag = false; // flag finds registers in an ArrayList
+        boolean flag = false;
 
         login.setUserMaster(txtUser.getText());
         login.setPasswordLogin(txtPassword.getText());
@@ -62,27 +68,44 @@ public class LoginController implements Initializable{
             String user = getUser().get(x).getUserLogin();
             String pass = getUser().get(x).getPasswordUser();
                 if (user.equals(login.getUserMaster()) && pass.equals(login.getPasswordLogin())) {
-                    showAlert(Alert.AlertType.INFORMATION, "Logged In", "Welcome!",
-                    "Logged in\n" + getUser().get(x).getFirstNameUser() + " "
-                            + getUser().get(x).getSecondNameUser() + "\n" + "Welcome!!");
-                                principalStage.principalWindow();
-                                    x = getUser().size();
-                                        flag = true;
+                    check();
+                    principalStage.principalWindow();
+                    x = getUser().size();
+                    flag = true;
+                }
+            x++; 
         }
-            x++; // only ordinal variables
-    }
 
         if (flag == false) {
-            showAlert(Alert.AlertType.ERROR, "Incorrect User or Password", null, "Incorrect User or Password");
+            error();
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle(title);
-    alert.setHeaderText(header);
-    alert.setContentText(content);
-    alert.showAndWait();
+    public void check(){
+        Image img = new Image("org/juangalicia/image/success.png");
+        Notifications notification = Notifications.create();
+        notification.title("Login Succeded");
+        notification.graphic(new ImageView(img));
+        notification.text("Welcome");
+        notification.hideAfter(Duration.seconds(5));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    public void error(){
+        Image img = new Image("org/juangalicia/image/error.png");
+        Notifications notification = Notifications.create();
+        notification.title("Error");
+        notification.graphic(new ImageView(img));
+        notification.text("Username or password is incorrect");
+        notification.hideAfter(Duration.seconds(5));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    public void minimize() {
+        Stage stage = (Stage) loginPane.getScene().getWindow();
+        stage.setIconified(true);
     }
     
     public void close(){

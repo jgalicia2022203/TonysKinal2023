@@ -1,61 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #a691ce;" stylesheets="@../resource/TonysKinal.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.PrincipalMenuController">
+<AnchorPane fx:id="principalPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.PrincipalMenuController">
    <children>
-      <ImageView fitHeight="949.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../image/PrincipalMenuBackground.png" />
-         </image>
-      </ImageView>
-      <MenuBar layoutX="-16.0" layoutY="-8.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="958.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Modules">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Companies" />
-                  <MenuItem mnemonicParsing="false" onAction="#productWindow" text="Products" />
-                  <MenuItem mnemonicParsing="false" onAction="#employeeWindow" text="Employees" />
-                  <MenuItem mnemonicParsing="false" onAction="#serviceWindow" text="Services" />
-                  <MenuItem mnemonicParsing="false" onAction="#dishWindow" text="Dishes" />
-                  <MenuItem mnemonicParsing="false" onAction="#typeEmployeeWindow" text="Type Employee" />
-                  <MenuItem mnemonicParsing="false" onAction="#typeDishWindow" text="Type Dish" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Has">
-              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#Services_has_DishesWindow" text="Services has Dishes" />
-                  <MenuItem mnemonicParsing="false" onAction="#Products_has_DishesWindow" text="Products has Dishes" />
-                  <MenuItem mnemonicParsing="false" onAction="#Services_has_EmployeesWindow" text="Services has Employees" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Reports">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="General Report" />
-                  <MenuItem mnemonicParsing="false" onAction="#companyWindow" text="Companies Report" />
-                  <MenuItem mnemonicParsing="false" onAction="#budgetWindow" text="Budgets Report" />
-               </items></Menu>
-          <Menu mnemonicParsing="false" text="?">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#programmerWindow" text="Developer" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <JFXButton layoutX="1288.0" layoutY="706.0" onAction="#logout" prefHeight="55.0" prefWidth="77.0" text=" ">
-         <graphic>
-            <ImageView fitHeight="75.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+      <AnchorPane layoutX="396.0" layoutY="73.0" prefHeight="57.0" prefWidth="554.0" style="-fx-background-color: #262626; -fx-background-radius: 10;">
+         <children>
+            <JFXButton layoutX="141.0" layoutY="2.0" onAction="#companyWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="BUILDING" size="20" wrappingWidth="6.142856597900391" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="198.0" layoutY="3.0" onAction="#employeeWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <MaterialDesignIconView fill="WHITE" glyphName="TIE" size="20" wrappingWidth="11.0" />
+               </graphic></JFXButton>
+            <JFXButton layoutX="255.0" layoutY="2.0" onAction="#dishWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="CUTLERY" size="20" wrappingWidth="13.428571701049805" />
+               </graphic></JFXButton>
+            <JFXButton layoutX="312.0" layoutY="2.0" onAction="#productWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_BASKET" size="20" wrappingWidth="14.14285659790039" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="369.0" layoutY="3.0" onAction="#serviceWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" " textFill="#2e2d2d">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="TRUCK" size="20" wrappingWidth="15.14285659790039" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="497.0" layoutY="1.0" onAction="#programmerWindow" prefHeight="58.0" prefWidth="57.0" ripplerFill="WHITE" style="-fx-background-radius: 10;" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" size="20" wrappingWidth="5.142856597900391" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutY="1.0" onAction="#principalWindow" prefHeight="57.0" prefWidth="57.0" ripplerFill="WHITE" style="-fx-background-radius: 10;" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="25" wrappingWidth="15.14285659790039" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-21.0" prefHeight="47.0" prefWidth="1387.0" style="-fx-background-color: #3c3939;">
+         <children>
+            <Button layoutX="1316.0" mnemonicParsing="false" onAction="#logout" prefHeight="47.0" prefWidth="71.0" styleClass="close" stylesheets="@../resource/TonysKinal.css">
+               <graphic>
+                  <MaterialDesignIconView fill="WHITE" glyphName="LOGOUT" size="20" />
+               </graphic>
+            </Button>
+            <Button layoutX="1245.0" mnemonicParsing="false" onAction="#minimize" prefHeight="47.0" prefWidth="71.0" styleClass="minimize" stylesheets="@../resource/TonysKinal.css" textFill="#2e2d2d">
+               <graphic>
+                  <MaterialDesignIconView fill="WHITE" glyphName="WINDOW_MINIMIZE" size="20" />
+               </graphic>
+            </Button>
+            <ImageView fitHeight="40.0" fitWidth="47.0" layoutX="33.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../image/Back.png" />
+                  <Image url="@../image/TonysLittleLogo.png" />
                </image>
             </ImageView>
-         </graphic>
-      </JFXButton>
+            <Label layoutX="80.0" layoutY="13.0" text="Tonys Management System" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
