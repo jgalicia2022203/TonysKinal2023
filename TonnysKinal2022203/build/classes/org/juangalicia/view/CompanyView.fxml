@@ -109,7 +109,7 @@
             <Font name="Arial" size="12.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="btnCreate" alignment="CENTER" layoutX="233.0" layoutY="696.0" onAction="#create" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="Create Company" textFill="WHITE">
+      <JFXButton fx:id="btnCreate" alignment="CENTER" layoutX="233.0" layoutY="696.0" onAction="#create" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Add Company" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -117,7 +117,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnUpdate" alignment="CENTER" layoutX="457.0" layoutY="696.0" onAction="#edit" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="Update Company" textFill="WHITE">
+      <JFXButton fx:id="btnUpdate" alignment="CENTER" layoutX="457.0" layoutY="696.0" onAction="#edit" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Update Company" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -125,7 +125,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnDelete" alignment="CENTER" layoutX="683.0" layoutY="696.0" onAction="#delete" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="Delete Company" textFill="WHITE">
+      <JFXButton fx:id="btnDelete" alignment="CENTER" layoutX="683.0" layoutY="696.0" onAction="#delete" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Delete Company" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -133,7 +133,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnRead" alignment="CENTER" layoutX="908.0" layoutY="696.0" onAction="#generateReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="Companies Report" textFill="WHITE">
+      <JFXButton fx:id="btnRead" alignment="CENTER" layoutX="908.0" layoutY="696.0" onAction="#generateReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Companies Report" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -147,7 +147,7 @@
       <FontAwesomeIconView glyphName="BUILDING_ALT" layoutX="175.0" layoutY="639.0" size="20" />
       <FontAwesomeIconView glyphName="PHONE" layoutX="481.0" layoutY="574.0" size="20" text="" />
       <MaterialDesignIconView glyphName="BRIEFCASE" layoutX="479.0" layoutY="640.0" size="20" />
-      <JFXButton fx:id="btnGeneralReport" alignment="CENTER" layoutX="784.0" layoutY="542.0" onAction="#printGeneralReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="General Report" textFill="WHITE">
+      <JFXButton fx:id="btnGeneralReport" alignment="CENTER" layoutX="784.0" layoutY="542.0" onAction="#printGeneralReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" General Report" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -155,7 +155,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" size="17" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnBudgets" alignment="CENTER" layoutX="784.0" layoutY="608.0" onAction="#budgetWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="See Budgets" textFill="WHITE">
+      <JFXButton fx:id="btnBudgets" alignment="CENTER" layoutX="784.0" layoutY="608.0" onAction="#budgetWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" See Budgets" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
