@@ -73,18 +73,6 @@ public class PrincipalMenuController implements Initializable {
         principalStage.userWindow();
     }
     
-    public void Products_has_DishesWindow(){
-        principalStage.Products_has_DishesWindow();
-    }
-    
-    public void Services_has_DishesWindow(){
-        principalStage.Services_has_DishesWindow();
-    }
-    
-    public void Services_has_EmployeesWindow(){
-        principalStage.Services_has_EmployeesWindow();
-    }
-    
     public void loginWindow(){
         principalStage.loginWindow();
     }

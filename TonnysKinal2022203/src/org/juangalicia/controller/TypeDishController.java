@@ -2,6 +2,10 @@ package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import org.juangalicia.bean.TypeDish;
+import org.juangalicia.db.Conexion;
+import org.juangalicia.main.Principal;
+import org.juangalicia.report.GenerateReport;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,17 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import org.juangalicia.bean.TypeDish;
-import org.juangalicia.db.Conexion;
-import org.juangalicia.main.Principal;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
@@ -30,35 +30,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.juangalicia.report.GenerateReport;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 public class TypeDishController implements Initializable {
-    private enum operations {
-        CREATE, SAVE, DELETE, UPDATE, CANCEL, NONE
-    };
-
-    private operations typeOfOperation = operations.NONE;
+    
     private Principal principalStage;
     private ObservableList<TypeDish> typeDishList;
     private final String Background="/org/juangalicia/image/Report Background.png";   
 
-    
     @FXML
     private JFXButton btnCreate;
-    @FXML
-    private JFXButton btnRead;
-    @FXML
-    private JFXButton btnUpdate;
-    @FXML
-    private JFXButton btnDelete;
-    @FXML
-    private ImageView imgCreate;
-    @FXML
-    private ImageView imgRead;
-    @FXML
-    private ImageView imgUpdate;
-    @FXML
-    private ImageView imgDelete;
     @FXML
     private TableView tblTypeDish;
     @FXML
@@ -84,6 +66,12 @@ public class TypeDishController implements Initializable {
         colTypeDishId.setCellValueFactory(new PropertyValueFactory<TypeDish, Integer>("codeTypeDish"));
         colDescription.setCellValueFactory(new PropertyValueFactory<TypeDish, String>("descriptionType"));
     }
+    
+    public void selectElement() {
+        txtTypeDishId.setText(
+                String.valueOf(((TypeDish) tblTypeDish.getSelectionModel().getSelectedItem()).getCodeTypeDish()));
+        txtDescription.setText(((TypeDish) tblTypeDish.getSelectionModel().getSelectedItem()).getDescriptionType());
+    }
 
     public ObservableList<TypeDish> getTypeDish() {
         ArrayList<TypeDish> list = new ArrayList<TypeDish>();
@@ -102,77 +90,64 @@ public class TypeDishController implements Initializable {
     }
 
     public void create() {
-        switch (typeOfOperation) {
-            case NONE:
-                clearControls();
-                unlockControls();
-                btnCreate.setText("Save");
-                btnUpdate.setText("Cancel");
-                btnDelete.setDisable(true);
-                btnRead.setDisable(true);
-                imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                typeOfOperation = operations.SAVE;
-                loadData();
-                break;
-            case SAVE:
-                save();
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Type Dish");
-                btnUpdate.setText("Update Type Dish");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
+        btnCreate.setOnAction(event -> {
+            if (isFormValid()) {
+                if (isDataExistsInTableView(txtTypeDishId.getText())) {
+                    clearControls();
+                } else {
+                    if (showConfirmationDialog("Add Type Dish", "You want to add this Type Dish?", 
+                            "Choose your option.", "Save", "Cancel")){
+                        try {
+                            save();
+                            loadData();
+                            clearControls();
+                            notification(NotificationType.SUCCESS, "Type Dish added successfully", 5);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        loadData();
+                    }
+                }
+            } else {
+                notification(NotificationType.ERROR, "please complete all the fields", 5);
+            }
+        });
+    }
+    
+    public void save() {
+        TypeDish register = new TypeDish();
+        register.setDescriptionType(txtDescription.getText());
+        try {
+            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_CreateTypeDish(?)");
+            procedure.setString(1, register.getDescriptionType());
+            procedure.execute();
+            typeDishList.add(register);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void edit() {
-        switch (typeOfOperation) {
-            case NONE:
-                if (tblTypeDish.getSelectionModel().getSelectedItem() != null) {
-                    btnCreate.setDisable(true);
-                    btnRead.setDisable(true);
-                    btnUpdate.setText("Update");
-                    btnDelete.setText("Cancel");
-                    imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                    imgDelete.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                    unlockControls();
-                    typeOfOperation = operations.UPDATE;
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "No element selected", null, "Please select an element");
+        if (tblTypeDish.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Update Type Dish", "You want to modify this Type Dish?", 
+                            "Choose your option.", "Update", "Cancel")) {
+                            try {
+                                update();
+                                loadData();
+                                clearControls();
+                                notification(NotificationType.SUCCESS, "Type Dish successfully updated from database", 5);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            loadData();
+                        }      
                 }
-                break;
-            case SAVE:
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Type Dish");
-                btnUpdate.setText("Update Type Dish");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-            case UPDATE:
-                update();
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Type Dish");
-                btnDelete.setText("Delete Type Dish");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-        }
+                else {
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
+                }
     }
 
     public void update() {
@@ -190,52 +165,34 @@ public class TypeDishController implements Initializable {
     }
 
     public void delete() {
-        switch (typeOfOperation) {
-            case UPDATE:
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Type Dish");
-                btnDelete.setText("Delete Type Dish");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-
-            default:
-                if (tblTypeDish.getSelectionModel().getSelectedItem() != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete Type Dish");
-                    alert.setHeaderText("Are you sure of deleting this register? You are gonna delete a foreign key");
-                    alert.setContentText("Choose your option.");
-
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
-
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == buttonTypeYes) {
+        if (tblTypeDish.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Delete Type Dish", "Are you sure of deleting this register?", 
+                            "Choose your option.", "Delete", "Cancel")){
                         try {
-                            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                                    .prepareCall("call sp_DeleteTypeDish(?)");
-                            procedure.setInt(1,
-                                    ((TypeDish) tblTypeDish.getSelectionModel().getSelectedItem()).getCodeTypeDish());
+                            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_DeleteTypeDish(?)");
+                            procedure.setInt(1,((TypeDish) tblTypeDish.getSelectionModel().getSelectedItem()).getCodeTypeDish());
                             procedure.execute();
                             typeDishList.remove(tblTypeDish.getSelectionModel().getSelectedItem());
                             clearControls();
+                            notification(NotificationType.SUCCESS, "Type Diish successfully deleted from database", 5);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText("You should select an element");
-                    alert.showAndWait();
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
                 }
+    }
+    
+    public void printReport() {
+        try {
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeTypeDish", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("typeDishReport.jasper", "Type Dishes Report", parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
         
@@ -269,16 +226,26 @@ public class TypeDishController implements Initializable {
         tblTypeDish.setItems(sortList);
     }
     
-    public void printReport() {
-        try {
-            Map parameters = new HashMap();
-            parameters.clear();
-            parameters.put("codeTypeDish", null);
-            parameters.put("Background", this.getClass().getResourceAsStream(Background));
-            GenerateReport.showReport("typeDishReport.jasper", "Type Dishes Report", parameters);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void logout() {
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+       alert.setTitle("Logout");
+       alert.setHeaderText("Are you sure you want to logout?");
+       alert.setContentText("Choose your option.");
+       ButtonType buttonTypeYes = new ButtonType("Yes");
+       ButtonType buttonTypeNo = new ButtonType("No");
+       alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+       
+        Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
+                        try {
+                            principalStage.loginWindow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        principalStage.typeDishWindow();
+                    }
     }
        
     public void minimize() {
@@ -286,35 +253,62 @@ public class TypeDishController implements Initializable {
         stage.setIconified(true);
     }
     
-    public void close() {
-        System.exit(0);
-    }
+    private enum NotificationType {
+        WARNING("Warning", "org/juangalicia/image/warning.png"),
+        SUCCESS("Success", "org/juangalicia/image/success.png"),
+        ERROR("Error", "org/juangalicia/image/error.png");
 
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-    public void save() {
-        TypeDish register = new TypeDish();
-        // register.setCodeTypeDish(Integer.parseInt(txtTypeDishId.getText()));
-        register.setDescriptionType(txtDescription.getText());
-        try {
-            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_CreateTypeDish(?)");
-            procedure.setString(1, register.getDescriptionType());
-            procedure.execute();
-            typeDishList.add(register);
-        } catch (Exception e) {
-            e.printStackTrace();
+        private final String title;
+        private final String imagePath;
+
+        NotificationType(String title, String imagePath) {
+            this.title = title;
+            this.imagePath = imagePath;
         }
     }
 
-    public void selectElement() {
-        txtTypeDishId.setText(
-                String.valueOf(((TypeDish) tblTypeDish.getSelectionModel().getSelectedItem()).getCodeTypeDish()));
-        txtDescription.setText(((TypeDish) tblTypeDish.getSelectionModel().getSelectedItem()).getDescriptionType());
+    private void notification(NotificationType type, String text, int seconds) {
+        Image imgN = new Image(type.imagePath);
+        Notifications notification = Notifications.create();
+        notification.title(type.title);
+        notification.graphic(new ImageView(imgN));
+        notification.text(text);
+        notification.hideAfter(Duration.seconds(seconds));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    private boolean showConfirmationDialog(String title, String header, String content, String button1, String button2) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        ButtonType buttonTypeYes = new ButtonType(button1);
+        ButtonType buttonTypeNo = new ButtonType(button2);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == buttonTypeYes;
+    }
+    
+    //Methods to Search existing registers on the TableView
+    public boolean isDataExistsInTableView(String newData) {
+        ObservableList<TypeDish> items = tblTypeDish.getItems();
+        
+        for (TypeDish typeDish : items) {
+            if (String.valueOf(typeDish.getCodeTypeDish()).equals(newData)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTextFieldEmpty(JFXTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+    
+    private boolean isFormValid() {
+        return !isTextFieldEmpty(txtTypeDishId)
+                && !isTextFieldEmpty(txtDescription);
     }
 
     public void lockControls() {
@@ -332,6 +326,55 @@ public class TypeDishController implements Initializable {
         txtDescription.clear();
     }
 
+    public void principalWindow(){
+        this.principalStage.principalWindow();
+    }
+
+    public void programmerWindow() {
+        principalStage.programmerWindow();
+    }
+
+    public void companyWindow() {
+        principalStage.companyWindow();
+    }
+
+    public void typeEmployeeWindow() {
+        principalStage.typeEmployeeWindow();
+    }
+
+    public void productWindow() {
+        principalStage.productWindow();
+    }
+
+    public void employeeWindow() {
+        principalStage.employeeWindow();
+    }
+
+    public void typeDishWindow() {
+        principalStage.typeDishWindow();
+    }
+
+    public void budgetWindow() {
+        principalStage.budgetWindow();
+    }
+    
+    public void dishWindow(){
+        principalStage.dishWindow();
+    }
+    
+    public void serviceWindow(){
+        principalStage.serviceWindow();
+    }
+    
+    public void userWindow(){
+        principalStage.userWindow();
+    }
+    
+    public void loginWindow(){
+        principalStage.loginWindow();
+    }
+    
+
     public Principal getPrincipalStage() {
         return principalStage;
     }
@@ -342,6 +385,5 @@ public class TypeDishController implements Initializable {
 
     public void menuPrincipal() {
         principalStage.principalWindow();
-    }
-
+    } 
 }

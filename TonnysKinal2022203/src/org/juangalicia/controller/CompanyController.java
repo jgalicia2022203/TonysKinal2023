@@ -80,7 +80,7 @@ public class CompanyController implements Initializable {
         colCompanyPhone.setCellValueFactory(new PropertyValueFactory<Company, String>("phone")); 
     }
     
-    //Put info from TableView on the TextFields
+    //Put info from TableView on the TextFields when you click on them on the TableView
     public void selectElement() {
         txtCompanyId.setText(String.valueOf(((Company) tblCompanys.getSelectionModel().getSelectedItem()).getCodeCompany()));
         txtCompanyName.setText(((Company) tblCompanys.getSelectionModel().getSelectedItem()).getNameCompany());
@@ -111,17 +111,16 @@ public class CompanyController implements Initializable {
     public void create() {
         btnCreate.setOnAction(event -> {
             if (isFormValid()) {
-                if (isDataExistsInTableView(txtCompanyName.getText())) {
-                    notification("Warning", "org/juangalicia/image/warning.png", "The Company already exists in database", 5);
+                if (isDataExistsInTableView(txtCompanyId.getText())) {
                     clearControls();
                 } else {
-                    if (showConfirmationDialog("Save Company", "You want to add this company?", 
+                    if (showConfirmationDialog("Save Company", "You want to add this company?",
                             "Choose your option.", "Save", "Cancel")){
                         try {
                             save();
                             loadData();
                             clearControls();
-                            notification("Company Registred", "org/juangalicia/image/success.png", "Company added successfully", 5);
+                            notification(NotificationType.SUCCESS, "Company added successfully", 5);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -130,7 +129,7 @@ public class CompanyController implements Initializable {
                     }
                 }
             } else {
-                notification("Error", "org/juangalicia/image/error.png", "please complete all the fields", 5);
+                notification(NotificationType.ERROR, "Please complete all the fields", 5);
             }
         });
     }
@@ -162,7 +161,7 @@ public class CompanyController implements Initializable {
                                 update();
                                 loadData();
                                 clearControls();
-                                notification("Company Updated", "org/juangalicia/image/success.png", "Company successfully updated from database", 5);
+                                notification(NotificationType.SUCCESS, "Company successfully updated from database", 5);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -172,7 +171,7 @@ public class CompanyController implements Initializable {
                         }      
                 }
                 else {
-                    notification("No element selected", "org/juangalicia/image/error.png", "Please select an element from the table", 5);
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
                 }
     }
 
@@ -205,14 +204,13 @@ public class CompanyController implements Initializable {
                             procedure.execute();
                             companyList.remove(tblCompanys.getSelectionModel().getSelectedItem());
                             clearControls();
-                            notification("Company Deleted", "org/juangalicia/image/success.png", 
-                                    "Company successfully deleted from database", 5);
+                            notification(NotificationType.SUCCESS, "Company successfully deleted from database", 5);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    notification("No element selected", "org/juangalicia/image/error.png", "Please select an element from the table", 5);
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
                 }
     }
 
@@ -310,10 +308,24 @@ public class CompanyController implements Initializable {
     }
     
     //Notifications and dialogs methods
-    public void notification(String title, String img, String text, int seconds){
-        Image imgN = new Image(img);
+    private enum NotificationType {
+        WARNING("Warning", "org/juangalicia/image/warning.png"),
+        SUCCESS("Success", "org/juangalicia/image/success.png"),
+        ERROR("Error", "org/juangalicia/image/error.png");
+
+        private final String title;
+        private final String imagePath;
+
+        NotificationType(String title, String imagePath) {
+            this.title = title;
+            this.imagePath = imagePath;
+        }
+    }
+
+    private void notification(NotificationType type, String text, int seconds) {
+        Image imgN = new Image(type.imagePath);
         Notifications notification = Notifications.create();
-        notification.title(title);
+        notification.title(type.title);
         notification.graphic(new ImageView(imgN));
         notification.text(text);
         notification.hideAfter(Duration.seconds(seconds));
@@ -338,7 +350,7 @@ public class CompanyController implements Initializable {
         ObservableList<Company> items = tblCompanys.getItems();
         
         for (Company company : items) {
-            if (company.getNameCompany().equals(newData)) {
+            if (String.valueOf(company.getCodeCompany()).equals(newData)) {
                 return true;
             }
         }
@@ -420,18 +432,6 @@ public class CompanyController implements Initializable {
     
     public void userWindow(){
         principalStage.userWindow();
-    }
-    
-    public void Products_has_DishesWindow(){
-        principalStage.Products_has_DishesWindow();
-    }
-    
-    public void Services_has_DishesWindow(){
-        principalStage.Services_has_DishesWindow();
-    }
-    
-    public void Services_has_EmployeesWindow(){
-        principalStage.Services_has_EmployeesWindow();
     }
     
     public void loginWindow(){

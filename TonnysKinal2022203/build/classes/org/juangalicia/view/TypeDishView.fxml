@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="employeePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.BudgetController">
+<AnchorPane fx:id="TypeDishPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.TypeDishController">
    <children>
       <AnchorPane layoutX="396.0" layoutY="73.0" prefHeight="57.0" prefWidth="554.0" style="-fx-background-color: #262626; -fx-background-radius: 10;">
          <children>
@@ -78,7 +78,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="txtBudgetSearch" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onAction="#budgetSearch" onKeyTyped="#companySearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtSearchTypeDish" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onKeyTyped="#typeEmployeeSearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
@@ -107,7 +107,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnRead" alignment="CENTER" layoutX="811.0" layoutY="696.0" onAction="#generateReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Type Dishes Report" textFill="WHITE">
+      <JFXButton fx:id="btnRead" alignment="CENTER" layoutX="811.0" layoutY="696.0" onAction="#printReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Type Dishes Report" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -118,7 +118,7 @@
       <FontAwesomeIconView fill="#262626" glyphName="SEARCH" layoutX="26.0" layoutY="158.0" size="13" text="" />
       <MaterialDesignIconView glyphName="KEY_VARIANT" layoutX="173.0" layoutY="576.0" size="20" />
       <FontAwesomeIconView glyphName="INFO_CIRCLE" layoutX="174.0" layoutY="639.0" size="20" />
-      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1030.0" layoutY="696.0" onAction="#companiesWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Go to Dishes" textFill="WHITE">
+      <JFXButton alignment="CENTER" layoutX="1030.0" layoutY="696.0" onAction="#dishWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Go to Dishes" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>

@@ -2,6 +2,9 @@ package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import org.juangalicia.bean.Product;
+import org.juangalicia.db.Conexion;
+import org.juangalicia.main.Principal;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,20 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-
-import org.juangalicia.bean.Product;
-import org.juangalicia.db.Conexion;
-import org.juangalicia.main.Principal;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,15 +29,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.juangalicia.bean.Company;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.juangalicia.report.GenerateReport;
 
 public class ProductController implements Initializable {
-    private enum operations {
-        CREATE, SAVE, DELETE, UPDATE, CANCEL, NONE
-    };
-
-    private operations typeOfOperation = operations.NONE;
     private Principal principalStage;
     private ObservableList<Product> productList;
     private final String Background="/org/juangalicia/image/Report Background.png";
@@ -49,20 +42,6 @@ public class ProductController implements Initializable {
     private AnchorPane productPane;
     @FXML
     private JFXButton btnCreate;
-    @FXML
-    private JFXButton btnRead;
-    @FXML
-    private JFXButton btnUpdate;
-    @FXML
-    private JFXButton btnDelete;
-    @FXML
-    private ImageView imgCreate;
-    @FXML
-    private ImageView imgRead;
-    @FXML
-    private ImageView imgUpdate;
-    @FXML
-    private ImageView imgDelete;
     @FXML
     private TableView tblProducts;
     @FXML
@@ -91,6 +70,12 @@ public class ProductController implements Initializable {
         colProductName.setCellValueFactory(new PropertyValueFactory<Product, String>("nameProduct"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
     }
+    
+    public void selectElement() {
+        txtProductId.setText(String.valueOf(((Product) tblProducts.getSelectionModel().getSelectedItem()).getCodeProduct()));
+        txtProductName.setText(((Product) tblProducts.getSelectionModel().getSelectedItem()).getNameProduct());
+        txtQuantity.setText(String.valueOf(((Product) tblProducts.getSelectionModel().getSelectedItem()).getQuantity()));
+    }
 
     public ObservableList<Product> getProduct() {
         ArrayList<Product> list = new ArrayList<Product>();
@@ -109,33 +94,29 @@ public class ProductController implements Initializable {
     }
 
     public void create() {
-        switch (typeOfOperation) {
-            case NONE:
-                clearControls();
-                unlockControls();
-                btnCreate.setText("Save");
-                btnUpdate.setText("Cancel");
-                btnDelete.setDisable(true);
-                btnRead.setDisable(true);
-                imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                typeOfOperation = operations.SAVE;
-                loadData();
-                break;
-            case SAVE:
-                save();
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Product");
-                btnUpdate.setText("Update Products");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-        }
+       btnCreate.setOnAction(event -> {
+            if (isFormValid()) {
+                if (isDataExistsInTableView(txtProductId.getText())) {
+                    clearControls();
+                } else {
+                    if (showConfirmationDialog("Save Product", "You want to add this product?",
+                            "Choose your option.", "Save", "Cancel")){
+                        try {
+                            save();
+                            loadData();
+                            clearControls();
+                            notification(NotificationType.SUCCESS, "Product added successfully", 5);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        loadData();
+                    }
+                }
+            } else {
+                notification(NotificationType.ERROR, "Please complete all the fields", 5);
+            }
+        });
     }
     
         public void save() {
@@ -157,49 +138,25 @@ public class ProductController implements Initializable {
     }
 
     public void edit() {
-        switch (typeOfOperation) {
-            case NONE:
-                if (tblProducts.getSelectionModel().getSelectedItem() != null) {
-                    btnCreate.setDisable(true);
-                    btnRead.setDisable(true);
-                    btnUpdate.setText("Update");
-                    btnDelete.setText("Cancel");
-                    imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                    imgDelete.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                    unlockControls();
-                    typeOfOperation = operations.UPDATE;
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "No element selected", null, "Please select an element");
+        if (tblProducts.getSelectionModel().getSelectedItem() != null) {
+                if (showConfirmationDialog("Update Product", "You want to modify this company?", 
+                        "Choose your option.", "Update", "Cancel")) {
+                            try {
+                                update();
+                                loadData();
+                                clearControls();
+                                notification(NotificationType.SUCCESS, "Product successfully updated from database", 5);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            loadData();
+                        }      
                 }
-                break;
-                
-            case SAVE:
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Product");
-                btnUpdate.setText("Update Product");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-                
-            case UPDATE:
-                update();
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Product");
-                btnDelete.setText("Delete Product");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-        }
+                else {
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
+                }
     }
 
     public void update() {
@@ -219,69 +176,29 @@ public class ProductController implements Initializable {
     }
 
     public void delete() {
-        switch (typeOfOperation) {
-            case UPDATE:
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Product");
-                btnDelete.setText("Delete Product");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-
-            default:
-                if (tblProducts.getSelectionModel().getSelectedItem() != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete Product");
-                    alert.setHeaderText("Are you sure of deleting this register? You are gonna delete a foreign key");
-                    alert.setContentText("Choose your option.");
-
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
-
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == buttonTypeYes) {
+        if (tblProducts.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Delete Product", "Are you sure of deleting this register?", 
+                            "Choose your option.", "Delete", "Cancel")){
                         try {
                             PreparedStatement procedure = Conexion.getInsance().getConexion()
                                     .prepareCall("call sp_DeleteProduct(?)");
-                            procedure.setInt(1,
-                                    ((Product) tblProducts.getSelectionModel().getSelectedItem()).getCodeProduct());
+                            procedure.setInt(1,((Product) tblProducts.getSelectionModel().getSelectedItem()).getCodeProduct());
                             procedure.execute();
                             productList.remove(tblProducts.getSelectionModel().getSelectedItem());
                             clearControls();
+                            notification(NotificationType.SUCCESS, "Product successfully deleted from database", 5);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText("You should select an element");
-                    alert.showAndWait();
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
                 }
-        }
-    }
-
-    public void selectElement() {
-        txtProductId.setText(
-                String.valueOf(((Product) tblProducts.getSelectionModel().getSelectedItem()).getCodeProduct()));
-        txtProductName.setText(((Product) tblProducts.getSelectionModel().getSelectedItem()).getNameProduct());
-        txtQuantity
-                .setText(String.valueOf(((Product) tblProducts.getSelectionModel().getSelectedItem()).getQuantity()));
+        
     }
     
     public void generateReport() {
-        switch (typeOfOperation) {
-            case NONE:
-                printReport();
-                break;
-        }
+        printReport();
     }
 
     public void printReport() {
@@ -296,8 +213,7 @@ public class ProductController implements Initializable {
         }
     }
     
-    
-        public void productSearch() {
+    public void productSearch() {
 
         FilteredList<Product> filter = new FilteredList<>(productList, e -> true);
 
@@ -328,23 +244,93 @@ public class ProductController implements Initializable {
         sortList.comparatorProperty().bind(tblProducts.comparatorProperty());
         tblProducts.setItems(sortList);
     }
-        
+    
+    public void logout() {
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+       alert.setTitle("Logout");
+       alert.setHeaderText("Are you sure you want to logout?");
+       alert.setContentText("Choose your option.");
+       ButtonType buttonTypeYes = new ButtonType("Yes");
+       ButtonType buttonTypeNo = new ButtonType("No");
+       alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+       
+        Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
+                        try {
+                            principalStage.loginWindow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        principalStage.productWindow();
+                    }
+    }
+    
     public void minimize() {
         Stage stage = (Stage) productPane.getScene().getWindow();
         stage.setIconified(true);
     }
     
-    public void close() {
-        System.exit(0);
+    private enum NotificationType {
+        WARNING("Warning", "org/juangalicia/image/warning.png"),
+        SUCCESS("Success", "org/juangalicia/image/success.png"),
+        ERROR("Error", "org/juangalicia/image/error.png");
+
+        private final String title;
+        private final String imagePath;
+
+        NotificationType(String title, String imagePath) {
+            this.title = title;
+            this.imagePath = imagePath;
+        }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
+    private void notification(NotificationType type, String text, int seconds) {
+        Image imgN = new Image(type.imagePath);
+        Notifications notification = Notifications.create();
+        notification.title(type.title);
+        notification.graphic(new ImageView(imgN));
+        notification.text(text);
+        notification.hideAfter(Duration.seconds(seconds));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    private boolean showConfirmationDialog(String title, String header, String content, String button1, String button2) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
-        alert.showAndWait();
-    }    
+        ButtonType buttonTypeYes = new ButtonType(button1);
+        ButtonType buttonTypeNo = new ButtonType(button2);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == buttonTypeYes;
+    }
+    
+    //Methods to Search existing registers on the TableView
+    public boolean isDataExistsInTableView(String newData) {
+        ObservableList<Product> items = tblProducts.getItems();
+        
+        for (Product product : items) {
+            if (String.valueOf(product.getCodeProduct()).equals(newData)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTextFieldEmpty(JFXTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+    
+    private boolean isFormValid() {
+        return !isTextFieldEmpty(txtProductId)
+                && !isTextFieldEmpty(txtProductName)
+                && !isTextFieldEmpty(txtQuantity);
+    }
+    
 
     public void lockControls() {
         txtProductId.setEditable(false);
@@ -364,6 +350,54 @@ public class ProductController implements Initializable {
         txtQuantity.clear();
     }
 
+    public void principalWindow(){
+        this.principalStage.principalWindow();
+    }
+
+    public void programmerWindow() {
+        principalStage.programmerWindow();
+    }
+
+    public void companyWindow() {
+        principalStage.companyWindow();
+    }
+
+    public void typeEmployeeWindow() {
+        principalStage.typeEmployeeWindow();
+    }
+
+    public void productWindow() {
+        principalStage.productWindow();
+    }
+
+    public void employeeWindow() {
+        principalStage.employeeWindow();
+    }
+
+    public void typeDishWindow() {
+        principalStage.typeDishWindow();
+    }
+
+    public void budgetWindow() {
+        principalStage.budgetWindow();
+    }
+    
+    public void dishWindow(){
+        principalStage.dishWindow();
+    }
+    
+    public void serviceWindow(){
+        principalStage.serviceWindow();
+    }
+    
+    public void userWindow(){
+        principalStage.userWindow();
+    }
+    
+    public void loginWindow(){
+        principalStage.loginWindow();
+    }
+    
     public Principal getPrincipalStage() {
         return principalStage;
     }
@@ -374,5 +408,5 @@ public class ProductController implements Initializable {
 
     public void menuPrincipal() {
         principalStage.principalWindow();
-    }
+    } 
 }

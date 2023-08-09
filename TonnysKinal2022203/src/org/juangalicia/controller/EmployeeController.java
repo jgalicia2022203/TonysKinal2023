@@ -1,8 +1,12 @@
 package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import org.juangalicia.bean.Employee;
+import org.juangalicia.bean.TypeEmployee;
+import org.juangalicia.db.Conexion;
+import org.juangalicia.main.Principal;
+import org.juangalicia.report.GenerateReport;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,20 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import org.juangalicia.bean.Employee;
-import org.juangalicia.bean.TypeEmployee;
-import org.juangalicia.db.Conexion;
-import org.juangalicia.main.Principal;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,42 +32,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.juangalicia.report.GenerateReport;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 public class EmployeeController implements Initializable {
+    
     private Principal principalStage;
-
-    private enum operations {
-        SAVE, DELETE, UPDATE, NONE
-    };
-
-    private operations typeOfOperation = operations.NONE;
     private ObservableList<Employee> employeeList;
     private ObservableList<TypeEmployee> typeEmployeeList;
     private final String Background="/org/juangalicia/image/Report Background.png";
 
-    
-    
     @FXML
     private AnchorPane employeePane;
     @FXML
     private JFXButton btnCreate;
     @FXML
-    private JFXButton btnRead;
-    @FXML
-    private JFXButton btnUpdate;
-    @FXML
-    private JFXButton btnDelete;
-    @FXML
-    private JFXComboBox cmbCodeTypeEmployee;
-    @FXML
-    private ImageView imgCreate;
-    @FXML
-    private ImageView imgRead;
-    @FXML
-    private ImageView imgUpdate;
-    @FXML
-    private ImageView imgDelete;
+    private ComboBox cmbCodeTypeEmployee;
     @FXML
     private TableColumn colAdress;
     @FXML
@@ -106,9 +86,10 @@ public class EmployeeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadData();
+        unlockControls();
         cmbCodeTypeEmployee.setItems(getTypeEmployee());
     }
-
+   
     public void loadData() {
         tblEmployees.setItems(getEmployee());
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("codeEmployee"));
@@ -138,8 +119,7 @@ public class EmployeeController implements Initializable {
     public TypeEmployee searchTypeEmployee(int codeTypeEmployee) {
         TypeEmployee result = null;
         try {
-            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                    .prepareCall("call sp_SearchTypeEmployee(?)");
+            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_SearchTypeEmployee(?)");
             procedure.setInt(1, codeTypeEmployee);
             ResultSet register = procedure.executeQuery();
             while (register.next()) {
@@ -189,80 +169,78 @@ public class EmployeeController implements Initializable {
     }
 
     public void create() {
-        switch (typeOfOperation) {
-            case NONE:
-                clearControls();
-                unlockControls();
-                btnCreate.setText("Save");
-                btnUpdate.setText("Cancel");
-                btnDelete.setDisable(true);
-                btnRead.setDisable(true);
-                imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                typeOfOperation = operations.SAVE;
-                loadData();
-                break;
-
-            case SAVE:
-                save();
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Employee");
-                btnUpdate.setText("Update Employee");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-        }
+        btnCreate.setOnAction(event -> {
+            if (isFormValid()) {
+                if (isDataExistsInTableView(txtEmployeeId.getText())) {
+                    clearControls();
+                } else {
+                    if (showConfirmationDialog("Add Employee", "You want to add this employee?", 
+                            "Choose your option.", "Save", "Cancel")){
+                        try {
+                            save();
+                            loadData();
+                            clearControls();
+                            notification(NotificationType.SUCCESS, "Employee added successfully", 5);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        loadData();
+                    }
+                }
+            } else {
+                notification(NotificationType.ERROR, "please complete all the fields", 5);
+            }
+        });
     }
+    
+    public void save() {
+        Employee register = new Employee();
+        register.setNumberEmployee(Integer.parseInt(txtEmployeeNumber.getText()));
+        register.setSecondNameEmployee(txtSecondName.getText());
+        register.setFirstNameEmployee(txtFirstName.getText());
+        register.setAdressEmployee(txtAdress.getText());
+        register.setContactPhone(txtContactPhone.getText());
+        register.setCookDegree(txtCookDegree.getText());
+        register.setCodeTypeEmployee(
+                ((TypeEmployee) cmbCodeTypeEmployee.getSelectionModel().getSelectedItem()).getCodeTypeEmployee());
+        try {
+            PreparedStatement procedure = Conexion.getInsance().getConexion()
+                    .prepareCall("call sp_CreateEmployee(?,?,?,?,?,?,?)");
+            procedure.setInt(1, register.getNumberEmployee());
+            procedure.setString(2, register.getSecondNameEmployee());
+            procedure.setString(3, register.getFirstNameEmployee());
+            procedure.setString(4, register.getAdressEmployee());
+            procedure.setString(5, register.getContactPhone());
+            procedure.setString(6, register.getCookDegree());
+            procedure.setInt(7, register.getCodeTypeEmployee());
+            procedure.execute();
+            employeeList.add(register);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }    
 
     public void edit() {
-        switch (typeOfOperation) {
-            case NONE:
-                if (tblEmployees.getSelectionModel().getSelectedItem() != null) {
-                    btnCreate.setDisable(true);
-                    btnRead.setDisable(true);
-                    btnUpdate.setText("Update");
-                    btnDelete.setText("Cancel");
-                    imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                    imgDelete.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                    unlockControls();
-                    typeOfOperation = operations.UPDATE;
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "No element selected", null, "Please select an element");
+        if (tblEmployees.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Update Employee", "You want to modify this Employee?", 
+                            "Choose your option.", "Update", "Cancel")) {
+                            try {
+                                update();
+                                loadData();
+                                clearControls();
+                                notification(NotificationType.SUCCESS, "Employee successfully updated from database", 5);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            loadData();
+                        }      
                 }
-                break;
-            
-             case SAVE:
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Employee");
-                btnUpdate.setText("Update Employee");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-            
-            case UPDATE:
-                update();
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Employee");
-                btnDelete.setText("Delete Employee");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-        }
+                else {
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
+                }
     }
 
     public void update() {
@@ -293,83 +271,42 @@ public class EmployeeController implements Initializable {
     }
 
     public void delete() {
-        switch (typeOfOperation) {
-            case UPDATE:
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Employee");
-                btnDelete.setText("Delete Employee");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-
-            default:
-                if (tblEmployees.getSelectionModel().getSelectedItem() != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete Employee");
-                    alert.setHeaderText("Are you sure of deleting this register? You are gonna delete a foreign key");
-                    alert.setContentText("Choose your option.");
-
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
-
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == buttonTypeYes) {
+       if (tblEmployees.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Delete Employee", "Are you sure of deleting this register?", 
+                            "Choose your option.", "Delete", "Cancel")){
                         try {
-                            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                                    .prepareCall("call sp_DeleteEmployee(?)");
-                            procedure.setInt(1,
-                                    ((Employee) tblEmployees.getSelectionModel().getSelectedItem()).getCodeEmployee());
+                            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_DeleteEmployee(?)");
+                            procedure.setInt(1,((Employee) tblEmployees.getSelectionModel().getSelectedItem()).getCodeEmployee());
                             procedure.execute();
                             employeeList.remove(tblEmployees.getSelectionModel().getSelectedItem());
                             clearControls();
+                            notification(NotificationType.SUCCESS, "Employee successfully deleted from database", 5);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText("You should select an element");
-                    alert.showAndWait();
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
                 }
-        }
+    }
+    
+    public void generateReport() {
+        printReport();
     }
 
-    public void save() {
-        Employee register = new Employee();
-        register.setNumberEmployee(Integer.parseInt(txtEmployeeNumber.getText()));
-        register.setSecondNameEmployee(txtSecondName.getText());
-        register.setFirstNameEmployee(txtFirstName.getText());
-        register.setAdressEmployee(txtAdress.getText());
-        register.setContactPhone(txtContactPhone.getText());
-        register.setCookDegree(txtCookDegree.getText());
-        register.setCodeTypeEmployee(
-                ((TypeEmployee) cmbCodeTypeEmployee.getSelectionModel().getSelectedItem()).getCodeTypeEmployee());
+    public void printReport() {
         try {
-            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                    .prepareCall("call sp_CreateEmployee(?,?,?,?,?,?,?)");
-            procedure.setInt(1, register.getNumberEmployee());
-            procedure.setString(2, register.getSecondNameEmployee());
-            procedure.setString(3, register.getFirstNameEmployee());
-            procedure.setString(4, register.getAdressEmployee());
-            procedure.setString(5, register.getContactPhone());
-            procedure.setString(6, register.getCookDegree());
-            procedure.setInt(7, register.getCodeTypeEmployee());
-            procedure.execute();
-            employeeList.add(register);
+            Map parameters = new HashMap();
+            parameters.clear();
+            parameters.put("codeCompany", null);
+            parameters.put("Background", this.getClass().getResourceAsStream(Background));
+            GenerateReport.showReport("EmployeeReport.jasper", "Companies Report", parameters);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    public void productSearch() {
+    public void employeeSearch() {
 
         FilteredList<Employee> filter = new FilteredList<>(employeeList, e -> true);
 
@@ -410,48 +347,109 @@ public class EmployeeController implements Initializable {
         sortList.comparatorProperty().bind(tblEmployees.comparatorProperty());
         tblEmployees.setItems(sortList);
     }
+   
+    //Menubar buttons methods
+    public void logout() {
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+       alert.setTitle("Logout");
+       alert.setHeaderText("Are you sure you want to logout?");
+       alert.setContentText("Choose your option.");
+       ButtonType buttonTypeYes = new ButtonType("Yes");
+       ButtonType buttonTypeNo = new ButtonType("No");
+       alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+       
+        Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
+                        try {
+                            principalStage.loginWindow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        principalStage.employeeWindow();
+                    }
+    }
     
-    public void generateReport() {
-        switch (typeOfOperation) {
-            case NONE:
-                printReport();
-                break;
-        }
-    }
-
-    public void printReport() {
-        try {
-            Map parameters = new HashMap();
-            parameters.clear();
-            parameters.put("codeCompany", null);
-            parameters.put("Background", this.getClass().getResourceAsStream(Background));
-            GenerateReport.showReport("EmployeeReport.jasper", "Companies Report", parameters);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void minimize() {
         Stage stage = (Stage) employeePane.getScene().getWindow();
         stage.setIconified(true);
     }
     
-    public void close() {
-        System.exit(0);
+    private enum NotificationType {
+        WARNING("Warning", "org/juangalicia/image/warning.png"),
+        SUCCESS("Success", "org/juangalicia/image/success.png"),
+        ERROR("Error", "org/juangalicia/image/error.png");
+
+        private final String title;
+        private final String imagePath;
+
+        NotificationType(String title, String imagePath) {
+            this.title = title;
+            this.imagePath = imagePath;
+        }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
+    private void notification(NotificationType type, String text, int seconds) {
+        Image imgN = new Image(type.imagePath);
+        Notifications notification = Notifications.create();
+        notification.title(type.title);
+        notification.graphic(new ImageView(imgN));
+        notification.text(text);
+        notification.hideAfter(Duration.seconds(seconds));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    private boolean showConfirmationDialog(String title, String header, String content, String button1, String button2) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
-        alert.showAndWait();
-    }    
+        ButtonType buttonTypeYes = new ButtonType(button1);
+        ButtonType buttonTypeNo = new ButtonType(button2);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == buttonTypeYes;
+    }
+    
+    //Methods to Search existing registers on the TableView
+    public boolean isDataExistsInTableView(String newData) {
+        ObservableList<Employee> items = tblEmployees.getItems();
+        
+        for (Employee employee : items) {
+            if (String.valueOf(employee.getCodeEmployee()).equals(newData)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTextFieldEmpty(JFXTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+    
+    private <T> boolean isComboBoxEmpty(ComboBox<T> comboBox) {
+        return comboBox.getValue() == null;
+    }
+
+    
+    private boolean isFormValid() {
+        return !isTextFieldEmpty(txtEmployeeNumber)
+                && !isTextFieldEmpty(txtFirstName)
+                && !isTextFieldEmpty(txtSecondName)
+                && !isTextFieldEmpty(txtAdress)
+                && !isTextFieldEmpty(txtContactPhone)
+                && !isTextFieldEmpty(txtCookDegree)
+                && !isComboBoxEmpty(cmbCodeTypeEmployee);
+    }
+
+    //Controls methods
     public void lockControls() {
         txtEmployeeId.setEditable(false);
         txtEmployeeNumber.setEditable(false);
-        txtSecondName.setEditable(false);
         txtFirstName.setEditable(false);
+        txtSecondName.setEditable(false);
         txtAdress.setEditable(false);
         txtContactPhone.setEditable(false);
         txtCookDegree.setEditable(false);
@@ -461,8 +459,8 @@ public class EmployeeController implements Initializable {
     public void unlockControls() {
         txtEmployeeId.setEditable(false);
         txtEmployeeNumber.setEditable(true);
-        txtSecondName.setEditable(true);
         txtFirstName.setEditable(true);
+        txtSecondName.setEditable(true);
         txtAdress.setEditable(true);
         txtContactPhone.setEditable(true);
         txtCookDegree.setEditable(true);
@@ -472,13 +470,63 @@ public class EmployeeController implements Initializable {
     public void clearControls() {
         txtEmployeeId.clear();
         txtEmployeeNumber.clear();
-        txtSecondName.clear();
         txtFirstName.clear();
+        txtSecondName.clear();
         txtAdress.clear();
         txtContactPhone.clear();
         txtCookDegree.clear();
         cmbCodeTypeEmployee.setValue(null);
     }
+    
+    //Stages
+    public void principalWindow(){
+        this.principalStage.principalWindow();
+    }
+
+    public void programmerWindow() {
+        principalStage.programmerWindow();
+    }
+
+    public void companyWindow() {
+        principalStage.companyWindow();
+    }
+
+    public void typeEmployeeWindow() {
+        principalStage.typeEmployeeWindow();
+    }
+
+    public void productWindow() {
+        principalStage.productWindow();
+    }
+
+    public void employeeWindow() {
+        principalStage.employeeWindow();
+    }
+
+    public void typeDishWindow() {
+        principalStage.typeDishWindow();
+    }
+
+    public void budgetWindow() {
+        principalStage.budgetWindow();
+    }
+    
+    public void dishWindow(){
+        principalStage.dishWindow();
+    }
+    
+    public void serviceWindow(){
+        principalStage.serviceWindow();
+    }
+    
+    public void userWindow(){
+        principalStage.userWindow();
+    }
+    
+    public void loginWindow(){
+        principalStage.loginWindow();
+    }
+    
 
     public Principal getPrincipalStage() {
         return principalStage;
@@ -490,5 +538,5 @@ public class EmployeeController implements Initializable {
 
     public void menuPrincipal() {
         principalStage.principalWindow();
-    }
+    } 
 }

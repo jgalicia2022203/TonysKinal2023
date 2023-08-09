@@ -17,10 +17,7 @@ import org.juangalicia.controller.TypeDishController;
 import org.juangalicia.controller.TypeEmployeeController;
 import org.juangalicia.controller.DishController;
 import org.juangalicia.controller.LoginController;
-import org.juangalicia.controller.Products_has_DishesController;
 import org.juangalicia.controller.ServiceController;
-import org.juangalicia.controller.Services_has_DishesController;
-import org.juangalicia.controller.Services_has_EmployeesController;
 import org.juangalicia.controller.UserController;
 
 import javafx.application.Application;
@@ -145,39 +142,6 @@ public class Principal extends Application {
         try {
             ServiceController service = (ServiceController) switchScene("ServiceView.fxml", 1366, 768);
             service.setPrincipalStage(this);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void Products_has_DishesWindow() {
-        try {
-            Products_has_DishesController PhD = (Products_has_DishesController) switchScene(
-                    "ProductsHasDishesView.fxml", 1366, 768);
-            PhD.setPrincipalStage(this);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void Services_has_DishesWindow() {
-        try {
-            Services_has_DishesController ShD = (Services_has_DishesController) switchScene(
-                    "ServicesHasDishesView.fxml", 1366, 768);
-            ShD.setPrincipalStage(this);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void Services_has_EmployeesWindow() {
-        try {
-            Services_has_EmployeesController ShE = (Services_has_EmployeesController) switchScene(
-                    "ServicesHasEmployeesView.fxml", 1366, 768);
-            ShE.setPrincipalStage(this);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="employeePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.BudgetController">
+<AnchorPane fx:id="employeePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.EmployeeController">
    <children>
       <AnchorPane layoutX="396.0" layoutY="73.0" prefHeight="57.0" prefWidth="554.0" style="-fx-background-color: #262626; -fx-background-radius: 10;">
          <children>
@@ -79,7 +79,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="txtBudgetSearch" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onAction="#budgetSearch" onKeyTyped="#companySearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtEmployeeSearch" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onKeyTyped="#employeeSearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
@@ -172,9 +172,8 @@
          </font>
       </JFXTextField>
       <FontAwesomeIconView glyphName="GRADUATION_CAP" layoutX="1080.0" layoutY="574.0" size="20" />
-      <JFXComboBox fx:id="cmbCodeTypeEmployee" focusColor="BLACK" layoutX="1115.0" layoutY="617.0" prefHeight="33.0" prefWidth="237.0" />
       <FontAwesomeIconView glyphName="GROUP" layoutX="1080.0" layoutY="642.0" size="20" text="" wrappingWidth="25.714270293712616" />
-      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1030.0" layoutY="696.0" onAction="#companiesWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" See Type Employees" textFill="WHITE">
+      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1030.0" layoutY="696.0" onAction="#typeEmployeeWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" See Type Employees" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -182,5 +181,6 @@
             <FontAwesomeIconView fill="WHITE" glyphName="BRIEFCASE" size="17" />
          </graphic>
       </JFXButton>
+      <ComboBox fx:id="cmbCodeTypeEmployee" layoutX="1112.0" layoutY="621.0" prefHeight="33.0" prefWidth="237.0" promptText="Type Employee" stylesheets="@../resource/TonysKinal.css" />
    </children>
 </AnchorPane>

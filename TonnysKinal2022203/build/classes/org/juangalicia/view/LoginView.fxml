@@ -43,11 +43,11 @@
                   <Font name="System Bold" size="40.0" />
                </font>
             </Label>
-            <JFXButton layoutX="154.0" layoutY="376.0" onAction="#login" prefHeight="58.0" prefWidth="196.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text="Login" textFill="WHITE">
+            <JFXButton layoutX="126.0" layoutY="375.0" onAction="#login" prefHeight="58.0" prefWidth="251.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text="Login" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font></JFXButton>
-            <JFXButton layoutX="153.0" layoutY="480.0" onAction="#userWindow" prefHeight="58.0" prefWidth="196.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text="Sign Up" textFill="WHITE">
+            <JFXButton layoutX="126.0" layoutY="482.0" onAction="#userWindow" prefHeight="58.0" prefWidth="251.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text=" Sign Up" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

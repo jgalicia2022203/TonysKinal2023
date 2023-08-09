@@ -1,79 +1,58 @@
 package org.juangalicia.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-import eu.schudt.javafx.controls.calendar.DatePicker;
-import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Date;
-import java.util.Optional;
-
 import org.juangalicia.bean.Budget;
 import org.juangalicia.bean.Company;
 import org.juangalicia.db.Conexion;
 import org.juangalicia.main.Principal;
-
+import org.controlsfx.control.Notifications;
+import org.juangalicia.report.GenerateReport;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Date;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.juangalicia.report.GenerateReport;
+import javafx.util.Duration;
 
 public class BudgetController implements Initializable {
     private Principal principalStage;
-
-    private enum operations {
-        SAVE, DELETE, UPDATE, NONE
-    }
-
-    private operations typeOfOperation = operations.NONE;
     private ObservableList<Budget> budgetList;
     private ObservableList<Company> companyList;
-    private DatePicker date;
     private final String Background = "/org/juangalicia/image/Report Background.png";
-
+    
+    @FXML 
+    private JFXDatePicker date;
     @FXML
     private AnchorPane budgetPane;
     @FXML
     private JFXButton btnCreate;
     @FXML
-    private JFXButton btnRead;
-    @FXML
-    private JFXButton btnUpdate;
-    @FXML
-    private JFXButton btnDelete;
-    @FXML
-    private JFXComboBox cmbCompanyId;
-    @FXML
-    private GridPane grpDate;
-    @FXML
-    private ImageView imgCreate;
-    @FXML
-    private ImageView imgRead;
-    @FXML
-    private ImageView imgUpdate;
-    @FXML
-    private ImageView imgDelete;
+    private ComboBox cmbCompanyId;
     @FXML
     private TableColumn colAmount;
     @FXML
@@ -94,12 +73,6 @@ public class BudgetController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadData();
-        date = new DatePicker(Locale.ENGLISH);
-        date.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-        date.getCalendarView().todayButtonTextProperty().set("Today");
-        date.getCalendarView().setShowWeeks(false);
-        date.getStylesheets().add("/org/juangalicia/resource/TonysKinal.css");
-        grpDate.add(date, 3, 0);
         cmbCompanyId.setItems(getCompany());
     }
 
@@ -112,13 +85,19 @@ public class BudgetController implements Initializable {
     }
 
     public void SelectElement() {
-        txtBudgetId
-                .setText(String.valueOf(((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getCodeBudget()));
-        date.selectedDateProperty().set(((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getDateRequest());
-        txtAmount
-                .setText(String.valueOf(((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getAmountBudget()));
-        cmbCompanyId.getSelectionModel()
-                .select(searchCompany(((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getCodeCompany()));
+        try {
+            Budget selectedBudget = (Budget) tblBudgets.getSelectionModel().getSelectedItem();
+            txtBudgetId.setText(String.valueOf(selectedBudget.getCodeBudget()));
+
+            // Convert java.sql.Date to java.util.LocalDate
+            java.util.Date utilDate = new java.util.Date(selectedBudget.getDateRequest().getTime());
+            LocalDate localDate = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            date.setValue(localDate);
+            txtAmount.setText(String.valueOf(selectedBudget.getAmountBudget()));
+            cmbCompanyId.getSelectionModel().select(searchCompany(selectedBudget.getCodeCompany()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Company searchCompany(int codeCompany) {
@@ -173,44 +152,40 @@ public class BudgetController implements Initializable {
     }
 
     public void create() {
-        switch (typeOfOperation) {
-            case NONE:
-                clearControls();
-                unlockControls();
-                btnCreate.setText("Save");
-                btnUpdate.setText("Cancel");
-                btnDelete.setDisable(true);
-                btnRead.setDisable(true);
-                imgCreate.setImage(new Image("/org/juangalicia/image/save.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                typeOfOperation = operations.SAVE;
-                loadData();
-                break;
-
-            case SAVE:
-                save();
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Budget");
-                btnUpdate.setText("Update Budget");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-        }
+        btnCreate.setOnAction(event -> {
+            if (isFormValid()) {
+                if (isDataExistsInTableView(txtBudgetId.getText())) {
+                    clearControls();
+                } else {
+                    if (showConfirmationDialog("Add Budget", "You want to add this budget?", 
+                            "Choose your option.", "Save", "Cancel")){
+                        try {
+                            save();
+                            loadData();
+                            clearControls();
+                            notification(NotificationType.SUCCESS, "Budget added successfully", 5);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        loadData();
+                    }
+                }
+            } else {
+                notification(NotificationType.ERROR, "please complete all the fields", 5);
+            }
+        });
     }
 
     public void save() {
-        Budget register = new Budget();
-        register.setDateRequest(date.getSelectedDate());
+         Budget register = new Budget();
+        // Convert LocalDate to java.sql.Date
+        java.sql.Date dateRequest = java.sql.Date.valueOf(date.getValue());
+        register.setDateRequest(dateRequest);
         register.setAmountBudget(Double.parseDouble(txtAmount.getText()));
         register.setCodeCompany(((Company) cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
         try {
-            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                    .prepareCall("call sp_CreateBudget(?,?,?)");
+            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_CreateBudget(?,?,?)");
             procedure.setDate(1, new java.sql.Date(register.getDateRequest().getTime()));
             procedure.setDouble(2, register.getAmountBudget());
             procedure.setInt(3, register.getCodeCompany());
@@ -222,57 +197,39 @@ public class BudgetController implements Initializable {
     }
 
     public void edit() {
-        switch (typeOfOperation) {
-            case NONE:
-                if (tblBudgets.getSelectionModel().getSelectedItem() != null) {
-                    btnCreate.setDisable(true);
-                    btnRead.setDisable(true);
-                    btnUpdate.setText("Update");
-                    btnDelete.setText("Cancel");
-                    imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                    imgDelete.setImage(new Image("/org/juangalicia/image/cancel.png"));
-                    unlockControls();
-                    typeOfOperation = operations.UPDATE;
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "No element selected", null, "Please select an element");
+        if (tblBudgets.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Update Budget", "You want to modify this Budget?", 
+                            "Choose your option.", "Update", "Cancel")) {
+                            try {
+                                update();
+                                loadData();
+                                clearControls();
+                                notification(NotificationType.SUCCESS, "Budget successfully updated from database", 5);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            loadData();
+                        }      
                 }
-                break;
-            case SAVE:
-                clearControls();
-                lockControls();
-                btnCreate.setText("Create Budget");
-                btnUpdate.setText("Update Budget");
-                btnDelete.setDisable(false);
-                btnRead.setDisable(false);
-                imgCreate.setImage(new Image("/org/juangalicia/image/create.png"));
-                imgUpdate.setImage(new Image("org/juangalicia/image/update.png"));
-                typeOfOperation = operations.NONE;
-                loadData();
-                break;
-            case UPDATE:
-                update();
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Budget");
-                btnDelete.setText("Delete Budget");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-        }
+                else {
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
+                }
     }
 
     public void update() {
         try {
-            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                    .prepareCall("call sp_UpdateBudget(?,?,?,?)");
+            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_UpdateBudget(?,?,?,?)");
             Budget register = (Budget) tblBudgets.getSelectionModel().getSelectedItem();
-            register.setDateRequest(date.getSelectedDate());
+
+            // Convert LocalDate to java.sql.Date
+            java.sql.Date dateRequest = java.sql.Date.valueOf(date.getValue());
+
+            register.setDateRequest(dateRequest);
             register.setAmountBudget(Double.parseDouble(txtAmount.getText()));
             register.setCodeCompany(((Company) cmbCompanyId.getSelectionModel().getSelectedItem()).getCodeCompany());
+
             procedure.setInt(1, register.getCodeBudget());
             procedure.setDate(2, new java.sql.Date(register.getDateRequest().getTime()));
             procedure.setDouble(3, register.getAmountBudget());
@@ -284,62 +241,27 @@ public class BudgetController implements Initializable {
     }
 
     public void delete() {
-        switch (typeOfOperation) {
-            case UPDATE:
-                clearControls();
-                lockControls();
-                btnCreate.setDisable(false);
-                btnRead.setDisable(false);
-                btnUpdate.setText("Update Budget");
-                btnDelete.setText("Delete Budget");
-                imgUpdate.setImage(new Image("/org/juangalicia/image/update.png"));
-                imgDelete.setImage(new Image("/org/juangalicia/image/delete.png"));
-                loadData();
-                typeOfOperation = operations.NONE;
-                break;
-
-            default:
-                if (tblBudgets.getSelectionModel().getSelectedItem() != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete Budget");
-                    alert.setHeaderText("Are you sure of deleting this register? You are gonna delete a foreign key");
-                    alert.setContentText("Choose your option.");
-
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
-
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == buttonTypeYes) {
+        if (tblBudgets.getSelectionModel().getSelectedItem() != null) {
+                    if (showConfirmationDialog("Delete Budget", "Are you sure of deleting this register?", 
+                            "Choose your option.", "Delete", "Cancel")){
                         try {
-                            PreparedStatement procedure = Conexion.getInsance().getConexion()
-                                    .prepareCall("call sp_DeleteBudget(?)");
-                            procedure.setInt(1,
-                                    ((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getCodeBudget());
+                            PreparedStatement procedure = Conexion.getInsance().getConexion().prepareCall("call sp_DeleteBudget(?)");
+                            procedure.setInt(1,((Budget) tblBudgets.getSelectionModel().getSelectedItem()).getCodeBudget());
                             procedure.execute();
                             budgetList.remove(tblBudgets.getSelectionModel().getSelectedItem());
                             clearControls();
+                            notification(NotificationType.SUCCESS, "Budget successfully deleted from database", 5);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText("You should select an element");
-                    alert.showAndWait();
+                    notification(NotificationType.ERROR, "Please select an element from the table", 5);
                 }
-        }
     }
 
     public void generateReport() {
-        switch (typeOfOperation) {
-            case NONE:
-                printReport();
-                break;
-
-        }
+        printReport();
     }
 
     public void printReport() {
@@ -387,14 +309,100 @@ public class BudgetController implements Initializable {
         sortList.comparatorProperty().bind(tblBudgets.comparatorProperty());
         tblBudgets.setItems(sortList);
     }
-
+    
+    public void logout() {
+       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+       alert.setTitle("Logout");
+       alert.setHeaderText("Are you sure you want to logout?");
+       alert.setContentText("Choose your option.");
+       ButtonType buttonTypeYes = new ButtonType("Yes");
+       ButtonType buttonTypeNo = new ButtonType("No");
+       alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+       
+        Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == buttonTypeYes) {
+                        try {
+                            principalStage.loginWindow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        principalStage.budgetWindow();
+                    }
+    }
+    
     public void minimize() {
         Stage stage = (Stage) budgetPane.getScene().getWindow();
         stage.setIconified(true);
     }
+    
+    private enum NotificationType {
+        WARNING("Warning", "org/juangalicia/image/warning.png"),
+        SUCCESS("Success", "org/juangalicia/image/success.png"),
+        ERROR("Error", "org/juangalicia/image/error.png");
 
-    public void close() {
-        System.exit(0);
+        private final String title;
+        private final String imagePath;
+
+        NotificationType(String title, String imagePath) {
+            this.title = title;
+            this.imagePath = imagePath;
+        }
+    }
+
+    private void notification(NotificationType type, String text, int seconds) {
+        Image imgN = new Image(type.imagePath);
+        Notifications notification = Notifications.create();
+        notification.title(type.title);
+        notification.graphic(new ImageView(imgN));
+        notification.text(text);
+        notification.hideAfter(Duration.seconds(seconds));
+        notification.position(Pos.BASELINE_RIGHT);
+        notification.show();
+    }
+    
+    private boolean showConfirmationDialog(String title, String header, String content, String button1, String button2) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        ButtonType buttonTypeYes = new ButtonType(button1);
+        ButtonType buttonTypeNo = new ButtonType(button2);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == buttonTypeYes;
+    }
+    
+    //Methods to Search existing registers on the TableView
+    public boolean isDataExistsInTableView(String newData) {
+        ObservableList<Budget> items = tblBudgets.getItems();
+        
+        for (Budget budget : items) {
+            if (String.valueOf(budget.getCodeBudget()).equals(newData)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTextFieldEmpty(JFXTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+    
+    private <T> boolean isComboBoxEmpty(ComboBox<T> comboBox) {
+        return comboBox.getValue() == null;
+    }
+    
+    private boolean isDatePickerEmpty(JFXDatePicker date) {
+    return date.getValue() == null;
+    }
+    
+    private boolean isFormValid() {
+        return !isTextFieldEmpty(txtBudgetId)
+                && !isTextFieldEmpty(txtAmount)
+                && !isDatePickerEmpty(date)
+                && !isComboBoxEmpty(cmbCompanyId);
     }
 
     public void lockControls() {
@@ -402,14 +410,6 @@ public class BudgetController implements Initializable {
         txtAmount.setEditable(false);
         cmbCompanyId.setDisable(true);
         date.setDisable(true);
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
     public void unlockControls() {
@@ -423,8 +423,58 @@ public class BudgetController implements Initializable {
         txtBudgetId.clear();
         txtAmount.clear();
         cmbCompanyId.setValue(null);
-        date.selectedDateProperty().set(null);
+        date.setValue(null);
     }
+
+    //Stages
+    public void principalWindow(){
+        this.principalStage.principalWindow();
+    }
+
+    public void programmerWindow() {
+        principalStage.programmerWindow();
+    }
+
+    public void companyWindow() {
+        principalStage.companyWindow();
+    }
+
+    public void typeEmployeeWindow() {
+        principalStage.typeEmployeeWindow();
+    }
+
+    public void productWindow() {
+        principalStage.productWindow();
+    }
+
+    public void employeeWindow() {
+        principalStage.employeeWindow();
+    }
+
+    public void typeDishWindow() {
+        principalStage.typeDishWindow();
+    }
+
+    public void budgetWindow() {
+        principalStage.budgetWindow();
+    }
+    
+    public void dishWindow(){
+        principalStage.dishWindow();
+    }
+    
+    public void serviceWindow(){
+        principalStage.serviceWindow();
+    }
+    
+    public void userWindow(){
+        principalStage.userWindow();
+    }
+    
+    public void loginWindow(){
+        principalStage.loginWindow();
+    }
+    
 
     public Principal getPrincipalStage() {
         return principalStage;
@@ -436,9 +486,5 @@ public class BudgetController implements Initializable {
 
     public void menuPrincipal() {
         principalStage.principalWindow();
-    }
-
-    public void companiesWindow() {
-        principalStage.companyWindow();
-    }
+    } 
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -80,7 +80,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="txtBudgetSearch" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onAction="#budgetSearch" onKeyTyped="#companySearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtBudgetSearch" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onKeyTyped="#budgetSearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
@@ -120,7 +120,7 @@
       <FontAwesomeIconView fill="#262626" glyphName="SEARCH" layoutX="26.0" layoutY="158.0" size="13" text="" />
       <MaterialDesignIconView glyphName="KEY_VARIANT" layoutX="173.0" layoutY="573.0" size="20" />
       <FontAwesomeIconView glyphName="MONEY" layoutX="172.0" layoutY="639.0" size="20" />
-      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1037.0" layoutY="696.0" onAction="#companiesWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Back to Companies" textFill="WHITE">
+      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1037.0" layoutY="696.0" onAction="#companyWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Back to Companies" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -133,7 +133,7 @@
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXDatePicker defaultColor="BLACK" layoutX="475.0" layoutY="555.0" prefHeight="27.0" prefWidth="268.0" promptText="Date" />
+      <JFXDatePicker fx:id="date" defaultColor="BLACK" layoutX="475.0" layoutY="555.0" prefHeight="27.0" prefWidth="275.0" promptText="Date" />
       <JFXTextField fx:id="txtAmount" focusColor="BLACK" labelFloat="true" layoutX="200.0" layoutY="616.0" prefHeight="33.0" prefWidth="237.0" promptText="Budget Amount">
          <font>
             <Font name="Arial" size="13.0" />
@@ -148,7 +148,7 @@
             <TableColumn fx:id="colCompanyId" minWidth="8.0" prefWidth="237.0" text="Company ID" />
          </columns>
       </TableView>
-      <JFXComboBox focusColor="BLACK" layoutX="506.0" layoutY="620.0" prefHeight="27.0" prefWidth="237.0" />
       <FontAwesomeIconView fill="WHITE" glyphName="BAR_CHART" layoutX="26.0" layoutY="637.0" size="100" wrappingWidth="122.14285278320312" />
+      <ComboBox fx:id="cmbCompanyId" layoutX="501.0" layoutY="620.0" prefHeight="29.0" prefWidth="237.0" promptText="Company" stylesheets="@../resource/TonysKinal.css" />
    </children>
 </AnchorPane>
