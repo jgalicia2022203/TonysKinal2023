@@ -60,7 +60,7 @@ public class Principal extends Application {
 
     public void programmerWindow() {
         try {
-            ProgrammerController programmer = (ProgrammerController) switchScene("ProgrammerView.fxml", 511, 706);
+            ProgrammerController programmer = (ProgrammerController) switchScene("ProgrammerView.fxml", 1000, 600);
             programmer.setPrincipalStage(this);
 
         } catch (Exception e) {

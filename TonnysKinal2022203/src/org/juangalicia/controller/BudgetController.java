@@ -399,8 +399,7 @@ public class BudgetController implements Initializable {
     }
     
     private boolean isFormValid() {
-        return !isTextFieldEmpty(txtBudgetId)
-                && !isTextFieldEmpty(txtAmount)
+        return !isTextFieldEmpty(txtAmount)
                 && !isDatePickerEmpty(date)
                 && !isComboBoxEmpty(cmbCompanyId);
     }

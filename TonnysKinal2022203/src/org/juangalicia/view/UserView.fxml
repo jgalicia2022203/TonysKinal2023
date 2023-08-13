@@ -15,9 +15,9 @@
 
 <AnchorPane fx:id="userPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.UserController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #262626;">
+      <AnchorPane prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #443c34;">
          <children>
-            <ImageView fitHeight="101.0" fitWidth="89.0" layoutX="23.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="111.0" fitWidth="149.0" layoutX="22.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/TonysLittleLogo.png" />
                </image>
@@ -57,7 +57,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="39.0" layoutY="462.0" text="Tonys CEO - John Wick" textFill="WHITE">
+            <Label layoutX="39.0" layoutY="462.0" text="Tonys CEO - Sergio Torres" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -67,54 +67,71 @@
                   <Image url="@../image/Vector.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="215.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="232.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/success.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
+      <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #c7bdac;">
          <children>
-            <Button layoutX="429.0" mnemonicParsing="false" onAction="#close" prefHeight="47.0" prefWidth="71.0" styleClass="close" stylesheets="@../resource/TonysKinal.css">
-               <graphic>
-                  <FontAwesomeIconView glyphName="CLOSE" />
-               </graphic>
-            </Button>
-            <Button layoutX="358.0" mnemonicParsing="false" onAction="#minimize" prefHeight="47.0" prefWidth="71.0" styleClass="minimize" stylesheets="@../resource/TonysKinal.css">
-               <graphic>
-                  <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" size="12" />
-               </graphic>
-            </Button>
             <Label layoutX="77.0" layoutY="96.0" text="Join Us!">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="154.0" text="For the purpose of industry regulation, your " textFill="#8692a6">
+            <Label layoutX="77.0" layoutY="154.0" text="For the purpose of industry regulation, your " textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="179.0" text="details are required." textFill="#8692a6">
+            <Label layoutX="77.0" layoutY="179.0" text="details are required." textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="txtFirstName" focusColor="#262626" labelFloat="true" layoutX="77.0" layoutY="225.0" prefHeight="25.0" prefWidth="313.0" promptText="First Name" />
-            <JFXTextField fx:id="txtSecondName" focusColor="#262626" labelFloat="true" layoutX="77.0" layoutY="281.0" prefHeight="25.0" prefWidth="313.0" promptText="Second Name" />
-            <JFXTextField fx:id="txtUsername" focusColor="#262626" labelFloat="true" layoutX="77.0" layoutY="337.0" prefHeight="25.0" prefWidth="313.0" promptText="Username" />
-            <JFXPasswordField fx:id="txtPassword" focusColor="#262626" labelFloat="true" layoutX="77.0" layoutY="395.0" prefHeight="25.0" prefWidth="313.0" promptText="Password" />
-            <JFXButton fx:id="btnRegister" layoutX="77.0" layoutY="500.0" onAction="#register" prefHeight="58.0" prefWidth="313.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text="Register Account" textFill="WHITE">
+            <JFXTextField fx:id="txtFirstName" focusColor="#e02d31" labelFloat="true" layoutX="77.0" layoutY="225.0" prefHeight="25.0" prefWidth="313.0" promptText="First Name" />
+            <JFXTextField fx:id="txtSecondName" focusColor="#e02d31" labelFloat="true" layoutX="77.0" layoutY="281.0" prefHeight="25.0" prefWidth="313.0" promptText="Second Name" />
+            <JFXTextField fx:id="txtUsername" focusColor="#e02d31" labelFloat="true" layoutX="77.0" layoutY="337.0" prefHeight="25.0" prefWidth="313.0" promptText="Username" />
+            <JFXPasswordField fx:id="txtPassword" focusColor="#e02d31" labelFloat="true" layoutX="77.0" layoutY="395.0" prefHeight="25.0" prefWidth="313.0" promptText="Password" />
+            <JFXButton fx:id="btnRegister" layoutX="77.0" layoutY="500.0" onAction="#register" prefHeight="58.0" prefWidth="313.0" ripplerFill="WHITE" style="-fx-background-color: #f4b13e; -fx-background-radius: 6;" text=" Register Account">
                <font>
                   <Font size="18.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView glyphName="USER_PLUS" size="20" />
+               </graphic>
             </JFXButton>
             <JFXCheckBox fx:id="chkTerms" layoutX="77.0" layoutY="451.0" text="I agree to terms &amp; conditions" />
             <MaterialDesignIconView glyphName="LOCK" layoutX="50.0" layoutY="415.0" size="20" />
             <MaterialDesignIconView glyphName="ACCOUNT_CIRCLE" layoutX="50.0" layoutY="357.0" size="20" />
             <FontAwesomeIconView glyphName="USER" layoutX="52.0" layoutY="244.0" size="20" />
             <FontAwesomeIconView glyphName="USER" layoutX="52.0" layoutY="300.0" size="20" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="47.0" prefWidth="993.0" style="-fx-background-color: #3c3939;">
+         <children>
+            <Button layoutX="934.0" mnemonicParsing="false" onAction="#close" prefHeight="47.0" prefWidth="71.0" styleClass="close" stylesheets="@../resource/TonysKinal.css">
+               <graphic>
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="WINDOW_CLOSE" size="20" />
+               </graphic>
+            </Button>
+            <Button layoutX="863.0" mnemonicParsing="false" onAction="#minimize" prefHeight="47.0" prefWidth="71.0" styleClass="minimize" stylesheets="@../resource/TonysKinal.css" textFill="#2e2d2d">
+               <graphic>
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="WINDOW_MINIMIZE" size="20" />
+               </graphic>
+            </Button>
+            <Label layoutX="69.0" layoutY="13.0" text="Tonys Management System" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="35.0" fitWidth="49.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/TonysLittleLogo.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

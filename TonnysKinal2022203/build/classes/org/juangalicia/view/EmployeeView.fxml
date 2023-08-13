@@ -14,57 +14,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="employeePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.EmployeeController">
+<AnchorPane fx:id="employeePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #443c34;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.juangalicia.controller.EmployeeController">
    <children>
-      <AnchorPane layoutX="396.0" layoutY="73.0" prefHeight="57.0" prefWidth="554.0" style="-fx-background-color: #262626; -fx-background-radius: 10;">
-         <children>
-            <JFXButton layoutX="141.0" layoutY="2.0" onAction="#companyWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="BUILDING" size="20" wrappingWidth="6.142856597900391" />
-               </graphic>
-            </JFXButton>
-            <JFXButton layoutX="198.0" layoutY="3.0" onAction="#employeeWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
-               <graphic>
-                  <MaterialDesignIconView fill="WHITE" glyphName="TIE" size="20" wrappingWidth="11.0" />
-               </graphic>
-            </JFXButton>
-            <JFXButton layoutX="255.0" layoutY="2.0" onAction="#dishWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="CUTLERY" size="20" wrappingWidth="13.428571701049805" />
-               </graphic>
-            </JFXButton>
-            <JFXButton layoutX="312.0" layoutY="2.0" onAction="#productWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_BASKET" size="20" wrappingWidth="14.14285659790039" />
-               </graphic>
-            </JFXButton>
-            <JFXButton layoutX="369.0" layoutY="3.0" onAction="#serviceWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" " textFill="#2e2d2d">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="TRUCK" size="20" wrappingWidth="15.14285659790039" />
-               </graphic>
-            </JFXButton>
-            <JFXButton layoutX="497.0" layoutY="1.0" onAction="#programmerWindow" prefHeight="58.0" prefWidth="57.0" ripplerFill="WHITE" style="-fx-background-radius: 10;" text=" ">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="QUESTION" size="20" wrappingWidth="5.142856597900391" />
-               </graphic>
-            </JFXButton>
-            <JFXButton layoutY="1.0" onAction="#principalWindow" prefHeight="57.0" prefWidth="57.0" ripplerFill="WHITE" style="-fx-background-radius: 10;" text=" ">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="25" wrappingWidth="15.14285659790039" />
-               </graphic>
-            </JFXButton>
-         </children>
-      </AnchorPane>
       <AnchorPane layoutX="-21.0" prefHeight="47.0" prefWidth="1366.0" style="-fx-background-color: #3c3939;">
          <children>
             <Button layoutX="1316.0" mnemonicParsing="false" onAction="#logout" prefHeight="47.0" prefWidth="71.0" styleClass="close" stylesheets="@../resource/TonysKinal.css">
                <graphic>
-                  <MaterialDesignIconView fill="WHITE" glyphName="LOGOUT" size="20" />
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="LOGOUT" size="20" />
                </graphic>
             </Button>
             <Button layoutX="1245.0" mnemonicParsing="false" onAction="#minimize" prefHeight="47.0" prefWidth="71.0" styleClass="minimize" stylesheets="@../resource/TonysKinal.css" textFill="#2e2d2d">
                <graphic>
-                  <MaterialDesignIconView fill="WHITE" glyphName="WINDOW_MINIMIZE" size="20" />
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="WINDOW_MINIMIZE" size="20" />
                </graphic>
             </Button>
             <ImageView fitHeight="40.0" fitWidth="47.0" layoutX="33.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
@@ -72,55 +33,54 @@
                   <Image url="@../image/TonysLittleLogo.png" />
                </image>
             </ImageView>
-            <Label layoutX="80.0" layoutY="13.0" text="Tonys Management System" textFill="WHITE">
+            <Label layoutX="86.0" layoutY="13.0" text="Tonys Management System" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="txtEmployeeSearch" focusColor="BLACK" labelFloat="true" layoutX="45.0" layoutY="141.0" onKeyTyped="#employeeSearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtEmployeeSearch" focusColor="#e02d31" labelFloat="true" layoutX="45.0" layoutY="141.0" onKeyTyped="#employeeSearch" prefHeight="25.0" prefWidth="423.0" promptText="Search" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="btnCreate" alignment="CENTER" layoutX="152.0" layoutY="696.0" onAction="#create" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text="Add Employee" textFill="WHITE">
+      <JFXButton fx:id="btnCreate" alignment="CENTER" layoutX="227.0" layoutY="696.0" onAction="#create" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #f4b13e;" text=" Add Employee">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
+            <FontAwesomeIconView glyphName="PLUS" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnUpdate" alignment="CENTER" layoutX="371.0" layoutY="696.0" onAction="#edit" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Update Employee" textFill="WHITE">
+      <JFXButton fx:id="btnUpdate" alignment="CENTER" layoutX="454.0" layoutY="696.0" onAction="#edit" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #f4b13e;" text=" Update Employee">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="20" />
+            <FontAwesomeIconView glyphName="REFRESH" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnDelete" alignment="CENTER" layoutX="591.0" layoutY="696.0" onAction="#delete" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Delete Employee" textFill="WHITE">
+      <JFXButton fx:id="btnDelete" alignment="CENTER" layoutX="683.0" layoutY="696.0" onAction="#delete" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #f4b13e;" text=" Delete Employee">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="20" />
+            <FontAwesomeIconView glyphName="TRASH" size="20" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="btnRead" alignment="CENTER" layoutX="811.0" layoutY="696.0" onAction="#generateReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" Employees Report" textFill="WHITE">
+      <JFXButton fx:id="btnRead" alignment="CENTER" layoutX="915.0" layoutY="696.0" onAction="#generateReport" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #f4b13e;" text=" Employees Report">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" size="17" />
+            <FontAwesomeIconView glyphName="FILE_TEXT" size="17" />
          </graphic>
       </JFXButton>
       <FontAwesomeIconView fill="#262626" glyphName="SEARCH" layoutX="26.0" layoutY="158.0" size="13" text="" />
-      <MaterialDesignIconView glyphName="KEY_VARIANT" layoutX="173.0" layoutY="576.0" size="20" />
-      <FontAwesomeIconView glyphName="USER" layoutX="172.0" layoutY="640.0" size="20" />
-      <FontAwesomeIconView glyphName="USER" layoutX="473.0" layoutY="640.0" size="20" />
-      <MaterialDesignIconView fill="#f5f5f5" glyphName="TIE" layoutX="32.0" layoutY="649.0" size="120" />
+      <MaterialDesignIconView fill="#ffeca5" glyphName="KEY_VARIANT" layoutX="227.0" layoutY="576.0" size="20" />
+      <FontAwesomeIconView fill="#ffeca5" glyphName="USER" layoutX="229.0" layoutY="643.0" size="20" />
+      <FontAwesomeIconView fill="#ffeca5" glyphName="USER" layoutX="520.0" layoutY="639.0" size="20" />
       <TableView fx:id="tblEmployees" layoutX="26.0" layoutY="180.0" onMouseClicked="#SelectElement" prefHeight="340.0" prefWidth="1314.0" stylesheets="@../resource/TonysKinal.css">
          <columns>
             <TableColumn fx:id="colEmployeeId" prefWidth="124.00003051757812" text="Employee ID" />
@@ -133,54 +93,103 @@
             <TableColumn fx:id="colCodeTypeEmployee" minWidth="8.0" prefWidth="167.0" text="Type Employee ID" />
          </columns>
       </TableView>
-      <JFXTextField fx:id="txtEmployeeId" focusColor="BLACK" labelFloat="true" layoutX="200.0" layoutY="552.0" prefHeight="33.0" prefWidth="237.0" promptText="Employee ID">
+      <JFXTextField fx:id="txtEmployeeId" focusColor="#e02d31" labelFloat="true" layoutX="264.0" layoutY="551.0" prefHeight="33.0" prefWidth="204.0" promptText="Employee ID" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtEmployeeNumber" focusColor="BLACK" labelFloat="true" layoutX="506.0" layoutY="549.0" prefHeight="33.0" prefWidth="237.0" promptText="Number">
+      <JFXTextField fx:id="txtEmployeeNumber" focusColor="#e02d31" labelFloat="true" layoutX="564.0" layoutY="552.0" prefHeight="33.0" prefWidth="204.0" promptText="Number" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <FontAwesomeIconView glyphName="SORT_NUMERIC_ASC" layoutX="473.0" layoutY="575.0" size="20" />
-      <JFXTextField fx:id="txtSecondName" focusColor="BLACK" labelFloat="true" layoutX="200.0" layoutY="617.0" prefHeight="33.0" prefWidth="237.0" promptText="Last Name">
+      <FontAwesomeIconView fill="#ffeca5" glyphName="SORT_NUMERIC_ASC" layoutX="519.0" layoutY="574.0" size="20" />
+      <JFXTextField fx:id="txtSecondName" focusColor="#e02d31" labelFloat="true" layoutX="264.0" layoutY="615.0" prefHeight="33.0" prefWidth="204.0" promptText="Last Name" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtFirstName" focusColor="BLACK" labelFloat="true" layoutX="506.0" layoutY="617.0" prefHeight="33.0" prefWidth="237.0" promptText="First Name">
+      <JFXTextField fx:id="txtFirstName" focusColor="#e02d31" labelFloat="true" layoutX="564.0" layoutY="618.0" prefHeight="33.0" prefWidth="204.0" promptText="First Name" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txtAdress" focusColor="BLACK" labelFloat="true" layoutX="819.0" layoutY="549.0" prefHeight="33.0" prefWidth="237.0" promptText="Adress">
+      <JFXTextField fx:id="txtAdress" focusColor="#e02d31" labelFloat="true" layoutX="858.0" layoutY="552.0" prefHeight="33.0" prefWidth="204.0" promptText="Adress" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <MaterialDesignIconView glyphName="BRIEFCASE" layoutX="785.0" layoutY="576.0" size="20" />
-      <JFXTextField fx:id="txtContactPhone" focusColor="BLACK" labelFloat="true" layoutX="819.0" layoutY="617.0" prefHeight="33.0" prefWidth="237.0" promptText="Contact Phone">
+      <MaterialDesignIconView fill="#ffeca5" glyphName="BRIEFCASE" layoutX="823.0" layoutY="576.0" size="20" />
+      <JFXTextField fx:id="txtContactPhone" focusColor="#e02d31" labelFloat="true" layoutX="858.0" layoutY="616.0" prefHeight="33.0" prefWidth="204.0" promptText="Contact Phone" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <FontAwesomeIconView glyphName="PHONE" layoutX="787.0" layoutY="640.0" size="20" text="" />
-      <JFXTextField fx:id="txtCookDegree" focusColor="BLACK" labelFloat="true" layoutX="1112.0" layoutY="549.0" prefHeight="33.0" prefWidth="237.0" promptText="Cook Degree">
+      <FontAwesomeIconView fill="#ffeca5" glyphName="PHONE" layoutX="825.0" layoutY="644.0" size="20" text="" />
+      <JFXTextField fx:id="txtCookDegree" focusColor="#e02d31" labelFloat="true" layoutX="1145.0" layoutY="549.0" prefHeight="33.0" prefWidth="204.0" promptText="Cook Degree" stylesheets="@../resource/TonysKinal.css" unFocusColor="BLACK">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </JFXTextField>
-      <FontAwesomeIconView glyphName="GRADUATION_CAP" layoutX="1080.0" layoutY="574.0" size="20" />
-      <FontAwesomeIconView glyphName="GROUP" layoutX="1080.0" layoutY="642.0" size="20" text="" wrappingWidth="25.714270293712616" />
-      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1030.0" layoutY="696.0" onAction="#typeEmployeeWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #262626;" text=" See Type Employees" textFill="WHITE">
+      <FontAwesomeIconView fill="#ffeca5" glyphName="GRADUATION_CAP" layoutX="1106.0" layoutY="575.0" size="20" />
+      <FontAwesomeIconView fill="#ffeca5" glyphName="GROUP" layoutX="1106.0" layoutY="639.0" size="20" text="" wrappingWidth="25.714270293712616" />
+      <JFXButton fx:id="btnCompanies" alignment="CENTER" layoutX="1145.0" layoutY="696.0" onAction="#typeEmployeeWindow" prefHeight="48.0" prefWidth="204.0" style="-fx-background-color: #f4b13e;" text=" See Type Employees">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="BRIEFCASE" size="17" />
+            <FontAwesomeIconView glyphName="BRIEFCASE" size="17" />
          </graphic>
       </JFXButton>
-      <ComboBox fx:id="cmbCodeTypeEmployee" layoutX="1112.0" layoutY="621.0" prefHeight="33.0" prefWidth="237.0" promptText="Type Employee" stylesheets="@../resource/TonysKinal.css" />
+      <ComboBox fx:id="cmbCodeTypeEmployee" layoutX="1145.0" layoutY="621.0" prefHeight="33.0" prefWidth="204.0" promptText="Type Employee" stylesheets="@../resource/TonysKinal.css" />
+      <AnchorPane layoutX="406.0" layoutY="70.0" prefHeight="57.0" prefWidth="554.0" style="-fx-background-color: #e02d31; -fx-background-radius: 10;">
+         <children>
+            <JFXButton layoutX="141.0" layoutY="2.0" onAction="#companyWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="#ffeca5" glyphName="BUILDING" size="20" wrappingWidth="6.142856597900391" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="198.0" layoutY="3.0" onAction="#employeeWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="TIE" size="20" wrappingWidth="11.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="255.0" layoutY="2.0" onAction="#dishWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="#ffeca5" glyphName="CUTLERY" size="20" wrappingWidth="13.428571701049805" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="312.0" layoutY="2.0" onAction="#productWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="#ffeca5" glyphName="SHOPPING_BASKET" size="20" wrappingWidth="14.14285659790039" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="369.0" layoutY="3.0" onAction="#serviceWindow" prefHeight="54.0" prefWidth="57.0" ripplerFill="WHITE" text=" " textFill="#2e2d2d">
+               <graphic>
+                  <FontAwesomeIconView fill="#ffeca5" glyphName="TRUCK" size="20" wrappingWidth="15.14285659790039" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="497.0" layoutY="1.0" onAction="#programmerWindow" prefHeight="58.0" prefWidth="57.0" ripplerFill="WHITE" style="-fx-background-radius: 10;" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="#ffeca5" glyphName="QUESTION" size="20" wrappingWidth="5.142856597900391" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutY="1.0" onAction="#principalWindow" prefHeight="57.0" prefWidth="57.0" ripplerFill="WHITE" style="-fx-background-radius: 10;" text=" ">
+               <graphic>
+                  <FontAwesomeIconView fill="#ffeca5" glyphName="HOME" size="25" wrappingWidth="15.14285659790039" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="26.0" layoutY="536.0" prefHeight="217.0" prefWidth="169.0" style="-fx-background-color: #262626; -fx-background-radius: 15;">
+         <children>
+            <MaterialDesignIconView fill="#ffeca5" glyphName="TIE" layoutX="10.0" layoutY="145.0" size="150" wrappingWidth="151.0" />
+            <Label layoutX="32.0" layoutY="166.0" text="Employees" textFill="#ffeca5">
+               <font>
+                  <Font name="Segoe Print" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

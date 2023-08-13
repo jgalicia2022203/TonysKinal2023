@@ -49,6 +49,7 @@ public class UserController implements Initializable{
             if (isFormValid()) {
                 save();
                 check();
+                principalStage.loginWindow();
             } else {
                 error();
             }

@@ -20,20 +20,26 @@
             <AnchorPane prefHeight="47.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
          </top>
       </BorderPane>
-      <AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #262626;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #443c34;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="368.0" fitWidth="350.0" layoutX="53.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="380.0" fitWidth="444.0" layoutX="14.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/Tonys.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: WHITE;">
+      <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #c7bdac;">
          <children>
-            <JFXTextField fx:id="txtUser" focusColor="#262626" labelFloat="true" layoutX="69.0" layoutY="229.0" prefHeight="25.0" prefWidth="367.0" promptText="Username" />
-            <JFXPasswordField fx:id="txtPassword" focusColor="#262626" labelFloat="true" layoutX="69.0" layoutY="300.0" prefHeight="25.0" prefWidth="367.0" promptText="Password" />
-            <Label layoutX="126.0" layoutY="144.0" text="Access your account">
+            <JFXTextField fx:id="txtUser" focusColor="#e02d31" labelFloat="true" layoutX="69.0" layoutY="229.0" prefHeight="25.0" prefWidth="367.0" promptText="Username" unFocusColor="BLACK">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></JFXTextField>
+            <JFXPasswordField fx:id="txtPassword" focusColor="#e02d31" labelFloat="true" layoutX="69.0" layoutY="300.0" prefHeight="25.0" prefWidth="367.0" promptText="Password" unFocusColor="BLACK">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></JFXPasswordField>
+            <Label layoutX="126.0" layoutY="144.0" text="Access your account" textFill="#ffeda5">
                <font>
                   <Font size="28.0" />
                </font>
@@ -43,14 +49,20 @@
                   <Font name="System Bold" size="40.0" />
                </font>
             </Label>
-            <JFXButton layoutX="126.0" layoutY="375.0" onAction="#login" prefHeight="58.0" prefWidth="251.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text="Login" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font></JFXButton>
-            <JFXButton layoutX="126.0" layoutY="482.0" onAction="#userWindow" prefHeight="58.0" prefWidth="251.0" style="-fx-background-color: #262626; -fx-background-radius: 6;" text=" Sign Up" textFill="WHITE">
+            <JFXButton layoutX="126.0" layoutY="375.0" onAction="#login" prefHeight="58.0" prefWidth="251.0" ripplerFill="WHITE" style="-fx-background-color: #f4b13e; -fx-background-radius: 6;" text=" Login">
                <font>
                   <Font size="18.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView glyphName="UNLOCK_ALT" size="20" />
+               </graphic></JFXButton>
+            <JFXButton layoutX="126.0" layoutY="482.0" onAction="#userWindow" prefHeight="58.0" prefWidth="251.0" ripplerFill="WHITE" style="-fx-background-color: #f4b13e; -fx-background-radius: 6;" text=" Register">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView glyphName="USER_PLUS" size="20" />
+               </graphic>
             </JFXButton>
             <Label layoutX="243.0" layoutY="447.0" text="or">
                <font>
@@ -59,16 +71,30 @@
             </Label>
             <MaterialDesignIconView glyphName="LOCK" layoutX="39.0" layoutY="320.0" size="20" />
             <MaterialDesignIconView glyphName="ACCOUNT_CIRCLE" layoutX="39.0" layoutY="249.0" size="20" />
-            <Button layoutX="431.0" mnemonicParsing="false" onAction="#close" prefHeight="47.0" prefWidth="71.0" styleClass="close" stylesheets="@../resource/TonysKinal.css">
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="47.0" prefWidth="993.0" style="-fx-background-color: #3c3939;">
+         <children>
+            <Button layoutX="934.0" mnemonicParsing="false" onAction="#close" prefHeight="47.0" prefWidth="71.0" styleClass="close" stylesheets="@../resource/TonysKinal.css">
                <graphic>
-                  <FontAwesomeIconView glyphName="CLOSE" />
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="WINDOW_CLOSE" size="20" />
                </graphic>
             </Button>
-            <Button layoutX="360.0" mnemonicParsing="false" onAction="#minimize" prefHeight="47.0" prefWidth="71.0" styleClass="minimize" stylesheets="@../resource/TonysKinal.css">
+            <Button layoutX="863.0" mnemonicParsing="false" onAction="#minimize" prefHeight="47.0" prefWidth="71.0" styleClass="minimize" stylesheets="@../resource/TonysKinal.css" textFill="#2e2d2d">
                <graphic>
-                  <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" />
+                  <MaterialDesignIconView fill="#ffeca5" glyphName="WINDOW_MINIMIZE" size="20" />
                </graphic>
             </Button>
+            <Label layoutX="69.0" layoutY="13.0" text="Tonys Management System" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="35.0" fitWidth="49.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/TonysLittleLogo.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
